@@ -1,0 +1,38 @@
+@import "../shared.scss";
+
+.product-detail-page {
+
+    min-height: 85vh;
+    height: auto;
+    padding-top: 25vh;
+
+    .product-image {
+        max-width: 100%;
+        height: auto;
+        border-right: 1px solid $light-gray-1;
+    }
+  
+    .product-info {
+        border-left: 1px solid $light-gray-1;
+        padding-left: 8rem;
+
+        @media screen and (max-width: 768px) {
+            padding-top: 5rem;
+            padding-left: 1rem;
+            border: none;
+            justify-content: start;
+            align-items: start;
+            
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+    
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+  }

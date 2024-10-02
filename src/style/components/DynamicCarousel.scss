@@ -1,0 +1,33 @@
+@import "../variables.scss";
+
+.carousel {
+    height: 70vh !important;
+    width: 100%;
+    margin-top: 15vh;
+
+    .carousel-inner{
+        height: 100%;
+        width: 100%;
+    }
+
+    .carousel-item{
+        height: 100%;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+    }
+  
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+    }
+}
+
+.carousel, .carousel * {
+    overflow-x: hidden;
+}
+  
+

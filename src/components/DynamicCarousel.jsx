@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from 'react';
+import { Carousel, Spinner } from 'react-bootstrap';
+import axios from 'axios';
+import "../style/components/DynamicCarousel.scss";
+
+const DynamicCarousel = () => {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  const fetchImages = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/carousel-images');
+      setImages(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+      setLoading(false); 
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="loading-container d-flex justify-content-center align-items-center">
+        <img
+          src="/resources/images/carousel_loading_image.jpg"
+          alt="Loading"
+          className="loading-image"
+        />
+        <Spinner animation="border" />  
+      </div>
+    );
+  }
+
+  return (
+    <Carousel controls={true} indicators={false} interval={5000}>
+      {images.map((image, index) => (
+        <Carousel.Item key={index}>
+          <img
+            className="d-block w-100"
+            src={image} 
+            alt={`Slide ${index}`}
+          />
+        </Carousel.Item>
+      ))}
+    </Carousel>
+  );
+};
+
+export default DynamicCarousel;
