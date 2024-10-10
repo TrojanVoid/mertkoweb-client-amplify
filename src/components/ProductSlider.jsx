@@ -11,7 +11,7 @@ const ProductSlider = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://hoyzrufexe.execute-api.eu-north-1.amazonaws.com/prod/api/concept-products');
+        const response = await axios.get('https://0obkhvr5j4.execute-api.eu-north-1.amazonaws.com/prod/api/concept-products');
         console.log("products response:", response.data);
         setProducts(response.data);
       } catch (error) {

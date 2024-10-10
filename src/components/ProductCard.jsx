@@ -12,7 +12,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const response = await axios.get(`https://hoyzrufexe.execute-api.eu-north-1.amazonaws.com/prod/api/product-image/${id}`);
+        const response = await axios.get(`https://0obkhvr5j4.execute-api.eu-north-1.amazonaws.com/prod/api/product-image/${id}`);
         setImage(response.data);
         setLoading(false);
       } catch (error) {
