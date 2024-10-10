@@ -16,7 +16,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchImage = async () => { 
       try {
-        const response = await axios.get(`http://localhost:5000/api/product-image/${productId}`);
+        const response = await axios.get(`https://hoyzrufexe.execute-api.eu-north-1.amazonaws.com/prod/api/product-image/${productId}`);
         setImage(response.data);
       } catch (error) {
         setError('Error fetching product image');
@@ -32,7 +32,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/get-product/${productId}`);
+        const response = await axios.get(`https://hoyzrufexe.execute-api.eu-north-1.amazonaws.com/prod/api/get-product/${productId}`);
         setProduct(response.data);
         setLoading(false);
       } catch (error) {

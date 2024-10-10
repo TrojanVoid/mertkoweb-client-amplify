@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mertkowebclient-dev-95e8d-authRole",
+      "UnauthRoleArn": "arn:aws:iam::536697259070:role/amplify-mertkowebclient-dev-95e8d-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::536697259070:role/amplify-mertkowebclient-dev-95e8d-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-mertkowebclient-dev-95e8d-deployment",
+      "UnauthRoleName": "amplify-mertkowebclient-dev-95e8d-unauthRole",
+      "StackName": "amplify-mertkowebclient-dev-95e8d",
+      "StackId": "arn:aws:cloudformation:eu-central-1:536697259070:stack/amplify-mertkowebclient-dev-95e8d/752a2830-8118-11ef-bd8c-0a38ca7121df",
+      "AmplifyAppId": "d9700zlhwdumg"
+    }
+  }
+}
