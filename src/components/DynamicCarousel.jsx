@@ -13,7 +13,7 @@ const DynamicCarousel = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get('https://0obkhvr5j4.execute-api.eu-north-1.amazonaws.com/prod/api/carousel-images');
+      const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/carousel-images');
       setImages(response.data);
       setLoading(false);
     } catch (error) {

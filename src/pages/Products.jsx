@@ -35,7 +35,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://0obkhvr5j4.execute-api.eu-north-1.amazonaws.com/prod/api/products');
+        const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/products');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
