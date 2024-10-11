@@ -14,7 +14,13 @@ const DynamicCarousel = () => {
   const fetchImages = async () => {
     try {
       const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/carousel-images');
-      setImageUrls(response.data.imageUrls); 
+      console.log('API Response:', response.data);
+      if (Array.isArray(response.data.imageUrls)) {
+        setImageUrls(response.data.imageUrls); 
+      } else {
+        console.error('imageUrls is not an array:', response.data.imageUrls);
+        setImageUrls([]);
+      }
       setLoading(false);
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -37,15 +43,23 @@ const DynamicCarousel = () => {
 
   return (
     <Carousel controls={true} indicators={false} interval={5000}>
-      {imageUrls.map((url, index) => (
-        <Carousel.Item key={index}>
-          <img
-            className="d-block w-100"
-            src={url} 
-            alt={`Slide ${index}`}
-          />
+      {imageUrls.length > 0 ? ( 
+        imageUrls.map((url, index) => (
+          <Carousel.Item key={index}>
+            <img
+              className="d-block w-100"
+              src={url} 
+              alt={`Slide ${index}`}
+            />
+          </Carousel.Item>
+        ))
+      ) : (
+        <Carousel.Item>
+          <div className="d-flex justify-content-center align-items-center" style={{ height: '300px' }}>
+            <h5>No images available</h5>
+          </div>
         </Carousel.Item>
-      ))}
+      )}
     </Carousel>
   );
 };
