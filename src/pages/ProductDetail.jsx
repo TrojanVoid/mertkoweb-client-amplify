@@ -8,7 +8,7 @@ import "../style/pages/ProductDetail.scss";
 const ProductDetail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [image, setImage] = useState('');
+  const [imageUrl, setImageUrl] = useState(''); 
   const [loading, setLoading] = useState(true);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ const ProductDetail = () => {
     const fetchImage = async () => { 
       try {
         const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/product-image/${productId}`);
-        setImage(response.data);
+        setImageUrl(response.data.imageUrl); 
       } catch (error) {
         setError('Error fetching product image');
         console.error(error);
@@ -77,7 +77,7 @@ const ProductDetail = () => {
               )}
               {!isImageLoading && (
                 <Image 
-                    src={image} 
+                    src={imageUrl} 
                     alt={product?.name} 
                     fluid 
                     className="product-image" 
@@ -85,7 +85,6 @@ const ProductDetail = () => {
                     onError={() => setIsImageLoading(false)}
                 />
               )}
-              
             </Col>
             <Col md={6} className="product-info">
               <h1>{product?.name}</h1>

@@ -4,7 +4,7 @@ import axios from 'axios';
 import "../style/components/DynamicCarousel.scss";
 
 const DynamicCarousel = () => {
-  const [images, setImages] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const DynamicCarousel = () => {
   const fetchImages = async () => {
     try {
       const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/carousel-images');
-      setImages(response.data);
+      setImageUrls(response.data.imageUrls); 
       setLoading(false);
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -37,11 +37,11 @@ const DynamicCarousel = () => {
 
   return (
     <Carousel controls={true} indicators={false} interval={5000}>
-      {images.map((image, index) => (
+      {imageUrls.map((url, index) => (
         <Carousel.Item key={index}>
           <img
             className="d-block w-100"
-            src={image} 
+            src={url} 
             alt={`Slide ${index}`}
           />
         </Carousel.Item>

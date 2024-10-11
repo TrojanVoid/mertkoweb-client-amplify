@@ -6,14 +6,14 @@ import "../style/components/ProductCard.scss";
 
 const ProductCard = ({ product, isDetailed = false }) => {
   const { id, name } = product;
-  const [image, setImage] = useState('');
-  const [loading, setLoading] = useState(true); 
+  const [imageUrl, setImageUrl] = useState('');  
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
         const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/product-image/${id}`);
-        setImage(response.data);
+        setImageUrl(response.data.imageUrl); 
         setLoading(false);
       } catch (error) {
         console.error('Error fetching image:', error);
@@ -32,15 +32,14 @@ const ProductCard = ({ product, isDetailed = false }) => {
             <Spinner animation="border" variant="primary" />
           </div>
         ) : (
-          <Card.Img variant="top" src={image} alt={name} />
+          <Card.Img variant="top" src={imageUrl} alt={name} />  
         )}
 
         {(!loading && isDetailed) && (
-            <Card.Body>
-                <Card.Title>{name}</Card.Title>
-            </Card.Body>
+          <Card.Body>
+            <Card.Title>{name}</Card.Title>
+          </Card.Body>
         )}
-        
       </Card>
     </Link>
   );
