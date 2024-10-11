@@ -15,12 +15,14 @@ const DynamicCarousel = () => {
     try {
       const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/carousel-images');
       console.log('API Response:', response.data);
-      if (Array.isArray(response.data.imageUrls)) {
-        setImageUrls(response.data.imageUrls); 
+      
+      if (Array.isArray(response.data)) {
+        setImageUrls(response.data); 
       } else {
-        console.error('imageUrls is not an array:', response.data.imageUrls);
+        console.error('Response data is not an array:', response.data);
         setImageUrls([]);
       }
+      
       setLoading(false);
     } catch (error) {
       console.error('Error fetching images:', error);
