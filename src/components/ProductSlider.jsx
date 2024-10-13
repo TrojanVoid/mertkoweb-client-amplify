@@ -12,7 +12,6 @@ const ProductSlider = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/concept-products');
-        console.log("products response:", response.data);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -23,23 +22,27 @@ const ProductSlider = () => {
   }, []);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 0,
-    arrows: false, 
+    arrows: false,
   };
 
   return (
     <div className="product-slider">
-      <Slider {...settings}>
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </Slider>
+      <div className="product-slider-container">
+        <Slider {...settings}>
+          {products.map(product => (
+            <div key={product.id} className="product-card-wrapper">
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </Slider>
+      </div>
     </div>
   );
 };
