@@ -64,8 +64,8 @@ const Header = ({ activeTabIndex = 0 }) => {
           </Nav>
         </div>
 
-        <div className="d-lg-flex justify-content-between header-links-large">
-          <Nav className="navbar-container ml-auto d-lg-flex justify-content-between">
+        <div className="d-lg-flex w-50 justify-content-between header-links-large">
+          <Nav className="navbar-container w-100 ml-auto d-lg-flex justify-content-between">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
             <Nav.Link className={activeTabIndex === 2 ? "active" : ""} as={Link} to="/products">Ürünler</Nav.Link>
