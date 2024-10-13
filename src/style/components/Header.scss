@@ -69,6 +69,10 @@
     padding-top: 4vh;
   }
 
+  .header-links-large{
+    width: 33%;
+  }
+
   .side-panel {
     position: fixed;
     top: 0;
@@ -79,9 +83,14 @@
     z-index: 1000;
     padding: 1rem;
     transition: left 0.3s ease-in-out;
+    font-size: 1.5em;
 
     &.open {
       left: 0; 
+    }
+
+    a{
+      padding: 1rem 0.1rem;
     }
   }
 
@@ -110,7 +119,7 @@
   }
 
   .navbar-brand {
-    width: 50%;
+    width: 33%;
     font-size: 1.5rem;
   }
 
