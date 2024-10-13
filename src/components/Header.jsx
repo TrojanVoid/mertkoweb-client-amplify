@@ -34,10 +34,13 @@ const Header = ({ activeTabIndex = 0 }) => {
   }, [isSidePanelOpen]);
 
   return (
-    <Navbar className={`header ${isMinimized ? 'minimized' : ''}`} expand="lg">
-      <div className="small-navbar">
-        <a href="tel:+902122230501">Tel: +90 212 223 05 01</a>
-        <a href="mailto:mertko@mertko.com" className="footer-email-link">E-posta: mertko@mertko.com</a>
+    <Navbar className={`header ${isMinimized ? 'minimized' : ''} d-flex flex-column justify-content-center align-items-center` } expand="lg">
+      <div className="small-navbar w-100 d-flex flex-row-reverse justify-content-start align-items-center">
+        <a href="tel:+902122230501" >
+          <span className="small-link">Tel: +90 212 223 05 01</span></a>
+        <a href="mailto:mertko@mertko.com" className="footer-email-link">
+          <span className="small-link">E-posta: mertko@mertko.com</span>
+        </a>
       </div>
 
       <Container className="large-navbar">
@@ -61,8 +64,7 @@ const Header = ({ activeTabIndex = 0 }) => {
           </Nav>
         </div>
 
-        {!isSidePanelOpen && (
-          <div className="d-lg-flex justify-content-between" id="basic-navbar-nav">
+        <div className="d-lg-flex justify-content-between" id="basic-navbar-nav">
           <Nav className="navbar-container ml-auto">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
@@ -70,7 +72,6 @@ const Header = ({ activeTabIndex = 0 }) => {
             <HashLink className={activeTabIndex === 3 ? "active" : ""} as={Link} to="/#contact">İletişim</HashLink>
           </Nav>
         </div>
-        )}
         
       </Container>
     </Navbar>
