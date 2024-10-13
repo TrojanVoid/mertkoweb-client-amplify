@@ -63,7 +63,8 @@ const Products = () => {
     <Layout>
       <Container fluid className="products-page h-100 d-flex justify-content-center align-items-center">
         <Row className="d-flex h-100 justify-content-center align-items-start">
-          <Col md={3} className="filters-section h-100 d-flex flex-column justify-content-start align-items-start">
+          
+          <Row md={3} className="filters-section h-100 d-flex flex-column justify-content-start align-items-start">
             <Form.Group controlId="searchInput">
               <Form.Control
                 type="text"
@@ -103,9 +104,9 @@ const Products = () => {
                 Azalan Hacime Göre Sırala
               </Button>
             </div>
-          </Col>
+          </Row>
 
-          <Col className="d-flex w-75 flex-wrap justify-content-center align-items-center" md={9}>
+          <Row className="d-flex w-75 flex-wrap justify-content-center align-items-center" md={9}>
             <Row className="gallery d-flex w-100 justify-content-start align-items-start">
               {sortedProducts.map(product => (
                 <Col 
@@ -120,7 +121,7 @@ const Products = () => {
                 </Col>
               ))}
             </Row>
-          </Col>
+          </Row>
         </Row>
       </Container>
     </Layout>
