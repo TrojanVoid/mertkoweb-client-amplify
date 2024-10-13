@@ -20,13 +20,8 @@
       padding-top: 2vh;
     }
 
-    .logo-image {
-      width: 60%;
-      max-width: 150px; 
-    }
-
     .navbar-toggler {
-      margin-left: auto; 
+      right: 0;
     }
 
     .header {
@@ -67,7 +62,7 @@
     max-height: 4vh;
     color: $primary-text-color;
     z-index: 999;
-    padding-right: 8.5rem;
+    padding-right: 5rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid $light-gray-1;
 
@@ -105,5 +100,9 @@
       color: $primary-text-color;
       border-bottom: 2px solid $primary-red-color;
     }
+  }
+
+  .small-link{
+    font-size: 0.7em;
   }
 }

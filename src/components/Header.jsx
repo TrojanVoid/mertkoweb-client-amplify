@@ -26,9 +26,10 @@ const Header = ({activeTabIndex=0}) => {
   return (
     <Navbar className={`header ${isMinimized ? 'minimized' : ''} d-flex flex-column justify-content-center align-items-center` } expand="lg">
       <div className="small-navbar w-100 d-flex flex-row-reverse justify-content-start align-items-center">
-        <a href="tel:+902122230501" >Tel: +90 212 223 05 01</a>
+        <a href="tel:+902122230501" >
+          <span className="small-link">Tel: +90 212 223 05 01</span></a>
         <a href="mailto:mertko@mertko.com" className="footer-email-link">
-          E-posta: mertko@mertko.com
+          <span className="small-link">E-posta: mertko@mertko.com</span>
         </a>
       </div>
       <Container className="large-navbar d-flex justify-content-center align-items-center">
