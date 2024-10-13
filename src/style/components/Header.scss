@@ -13,16 +13,18 @@
       display: flex !important;
       justify-content: center !important;
       align-items: center !important;
-      padding: 0 !important;
+      padding: 0 !important;  
+      width: 100% !important;
     }
 
     .large-navbar {
       padding-top: 2vh;
+      justify-content: center !important;
     }
 
     .navbar-toggler {
       right: 0;
-      width: 10%;
+      width: 25% !important;
     }
 
     .header {
@@ -32,8 +34,13 @@
     }
 
     .logo-image {
-      height: 7vh;
-      max-width: 100px;
+      width: 70% !important;
+      max-width: 70% !important;
+    }
+
+    &.minimized {
+      min-height: 15vh !important;
+      max-height: 20vh !important;
     }
   }
 
