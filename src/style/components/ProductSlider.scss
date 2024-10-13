@@ -8,17 +8,14 @@
 
   .product-slider-container {
     width: 100%;
-    position: relative;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     
-    perspective: 1000px;
-    transform-style: preserve-3d;
+    perspective: 1500px;
     
-    transform: scale(1.2) translateZ(-200px) rotateX(15deg);
-
     .slick-track {
       display: flex;
       transition: transform 0.5s ease;
@@ -30,11 +27,8 @@
       height: 100%;
       display: flex;
       justify-content: center;
+      
       transform-style: preserve-3d;
-    }
-
-    .slick-slider {
-      height: 100%;
     }
 
     .slick-list {
@@ -42,16 +36,16 @@
     }
   }
 
-  .slick-prev,
-  .slick-next {
-    z-index: 1;
+  .slick-track {
+    transform: rotateX(10deg) scale(0.9); 
+    will-change: transform;
   }
 
   img {
     transition: all 0.3s ease-out;
     box-sizing: content-box;
     &:hover {
-      scale: 1.05;
+      transform: scale(1.05);
     }
   }
 }
