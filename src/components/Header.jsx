@@ -61,14 +61,17 @@ const Header = ({ activeTabIndex = 0 }) => {
           </Nav>
         </div>
 
-        <Navbar.Collapse className="d-lg-flex justify-content-between" id="basic-navbar-nav">
+        {!isSidePanelOpen && (
+          <div className="d-lg-flex justify-content-between" id="basic-navbar-nav">
           <Nav className="navbar-container ml-auto">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
             <Nav.Link className={activeTabIndex === 2 ? "active" : ""} as={Link} to="/products">Ürünler</Nav.Link>
             <HashLink className={activeTabIndex === 3 ? "active" : ""} as={Link} to="/#contact">İletişim</HashLink>
           </Nav>
-        </Navbar.Collapse>
+        </div>
+        )}
+        
       </Container>
     </Navbar>
   );
