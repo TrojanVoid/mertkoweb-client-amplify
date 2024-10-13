@@ -43,7 +43,7 @@ const Header = ({ activeTabIndex = 0 }) => {
         </a>
       </div>
 
-      <Container className="large-navbar">
+      <Container className="large-navbar d-flex justify-content-center align-items-center">
         <Navbar.Brand className="logo">
           <HashLink as={Link} className="logo-link" to="/#home">
             <img src="/resources/images/mertko_logo-300x117.png" alt="Logo" className="logo-image" />
@@ -64,7 +64,7 @@ const Header = ({ activeTabIndex = 0 }) => {
           </Nav>
         </div>
 
-        <div className="d-lg-flex justify-content-between" id="basic-navbar-nav">
+        <div className="d-lg-flex justify-content-between">
           <Nav className="navbar-container ml-auto">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
