@@ -42,6 +42,10 @@
       min-height: 15vh !important;
       max-height: 20vh !important;
     }
+
+    .header-links-large{
+      display: none !important;
+    }
   }
 
   &.minimized {
