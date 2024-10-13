@@ -19,12 +19,12 @@
 
     .large-navbar {
       padding-top: 2vh;
-      justify-content: center !important;
+      justify-content: space-between !important;
     }
 
     .navbar-toggler {
       right: 0;
-      width: 25% !important;
+      width: 20% !important;
     }
 
     .header {
@@ -34,8 +34,8 @@
     }
 
     .logo-image {
-      width: 70% !important;
-      max-width: 70% !important;
+      width: 60% !important;
+      max-width: 60% !important;
     }
 
     &.minimized {
