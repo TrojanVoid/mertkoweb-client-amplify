@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Image, Spinner, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -12,6 +12,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [error, setError] = useState(null);
+  const imageRef = useRef(null); 
 
   useEffect(() => {
     const fetchImage = async () => { 
@@ -45,6 +46,20 @@ const ProductDetail = () => {
     fetchProductDetails();
   }, [productId]);
 
+  const handleFullScreen = () => {
+    if (imageRef.current) {
+      if (imageRef.current.requestFullscreen) {
+        imageRef.current.requestFullscreen();
+      } else if (imageRef.current.mozRequestFullScreen) { // For Firefox
+        imageRef.current.mozRequestFullScreen();
+      } else if (imageRef.current.webkitRequestFullscreen) { // For Chrome, Safari, and Opera
+        imageRef.current.webkitRequestFullscreen();
+      } else if (imageRef.current.msRequestFullscreen) { // For IE/Edge
+        imageRef.current.msRequestFullscreen();
+      }
+    }
+  };
+
   let content = null;
 
   if (loading) {
@@ -77,12 +92,12 @@ const ProductDetail = () => {
               )}
               {!isImageLoading && (
                 <Image 
+                    ref={imageRef} 
                     src={imageUrl} 
                     alt={product?.name} 
                     fluid 
                     className="product-image" 
-                    onLoad={() => setIsImageLoading(false)} 
-                    onError={() => setIsImageLoading(false)}
+                    onClick={handleFullScreen} 
                 />
               )}
             </Col>
