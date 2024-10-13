@@ -23,25 +23,21 @@ const ProductSlider = () => {
   }, []);
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 0,
-    arrows: false,
-    centerMode: true,
-    centerPadding: '0',
-  }; 
+    arrows: false, 
+  };
 
   return (
     <div className="product-slider">
       <Slider {...settings}>
         {products.map(product => (
-          <div key={product.id} className="product-card-wrapper">
-            <ProductCard product={product} />
-          </div>
+          <ProductCard key={product.id} product={product} />
         ))}
       </Slider>
     </div>
