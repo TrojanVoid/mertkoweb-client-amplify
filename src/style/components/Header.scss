@@ -71,6 +71,10 @@
 
   .header-links-large{
     width: 50%;
+
+    @media (max-width: 768px) {
+      width: 65% !important;
+    }
   }
 
   .side-panel {
