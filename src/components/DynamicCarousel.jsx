@@ -52,6 +52,7 @@ const DynamicCarousel = () => {
               className="d-block w-100"
               src={url} 
               alt={`Slide ${index}`}
+              referrerPolicy='no-referrer'
             />
           </Carousel.Item>
         ))

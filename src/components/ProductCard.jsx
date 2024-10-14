@@ -32,7 +32,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
             <Spinner animation="border" variant="primary" />
           </div>
         ) : (
-          <Card.Img variant="top" src={imageUrl} alt={name} />  
+          <Card.Img variant="top" src={imageUrl} alt={name} referrerPolicy='no-referrer' />  
         )}
 
         {(!loading && isDetailed) && (
