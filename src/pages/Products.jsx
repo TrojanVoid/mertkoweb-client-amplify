@@ -89,7 +89,7 @@ const Products = () => {
                   sm={6} 
                   md={4} 
                   lg={3} 
-                  className={`mb-4 ${shouldHideProduct(product) ? 'hidden' : ''}`}
+                  className={`mb-4 product-container${shouldHideProduct(product) ? 'hidden' : ''}`}
                 >
                   <ProductCard product={product} isDetailed={true} />
                 </Col>
