@@ -25,11 +25,13 @@
 
       button{
         width: 25%;
+
+        @media (max-width: 768px){
+          width: 50%;
+        }
       }
 
-      @media (max-width: 768px){
-        width: 50%;
-      }
+      
 
     }
   
@@ -44,9 +46,7 @@
   
       .product-card {
         
-        box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.3);
-  
-        
+        box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.3);        
       }
 
       .product-container{
