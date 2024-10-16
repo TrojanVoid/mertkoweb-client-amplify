@@ -26,11 +26,16 @@
       button{
         width: 25%;
 
-        @media (max-width: 768px){
-          width: 40%;
-        }
+        
       }
 
+      @media (max-width: 768px){
+        button{
+          width: 40% !important;
+        }
+
+        justify-content: center !important;
+      }
       
 
     }
