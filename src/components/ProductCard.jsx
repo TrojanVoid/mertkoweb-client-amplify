@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import "../style/components/ProductCard.scss";
 
 const ProductCard = ({ product, isDetailed = false }) => {
-  const { id, name } = product;
+  const { id, name, volume } = product;
   const [imageUrl, setImageUrl] = useState('');  
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +37,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
 
         {(!loading && isDetailed) && (
           <Card.Body>
-            <Card.Title>{name}</Card.Title>
+            <Card.Title>{`${name} | ${volume} mL`}</Card.Title>
           </Card.Body>
         )}
       </Card>
