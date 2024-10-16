@@ -19,9 +19,9 @@
     .filters-section {
       flex-wrap: wrap;
       gap: 1rem;
-      width: 25%;
       height: 10%;
       margin-bottom: 2rem;
+      border-bottom: 1px solid $light-gray-1;
 
       button{
         width: 25%;
