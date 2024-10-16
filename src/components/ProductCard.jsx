@@ -37,7 +37,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
 
         {(!loading && isDetailed) && (
           <Card.Body>
-            <Card.Title>{`${name} | ${volume} mL`}</Card.Title>
+            <Card.Title>{`${name}   ${volume} mL`}</Card.Title>
           </Card.Body>
         )}
       </Card>
