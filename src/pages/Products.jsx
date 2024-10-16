@@ -64,7 +64,7 @@ const Products = () => {
       <Container fluid className="products-page h-100 d-flex justify-content-center align-items-center">
         <Row className="d-flex h-100 flex-column justify-content-center align-items-start">
           
-          <Row md={3} className="filters-section h-100 w-100 d-flex justify-content-start align-items-center">
+          <Row md={3} className="filters-section w-100 d-flex justify-content-start align-items-center">
             <Button
               variant="outline-primary"
               className="me-2"
