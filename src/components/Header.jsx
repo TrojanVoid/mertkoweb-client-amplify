@@ -77,7 +77,7 @@ const Header = ({ activeTabIndex = 0 }) => {
         </div>
 
         <div className="d-lg-flex justify-content-between header-links-large">
-          <Nav className="navbar-container w-100 ml-auto d-lg-flex justify-content-between">
+          <Nav className="navbar-container w-100 ml-auto d-flex justify-content-between">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
             <Dropdown onToggle={(isOpen) => setDropdownOpen(isOpen)}>
