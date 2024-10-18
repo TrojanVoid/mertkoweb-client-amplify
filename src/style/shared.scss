@@ -29,6 +29,16 @@ html{
     h3{
         margin-left: 2rem;
     }
+
+    @media screen and (max-width: 768px){
+        padding-left: 0 !important;
+        justify-content: center !important;
+        align-items: center !important;
+        
+        h3{
+            margin-left: 0 !important;
+        }
+    }
 }
 
 .spinner-border {
