@@ -23,10 +23,17 @@ const Header = ({ activeTabIndex = 0 }) => {
     window.addEventListener('scroll', handleScroll);
 
     const handleClickOutside = (e) => {
-      if (isSidePanelOpen && !e.target.closest('.side-panel') && !e.target.closest('.navbar-toggler')) {
+      const dropdownMenu = document.querySelector('.dropdown-menu'); 
+      const isDropdownOpen = dropdownOpen;
+    
+      if (isSidePanelOpen && 
+          !e.target.closest('.side-panel') && 
+          !e.target.closest('.navbar-toggler') && 
+          !(isDropdownOpen && dropdownMenu && dropdownMenu.contains(e.target))) {
         setIsSidePanelOpen(false);
       }
     };
+    
     
     window.addEventListener('click', handleClickOutside);
 
