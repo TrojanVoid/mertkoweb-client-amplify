@@ -44,7 +44,7 @@ const Home = () => {
             </div>
 
 
-            <div id="about" className="page-label">
+            <div id="about" className="page-label text-sm-center">
               <h3>
                 Hakkımızda
               </h3>
