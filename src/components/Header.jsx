@@ -30,6 +30,7 @@ const Header = ({ activeTabIndex = 0 }) => {
           !e.target.closest('.side-panel') && 
           !e.target.closest('.navbar-toggler') && 
           !e.target.closest('dropdown-icon') &&
+          !e.target.closest('path') &&
           !(isDropdownOpen && dropdownMenu && dropdownMenu.contains(e.target))) {
         setIsSidePanelOpen(false);
       }
