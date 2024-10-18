@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
-
 import Layout from '../components/Layout';
 import "../style/pages/Products.scss";
-import { Redirect } from 'react-router-dom';
 
 const SECTION_TAB_MAP = {
     'home': 0,
@@ -20,7 +18,8 @@ const Products = () => {
   const validTypes = ['sise', 'kavanoz', 'konsept'];
 
   if(!validTypes.includes(type)) {
-    return <Redirect to="/" />;
+    Navigate('/');
+    return null;
   }
   
 
@@ -34,9 +33,9 @@ const Products = () => {
     const navLinks = document.querySelectorAll('.navbar-nav a');
     navLinks.forEach((link, index) => {
         if (index === SECTION_TAB_MAP['products']) {
-        link.classList.add('active');
+          link.classList.add('active');
         } else {
-        link.classList.remove('active');
+          link.classList.remove('active');
         }
     });
     });    
