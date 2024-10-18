@@ -29,7 +29,7 @@ const Header = ({ activeTabIndex = 0 }) => {
       if (isSidePanelOpen && 
           !e.target.closest('.side-panel') && 
           !e.target.closest('.navbar-toggler') && 
-          !e.target.closes('dropdown-icon') &&
+          !e.target.closest('dropdown-icon') &&
           !(isDropdownOpen && dropdownMenu && dropdownMenu.contains(e.target))) {
         setIsSidePanelOpen(false);
       }
