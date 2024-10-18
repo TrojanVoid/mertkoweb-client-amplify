@@ -84,6 +84,10 @@
 
         @media (max-width: 768px){
           flex: 1 1 20%;
+          max-width: 33% !important;
+        }
+
+        @media(max-width: 1020px){
           max-width: 20%;
         }
       }
