@@ -161,6 +161,9 @@
       text-decoration: none;
       color: $secondary-text-color;
       border-radius: 0;
+      font-size: 0.85em;
+      font-weight: 600;
+
 
       &:hover{
         border-bottom: 2px solid $primary-red-color;
