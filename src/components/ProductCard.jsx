@@ -4,8 +4,14 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import "../style/components/ProductCard.scss";
 
+const TYPE_MAP = {
+  "p": "sise",
+  "c": "konsept",
+  "k": "kavanoz",
+}
+
 const ProductCard = ({ product, isDetailed = false }) => {
-  const { id, name, volume } = product;
+  const { id, name, volume, category } = product;
   const [imageUrl, setImageUrl] = useState('');  
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +31,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
   }, [id]);
 
   return (
-    <Link to={`/products/${id}`} className="product-card-link">
+    <Link to={`/products/${TYPE_MAP[category]}/${id}`} className="product-card-link">
       <Card className="product-card">
         {loading ? (
           <div className="spinner-wrapper">
@@ -37,7 +43,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
 
         {(!loading && isDetailed) && (
           <Card.Body>
-            <Card.Title>{`${name}   ${volume} mL`}</Card.Title>
+            <Card.Title>{`${name} ${volume} mL`}</Card.Title>
           </Card.Body>
         )}
       </Card>
