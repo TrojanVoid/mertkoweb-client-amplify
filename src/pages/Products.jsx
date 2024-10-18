@@ -108,17 +108,20 @@
             </Row>
 
             {/* Pagination Controls */}
-            <Row className="w-50 d-flex align-items-center pagination-container justify-content-center mt-4">
-              {Array.from({ length: totalPages }, (_, index) => (
-                <Button 
-                  key={index + 1} 
-                  variant="outline-primary" 
-                  onClick={() => handlePageChange(index + 1)}
-                  className={currentPage === index + 1 ? 'active' : ''}
-                >
-                  {index + 1}
-                </Button>
-              ))}
+            <Row className="w-100 d-flex align-items-center pagination-container justify-content-center mt-2 pt-2">
+              <div className="w-50 d-flex justify-content-center-align-items-center flex-wrap pagination-buttons">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <Button 
+                    key={index + 1} 
+                    variant="outline-primary" 
+                    onClick={() => handlePageChange(index + 1)}
+                    className={currentPage === index + 1 ? 'active' : ''}
+                  >
+                    {index + 1}
+                  </Button>
+                ))}
+              </div>
+              
             </Row>
 
           </Row>
