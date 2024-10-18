@@ -29,6 +29,7 @@ const Header = ({ activeTabIndex = 0 }) => {
       if (isSidePanelOpen && 
           !e.target.closest('.side-panel') && 
           !e.target.closest('.navbar-toggler') && 
+          !e.target.closes('dropdown-icon') &&
           !(isDropdownOpen && dropdownMenu && dropdownMenu.contains(e.target))) {
         setIsSidePanelOpen(false);
       }
@@ -71,12 +72,12 @@ const Header = ({ activeTabIndex = 0 }) => {
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
             <Dropdown onToggle={(isOpen) => setDropdownOpen(isOpen)}>
               <Dropdown.Toggle variant="link" className={activeTabIndex === 2 ? "active" : ""}>
-                Ürünler {dropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+                Ürünler {dropdownOpen ? <FaChevronUp className="dropdown-icon" /> : <FaChevronDown className="dropdown-icon"/>}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item as={Link} to="/products/bottles">Şişeler</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/products/jars">Kavanozlar</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/products/concept">Konsept Ürünler</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/sise">Şişeler</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/kavanoz">Kavanozlar</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/konsept">Konsept Ürünler</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <HashLink className={activeTabIndex === 3 ? "active" : ""} as={Link} to="/#contact">İletişim</HashLink>
