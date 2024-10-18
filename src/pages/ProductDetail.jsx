@@ -5,6 +5,12 @@ import Layout from '../components/Layout';
 import axios from 'axios';
 import "../style/pages/ProductDetail.scss";
 
+const CATEGORY_MAP = {
+  "p": "Şişe",
+  "c": "Konsept",
+  "k": "Kavanoz",
+}
+
 const ProductDetail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
@@ -103,9 +109,8 @@ const ProductDetail = () => {
             </Col>
             <Col md={6} className="product-info">
               <h1>{product?.name}</h1>
-              <p><strong>Kategori:</strong> {product?.category}</p>
+              <p><strong>Kategori:</strong> {CATEGORY_MAP[product?.category]}</p>
               <p><strong>Hacim:</strong> {product?.volume} mL</p>
-              <p><strong>Açıklama:</strong> {product?.description}</p>
             </Col>
           </Row>)
         }
