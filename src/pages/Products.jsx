@@ -108,7 +108,7 @@
             </Row>
 
             {/* Pagination Controls */}
-            <Row className="pagination-container justify-content-center mt-4">
+            <Row className="w-50 d-flex align-items-center pagination-container justify-content-center mt-4">
               {Array.from({ length: totalPages }, (_, index) => (
                 <Button 
                   key={index + 1} 
