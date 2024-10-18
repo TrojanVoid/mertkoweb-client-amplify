@@ -108,7 +108,7 @@
             </Row>
 
             {/* Pagination Controls */}
-            <Row className="w-100 d-flex align-items-center pagination-container justify-content-center mt-2 pt-2">
+            <Row className="w-100 d-flex align-items-center pagination-container justify-content-center mt-2 pt-2 pb-2">
               <div className="w-50 d-flex justify-content-center-align-items-center flex-wrap pagination-buttons">
                 {Array.from({ length: totalPages }, (_, index) => (
                   <Button 
