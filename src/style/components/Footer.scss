@@ -16,6 +16,7 @@
   a {
     color: $dark-primary-text-color;
     text-decoration: none;
+    transition: all 0.5s ease-out;
 
     &:hover {
       text-decoration: underline;
