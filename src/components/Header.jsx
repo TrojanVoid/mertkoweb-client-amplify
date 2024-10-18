@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
 import "../style/components/Header.scss";
