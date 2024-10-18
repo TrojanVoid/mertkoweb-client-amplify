@@ -3,10 +3,13 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { HashLink } from 'react-router-hash-link';
 import { Link } from 'react-router-dom';
 import "../style/components/Header.scss";
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; 
 
 const Header = ({ activeTabIndex = 0 }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +62,16 @@ const Header = ({ activeTabIndex = 0 }) => {
           <Nav className="navbar-container">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
-            <Nav.Link className={activeTabIndex === 2 ? "active" : ""} as={Link} to="/products">Ürünler</Nav.Link>
+            <Dropdown onToggle={(isOpen) => setDropdownOpen(isOpen)}>
+              <Dropdown.Toggle variant="link" className={activeTabIndex === 2 ? "active" : ""}>
+                Ürünler {dropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/products/bottles">Şişeler</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/jars">Kavanozlar</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/concept">Konsept Ürünler</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <HashLink className={activeTabIndex === 3 ? "active" : ""} as={Link} to="/#contact">İletişim</HashLink>
           </Nav>
         </div>
@@ -68,7 +80,16 @@ const Header = ({ activeTabIndex = 0 }) => {
           <Nav className="navbar-container w-100 ml-auto d-lg-flex justify-content-between">
             <HashLink className={activeTabIndex === 0 ? "active" : ""} as={Link} to="/#home">Ana Sayfa</HashLink>
             <HashLink className={activeTabIndex === 1 ? "active" : ""} to="/#about">Hakkımızda</HashLink>
-            <Nav.Link className={activeTabIndex === 2 ? "active" : ""} as={Link} to="/products">Ürünler</Nav.Link>
+            <Dropdown onToggle={(isOpen) => setDropdownOpen(isOpen)}>
+              <Dropdown.Toggle variant="link" className={activeTabIndex === 2 ? "active" : ""}>
+                Ürünler {dropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/products/sise">Şişeler</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/kavanoz">Kavanozlar</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/products/konsept">Konsept Ürünler</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <HashLink className={activeTabIndex === 3 ? "active" : ""} as={Link} to="/#contact">İletişim</HashLink>
           </Nav>
         </div>

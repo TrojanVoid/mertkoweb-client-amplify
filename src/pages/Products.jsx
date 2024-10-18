@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ProductCard from '../components/ProductCard';
 
 import Layout from '../components/Layout';
 import "../style/pages/Products.scss";
+import { Redirect } from 'react-router-dom';
 
 const SECTION_TAB_MAP = {
     'home': 0,
@@ -14,6 +16,14 @@ const SECTION_TAB_MAP = {
 };
 
 const Products = () => {
+  const {type} = useParams();
+  const validTypes = ['sise', 'kavanoz', 'konsept'];
+
+  if(!validTypes.includes(type)) {
+    return <Redirect to="/" />;
+  }
+  
+
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortByVolume, setSortByVolume] = useState(null);
@@ -35,15 +45,15 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/products');
-        setProducts(response.data);
+        const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/products?type=${type}`);
+        setProducts(response.data);        
       } catch (error) {
         console.error('Error fetching products:', error);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [type]);
 
   const shouldHideProduct = (product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
