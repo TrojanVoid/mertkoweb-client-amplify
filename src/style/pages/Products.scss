@@ -57,7 +57,7 @@
 
       .product-container{
         flex: 1 1 calc(15% - 1.5rem);
-        max-width: 33%;
+        max-width: 25%;
 
         @media (max-width: 768px) {
           flex: 1 1 calc(45% - 1.5rem);
@@ -87,7 +87,7 @@
 
         @media (max-width: 768px){
           flex: 1 1 20%;
-          max-width: 25% !important;
+          max-width: 33% !important;
         }
 
         @media(max-width: 1020px){
