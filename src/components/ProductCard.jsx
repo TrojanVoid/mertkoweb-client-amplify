@@ -8,18 +8,19 @@ const TYPE_MAP = {
   "p": "sise",
   "c": "konsept",
   "k": "kavanoz",
+  "h" : "hemen"
 }
 
 const ProductCard = ({ product, isDetailed = false }) => {
   const { id, name, volume, category } = product;
-  const [imageUrl, setImageUrl] = useState('');  
+  const [images, setImages] = useState([]);  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchImage = async () => {
+    const fetchImages = async () => {
       try {
-        const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/product-image/${id}`);
-        setImageUrl(response.data.imageUrl); 
+        const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/product-images/${id}`);
+        setImages(response.data.images); 
         setLoading(false);
       } catch (error) {
         console.error('Error fetching image:', error);
@@ -27,7 +28,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
       }
     };
 
-    fetchImage();
+    fetchImages();
   }, [id]);
 
   return (
@@ -38,7 +39,7 @@ const ProductCard = ({ product, isDetailed = false }) => {
             <Spinner animation="border" variant="primary" />
           </div>
         ) : (
-          <Card.Img variant="top" src={imageUrl} alt={name} referrerPolicy='no-referrer' />  
+          <Card.Img variant="top" src={images[0]} alt={name} referrerPolicy='no-referrer' />  
         )}
 
         {(!loading && isDetailed) && (

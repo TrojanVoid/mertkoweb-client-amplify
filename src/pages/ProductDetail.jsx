@@ -9,22 +9,23 @@ const CATEGORY_MAP = {
   "p": "Şişe",
   "c": "Konsept",
   "k": "Kavanoz",
+  "h" : "Hemen Teslim"
 }
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const [imageUrl, setImageUrl] = useState(''); 
+  const [images, setImages] = useState([]); 
   const [loading, setLoading] = useState(true);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [error, setError] = useState(null);
   const imageRef = useRef(null); 
 
   useEffect(() => {
-    const fetchImage = async () => { 
+    const fetchImages = async () => { 
       try {
-        const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/product-image/${productId}`);
-        setImageUrl(response.data.imageUrl); 
+        const response = await axios.get(`https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/product-images/${productId}`);
+        setImages(response.data.images); 
       } catch (error) {
         setError('Error fetching product image');
         console.error(error);
@@ -33,7 +34,7 @@ const ProductDetail = () => {
       }
     };
 
-    fetchImage();
+    fetchImages();
   }, [productId]);
 
   useEffect(() => {
@@ -97,14 +98,16 @@ const ProductDetail = () => {
                 </div>
               )}
               {!isImageLoading && (
-                <Image 
-                    ref={imageRef} 
-                    src={imageUrl} 
+                images.map((image, index) => (
+                  <Image 
+                    key={index} 
+                    src={image} 
                     alt={product?.name} 
                     fluid 
                     className="product-image" 
                     onClick={handleFullScreen} 
-                />
+                  />
+                ))
               )}
             </Col>
             <Col md={6} className="product-info">
