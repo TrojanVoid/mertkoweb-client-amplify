@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col, Image, Spinner, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
+import Slider from "react-slick";
 import axios from 'axios';
 import "../style/pages/ProductDetail.scss";
 
@@ -20,6 +21,27 @@ const ProductDetail = () => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [error, setError] = useState(null);
   const imageRef = useRef(null); 
+  
+  const imageSliderSettings = {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,           
+    asNavFor: thumbSlider,
+    fade: true,             
+    autoplay: false,         
+    draggable: true, 
+  };
+
+  const imageThumbnailSettings = {
+    slidesToShow: images.length >= 5 ? 5 : images.length,
+    slidesToScroll: 1,
+    asNavFor: mainSlider,
+    focusOnSelect: true,
+    centerMode: true,
+    variableWidth: true,
+    autoplay: false,         // Prevents automatic sliding
+    draggable: true,         // Allows user drag interaction
+  };
 
   useEffect(() => {
     const fetchImages = async () => { 
@@ -97,18 +119,31 @@ const ProductDetail = () => {
                   <Spinner animation="border" variant="primary" />
                 </div>
               )}
-              {!isImageLoading && (
-                images.map((image, index) => (
-                  <Image 
-                    key={index} 
-                    src={image} 
-                    alt={product?.name} 
-                    fluid 
-                    className="product-image" 
-                    onClick={handleFullScreen} 
+              <Slider {...imageSliderSettings}>
+                {images.map((image, index) => (
+                  <Image
+                    key={index}
+                    src={image}
+                    alt={product?.name}
+                    fluid
+                    className="product-image"
+                    onClick={handleFullScreen}
                   />
-                ))
-              )}
+                ))}
+              </Slider>
+
+              <Slider {...imageThumbnailSettings} className="thumbnail-slider mt-3">
+                {images.map((image, index) => (
+                  <Image
+                    key={index}
+                    src={image}
+                    alt={product?.name}
+                    fluid
+                    className="thumbnail-image mx-1"
+                    onClick={() => document.querySelector('.slick-slider').slickGoTo(index)}
+                  />
+                ))}
+              </Slider>
             </Col>
             <Col md={6} className="product-info">
               <h1>{product?.name}</h1>
