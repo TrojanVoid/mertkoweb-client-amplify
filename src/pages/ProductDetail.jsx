@@ -121,7 +121,7 @@ const ProductDetail = () => {
                 ))}
               </Slider>
 
-              <div className="thumbnail-slider mt-3 d-flex justify-content-start align-items-center w-100 h-25">
+              <div className="d-flex justify-content-start align-items-center w-100 h-25">
                 {images.map((image, index) => (
                   <Image
                     key={index}
