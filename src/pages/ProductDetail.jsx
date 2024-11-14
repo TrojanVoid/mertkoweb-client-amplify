@@ -21,6 +21,7 @@ const ProductDetail = () => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [error, setError] = useState(null);
   const imageRef = useRef(null); 
+  const imageSliderRef = useRef(null);
   
   const imageSliderSettings = {
     slidesToShow: 1,
@@ -107,7 +108,7 @@ const ProductDetail = () => {
                   <Spinner animation="border" variant="primary" />
                 </div>
               )}
-              <Slider {...imageSliderSettings}>
+              <Slider ref="imageSliderRef" {...imageSliderSettings}>
                 {images.map((image, index) => (
                   <Image
                     key={index}
@@ -128,7 +129,7 @@ const ProductDetail = () => {
                     alt={product?.name}
                     fluid
                     className="thumbnail-image mx-1"
-                    onClick={() => document.querySelector('.slick-slider').slickGoTo(index)}
+                    onClick={() => imageSliderRef.slickGoTo(index)}
                   />
                 ))}
               </div>
