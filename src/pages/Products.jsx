@@ -20,7 +20,7 @@
     const [products, setProducts] = useState([]);
     const [sortByVolume, setSortByVolume] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth > 768 ? 50 : 20);
+    const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth > 768 ? 48 : 20);
 
     useEffect(() => {
       if (!validTypes.includes(type)) {
@@ -72,7 +72,7 @@
     return (
       <Layout>
         <Container fluid className="products-page h-100 d-flex justify-content-center align-items-center">
-          <Row className="d-flex h-100 flex-column justify-content-center align-items-start">
+          <Row className="d-flex h-100 flex-column justify-content-center align-items-center">
 
             <Row md={3} className="filters-section w-100 d-flex justify-content-start align-items-center">
               <Button
