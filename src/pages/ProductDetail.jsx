@@ -108,7 +108,7 @@ const ProductDetail = () => {
                   <Spinner animation="border" variant="primary" />
                 </div>
               )}
-              <Slider ref="imageSliderRef" {...imageSliderSettings}>
+              <Slider ref={imageSliderRef} {...imageSliderSettings}>
                 {images.map((image, index) => (
                   <Image
                     key={index}
