@@ -129,7 +129,7 @@ const ProductDetail = () => {
                     alt={product?.name}
                     fluid
                     className="thumbnail-image mx-1"
-                    onClick={() => imageSliderRef.slickGoTo(index)}
+                    onClick={() => imageSliderRef.current.slickGoTo(index)}
                   />
                 ))}
               </div>
