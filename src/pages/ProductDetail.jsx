@@ -26,7 +26,6 @@ const ProductDetail = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,           
-    asNavFor: thumbSlider,
     fade: true,             
     autoplay: false,         
     draggable: true, 
@@ -35,12 +34,11 @@ const ProductDetail = () => {
   const imageThumbnailSettings = {
     slidesToShow: images.length >= 5 ? 5 : images.length,
     slidesToScroll: 1,
-    asNavFor: mainSlider,
     focusOnSelect: true,
     centerMode: true,
     variableWidth: true,
-    autoplay: false,         // Prevents automatic sliding
-    draggable: true,         // Allows user drag interaction
+    autoplay: false,        
+    draggable: true,        
   };
 
   useEffect(() => {
