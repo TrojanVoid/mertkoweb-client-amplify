@@ -31,16 +31,6 @@ const ProductDetail = () => {
     draggable: true, 
   };
 
-  const imageThumbnailSettings = {
-    slidesToShow: images.length >= 5 ? 5 : images.length,
-    slidesToScroll: 1,
-    focusOnSelect: true,
-    centerMode: true,
-    variableWidth: true,
-    autoplay: false,        
-    draggable: true,        
-  };
-
   useEffect(() => {
     const fetchImages = async () => { 
       try {
@@ -130,7 +120,7 @@ const ProductDetail = () => {
                 ))}
               </Slider>
 
-              <Slider {...imageThumbnailSettings} className="thumbnail-slider mt-3">
+              <div className="thumbnail-slider mt-3 d-flex justify-content-start align-items-center w-100 h-25">
                 {images.map((image, index) => (
                   <Image
                     key={index}
@@ -141,7 +131,7 @@ const ProductDetail = () => {
                     onClick={() => document.querySelector('.slick-slider').slickGoTo(index)}
                   />
                 ))}
-              </Slider>
+              </div>
             </Col>
             <Col md={6} className="product-info">
               <h1>{product?.name}</h1>

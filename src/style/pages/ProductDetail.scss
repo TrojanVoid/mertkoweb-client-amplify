@@ -35,4 +35,14 @@
             margin-bottom: 0.5rem;
         }
     }
-  }
+
+    slick-prev{
+        left: 5%;
+        z-index: 1;
+    }
+
+    slick-next{
+        left: 90%;
+        z-index: 1; 
+    }
+}
