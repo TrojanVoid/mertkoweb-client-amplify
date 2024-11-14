@@ -74,7 +74,7 @@
         <Container fluid className="products-page h-100 d-flex justify-content-center align-items-center">
           <Row className="d-flex h-100 flex-column justify-content-center align-items-center">
 
-            <Row md={3} className="filters-section w-100 d-flex justify-content-start align-items-center">
+            <Row md={3} className="filters-section w-100 d-flex justify-content-center align-items-center">
               <Button
                 variant="outline-primary"
                 className="me-2"
@@ -91,7 +91,7 @@
             </Row>
 
             <Row className="d-flex w-100 flex-wrap justify-content-center align-items-center" md={9}>
-              <Row className="gallery d-flex w-100 justify-content-start align-items-start">
+              <Row className="gallery d-flex w-100 justify-content-center align-items-center">
                 {currentProducts.map(product => (
                   <Col 
                     key={product.id} 
