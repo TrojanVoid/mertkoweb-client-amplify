@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel, Spinner } from 'react-bootstrap';
-import axios from 'axios';
-import "../style/components/DynamicCarousel.scss";
+import "../style/components/dynamic-carousel.scss";
+import {types, requestByType} from "../apis/ProductApi";
 
 const DynamicCarousel = () => {
   const [imageUrls, setImageUrls] = useState([]);  
@@ -13,7 +13,7 @@ const DynamicCarousel = () => {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/carousel-images');
+      const response = await requestByType(types.carouselImages);
       console.log('API Response:', response.data);
       
       if (Array.isArray(response.data)) {
@@ -52,7 +52,6 @@ const DynamicCarousel = () => {
               className="d-block w-100"
               src={url} 
               alt={`Slide ${index}`}
-              referrerPolicy='no-referrer'
             />
           </Carousel.Item>
         ))

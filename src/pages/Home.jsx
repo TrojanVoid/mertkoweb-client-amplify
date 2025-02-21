@@ -1,7 +1,8 @@
 import React from 'react';
-import Layout from '../components/Layout';
-import "../style/pages/Home.scss";
+import Layout from '../global/Layout';
+import "../style/pages/home.scss";
 import DynamicCarousel from '../components/DynamicCarousel';
+import MainSlider from '../components/MainSlider';
 import ProductSlider from '../components/ProductSlider';
 import Contact from '../components/Contact';
 import { useState, useEffect } from 'react';
@@ -29,7 +30,7 @@ const Home = () => {
         </div>
         <div className="home-page d-flex flex-column justify-content-center align-items-center">
           <div className="carousel-container w-100">
-            <DynamicCarousel />
+            <MainSlider />
           </div>
         
 

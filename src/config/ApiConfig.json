@@ -1,0 +1,9 @@
+{
+  "development" : {
+    "apiUrl" : "http://localhost:5000/api"
+  },
+
+  "production" : {
+    "apiUrl" : "https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api"
+  }
+}

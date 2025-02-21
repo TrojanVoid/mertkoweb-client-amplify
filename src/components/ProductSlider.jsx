@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import axios from 'axios';
 import ProductCard from './ProductCard';
 
-import "../style/components/ProductSlider.scss";
+import "../style/components/product-slider.scss";
+import { types, requestByType } from "../apis/ProductApi";
 
 const ProductSlider = () => {
   const [products, setProducts] = useState([]);
@@ -11,7 +11,7 @@ const ProductSlider = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('https://xvncvkcbxjfshtpvdx4fbl522i0kcjca.lambda-url.eu-north-1.on.aws/api/concept-products');
+        const response = await requestByType(types.conceptProducts);
         console.log("products response:", response.data);
         setProducts(response.data);
       } catch (error) {
@@ -23,21 +23,25 @@ const ProductSlider = () => {
   }, []);
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 0,
-    arrows: false, 
-  };
+    arrows: false,
+    centerMode: true,
+    centerPadding: '0',
+  }; 
 
   return (
     <div className="product-slider">
       <Slider {...settings}>
         {products.map(product => (
-          <ProductCard key={product.id} product={product} />
+          <div key={product.id} className="product-card-wrapper">
+            <ProductCard product={product} />
+          </div>
         ))}
       </Slider>
     </div>

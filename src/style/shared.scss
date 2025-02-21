@@ -1,4 +1,27 @@
 @import "./variables.scss";
+@import "./globals.scss";
+@import "./icomoon.scss";
+@import './components/custom-swiper.scss';
+@import 'loading.scss';
+@import 'globals.scss';
+@import './components/modal.scss';
+@import './components/footer.scss';
+@import './components/product.scss';
+@import './components/blog.scss';
+@import './components/faqs.scss';
+@import 'layout/category-active.scss';
+@import 'layout/text-has-line-before.scss';
+@import 'layout/collection.scss';
+@import 'layout/tab-features.scss';
+@import 'layout/banner.scss';
+@import 'layout/testimonial.scss';
+@import 'layout/instagram.scss';
+@import 'layout/benefit.scss';
+@import 'layout/newsletter.scss';
+@import 'layout/featured-product.scss';
+/* @import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities"; */
 
 html{
     background-color: $white-0;
@@ -29,16 +52,6 @@ html{
     h3{
         margin-left: 2rem;
     }
-
-    @media screen and (max-width: 768px){
-        padding-left: 0 !important;
-        justify-content: center !important;
-        align-items: center !important;
-        
-        h3{
-            margin-left: 0 !important;
-        }
-    }
 }
 
 .spinner-border {
@@ -48,4 +61,12 @@ html{
     position: absolute;
     z-index: 2;
 
+}
+
+.text-black-0{
+    color: $black-0 !important;
+}
+
+.text-black-1{
+    color: $black-1;
 }

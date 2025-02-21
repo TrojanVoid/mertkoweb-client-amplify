@@ -2,7 +2,7 @@
 
 .product-detail-page {
 
-    min-height: 100vh;
+    min-height: 85vh;
     height: auto;
     padding-top: 25vh;
 
@@ -35,23 +35,4 @@
             margin-bottom: 0.5rem;
         }
     }
-
-    .slick-prev{
-        left: 5%;
-        z-index: 1;
-    }
-
-    .slick-next{
-        left: 90%;
-        z-index: 1; 
-    }
-
-    .thumbnail-slider{
-        img{
-            width: 20%;
-            height: auto;
-            border: 1px solid $light-gray-1;
-            margin-left: 0 !important;
-        }
-    }
-}
+  }

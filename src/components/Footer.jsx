@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import "../style/components/Footer.scss";
+import "../style/components/old-footer.scss";
 
 const Footer = () => {
   return (
