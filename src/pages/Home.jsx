@@ -4,6 +4,7 @@ import "../style/pages/home.scss";
 import DynamicCarousel from '../components/DynamicCarousel';
 import MainSlider from '../components/MainSlider';
 import ProductSlider from '../components/ProductSlider';
+import ProductTab from '../components/ProductTab';
 import Contact from '../components/Contact';
 import { useState, useEffect } from 'react';
 
@@ -34,13 +35,13 @@ const Home = () => {
           </div>
         
 
-            <div className="concept-products w-75 d-flex justify-content-between align-items-center">
-              <h4 className="concept-products-title">
-                KONSEPT ÜRÜNLER
-              </h4>
+            <div className="concept-products w-100 d-flex justify-content-center align-items-center">
 
-              <div className="concept-products-list-container d-flex overflow-auto">
-                <ProductSlider />
+              <div className="concept-products-list-container d-flex justify-content-center overflow-auto w-[90%] h-auto">
+                {/* <ProductSlider /> */}
+                <ProductTab>
+
+                </ProductTab>
               </div>
             </div>
 

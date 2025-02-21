@@ -1,0 +1,34 @@
+{
+  "productTabTypes": [
+    {
+      "id": 1,
+      "key": "bestSellers",
+      "tr": {
+        "name": "Çok Satanlar"
+      },
+      "en": {
+        "name": "Best Sellers"
+      }
+    },
+    {
+      "id": 2,
+      "key": "newReleases",
+      "tr": {
+        "name": "Yeni Çıkanlar"
+      },
+      "en": {
+        "name": "New Releases"
+      }
+    },
+    {
+      "id": 3,
+      "key": "selectedProducts",
+      "tr": {
+        "name": "Seçili Ürünler"
+      },
+      "en": {
+        "name": "Selected Products"
+      }
+    }
+  ]
+}
