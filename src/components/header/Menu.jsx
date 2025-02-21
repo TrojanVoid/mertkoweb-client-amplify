@@ -94,7 +94,7 @@ const Menu = ({ props }) => {
                             <ul className='flex items-center gap-8 h-full'>
                                 <li className='h-full'>
                                     <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
-                                        İLETİŞİM
+                                        ÜRÜNLER
                                     </Link>
                                     <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                                         <div className="container">
@@ -290,7 +290,7 @@ const Menu = ({ props }) => {
 
                                 <li className='h-full'>
                                     <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
-                                        Ürünler
+                                        ÜRÜNLER
                                     </Link>
                                     <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                                         <div className="container">
