@@ -86,7 +86,7 @@ const Product = ({ data, type, style }) => {
             {type === "grid" ? (
                 <div className={`product-item grid-type ${style}`}>
                     <div onClick={() => handleDetailProduct(data.id)} className="product-main cursor-pointer block">
-                        <div className="product-thumb bg-white relative overflow-hidden rounded-2xl">
+                        <div className="product-thumb bg-white relative overflow-hidden rounded-2xl w-100 h-100">
                             {data.new && (
                                 <div className="product-tag text-button-uppercase bg-green px-3 py-0.5 inline-block rounded-full absolute top-3 left-3 z-[1]">
                                     New
@@ -97,14 +97,14 @@ const Product = ({ data, type, style }) => {
                                     Sale
                                 </div>
                             )}
-                            <div className="product-img w-full h-full aspect-[3/4]">
+                            <div className="product-img w-full h-full aspect-[4/3]">
                                 {activeColor ? (
                                     <>
                                         {
                                             <img
                                                 src={data.variation.find((item) => item.color === activeColor)?.image ?? ''}
-                                                width={500}
-                                                height={500}
+                                                width={250}
+                                                height={250}
                                                 alt={data.name}
                                                 //priority={true}
                                                 className='w-full h-full object-cover duration-700'
@@ -114,14 +114,14 @@ const Product = ({ data, type, style }) => {
                                 ) : (
                                     <>
                                         {
-                                            data.thumbImage.map((img, index) => (
+                                            data.images.map((img, index) => (
                                                 <img
                                                     key={index}
-                                                    src={img}
-                                                    width={500}
-                                                    height={500}
+                                                    src={img.imageUrl}
+                                                    width={250}
+                                                    height={250}
                                                     //priority={true}
-                                                    alt={data.name}
+                                                    alt={img.altDescription ? img.altDescription : data.name}
                                                     className='w-full h-full object-cover duration-700'
                                                 />
                                             ))
@@ -129,7 +129,9 @@ const Product = ({ data, type, style }) => {
                                     </>
                                 )}
                             </div>
-                            {data.sale && (
+
+                            {/* TODO MAYBE ADD THIS BACK IN ANOTHER FORMAT? */}
+                            {/* {data.sale && (
                                 <>
                                     <Marquee className='banner-sale-auto bg-black absolute bottom-0 left-0 w-full py-1.5'>
                                         <div className={`caption2 font-semibold uppercase text-white px-2.5`}>Hot Sale {percentSale}% OFF</div>
@@ -144,7 +146,7 @@ const Product = ({ data, type, style }) => {
                                         <Icon.Lightning weight='fill' className='text-red' />
                                     </Marquee>
                                 </>
-                            )}
+                            )} */}
                             
                             <div className="list-action-icon flex items-center justify-center gap-2 absolute w-full bottom-3 z-[1] lg:hidden">
                                 <div
@@ -178,17 +180,17 @@ const Product = ({ data, type, style }) => {
                                 </div>
                                 <div className="flex items-center justify-between gap-3 gap-y-1 flex-wrap mt-2">
                                     <div className="text-button-uppercase">
-                                        <span className='text-secondary2 max-sm:text-xs'>Sold: </span>
-                                        <span className='max-sm:text-xs'>{data.sold}</span>
+                                        <span className='text-secondary2 max-sm:text-xs'>Hacim: </span>
+                                        <span className='max-sm:text-xs'>{data.volume}</span>
                                     </div>
-                                    <div className="text-button-uppercase">
+                                    {/* <div className="text-button-uppercase">
                                         <span className='text-secondary2 max-sm:text-xs'>Available: </span>
                                         <span className='max-sm:text-xs'>{data.quantity - data.sold}</span>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
-                            <div className="product-name text-title duration-300">{data.name}</div>
-                            {data.variation.length > 0 && data.action === 'add to cart' && (
+                            <div className="product-name text-title duration-300 text-black-0 text-2xl">{data.name}</div>
+                            {/* {data.variation.length > 0 && data.action === 'add to cart' && (
                                 <div className="list-color py-2 max-md:hidden flex items-center gap-2 flex-wrap duration-500">
                                     {data.variation.map((item, index) => (
                                         <div
@@ -203,8 +205,8 @@ const Product = ({ data, type, style }) => {
                                         </div>
                                     ))}
                                 </div>
-                            )}
-                            {data.variation.length > 0 && data.action === 'quick shop' && (
+                            )} */}
+                            {/* {data.variation.length > 0 && data.action === 'quick shop' && (
                                 <div className="list-color-image max-md:hidden flex items-center gap-2 flex-wrap duration-500">
                                     {data.variation.map((item, index) => (
                                         <div
@@ -227,8 +229,10 @@ const Product = ({ data, type, style }) => {
                                         </div>
                                     ))}
                                 </div>
-                            )}
-                            <div className="product-price-block flex items-center gap-2 flex-wrap mt-1 duration-300 relative z-[1]">
+                            )} */}
+
+
+                            {/* <div className="product-price-block flex items-center gap-2 flex-wrap mt-1 duration-300 relative z-[1]">
                                 <div className="product-price text-title">${data.price}.00</div>
                                 {percentSale > 0 && (
                                     <>
@@ -238,7 +242,7 @@ const Product = ({ data, type, style }) => {
                                         </div>
                                     </>
                                 )}
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>

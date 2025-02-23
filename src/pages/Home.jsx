@@ -6,6 +6,7 @@ import MainSlider from '../components/MainSlider';
 import ProductSlider from '../components/ProductSlider';
 import ProductTab from '../components/ProductTab';
 import Contact from '../components/Contact';
+import Benefit from '../components/Benefit';
 import { useState, useEffect } from 'react';
 
 const SECTION_TAB_MAP = {
@@ -35,24 +36,18 @@ const Home = () => {
           </div>
         
 
-            <div className="concept-products w-100 d-flex justify-content-center align-items-center">
+          <ProductTab>
 
-              <div className="concept-products-list-container d-flex justify-content-center overflow-auto w-[90%] h-auto">
-                {/* <ProductSlider /> */}
-                <ProductTab>
-
-                </ProductTab>
-              </div>
-            </div>
+          </ProductTab>
 
 
-            <div id="about" className="page-label text-sm-center">
+            <div id="about" className="page-label text-sm-center py-[1rem] text-xl">
               <h3>
                 Hakkımızda
               </h3>
             </div>
 
-            <section className="about w-100 d-flex justify-content-center align-items-center">
+            <section className="about w-100 d-flex justify-content-center align-items-center py-[5rem]">
               <div className="about-wrapper w-75 d-flex flex-wrap justify-content-between align-items-center">
                 
                 <div className="about-section col-12 col-md-6 d-flex flex-column justify-content-start align-items-start">
@@ -88,8 +83,10 @@ const Home = () => {
               </div>
             </section>
 
-            <Contact />
+            {/* <Contact /> */} // TODO: Maybe re-implement this?
+            <Benefit>
 
+            </Benefit>
 
         </div>
     </Layout>

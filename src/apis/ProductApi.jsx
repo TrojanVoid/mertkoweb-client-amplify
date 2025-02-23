@@ -1,3 +1,4 @@
+import { Feather } from "@phosphor-icons/react";
 import axios from "axios";
 
 const {TITLE_TAGS, Logger} = require("../util/Logger");
@@ -13,6 +14,9 @@ export const types = {
   carouselImages: "carouselImages",
   productImages: "productImages",
   conceptProducts: "conceptProducts",
+  selectedProducts: "selectedProducts",
+  newProducts: "newReleases",
+  bestSellers: "bestSellers",
 }
 
 export const urls = {
@@ -21,6 +25,9 @@ export const urls = {
   carouselImages: `${baseUrl}/carousel-images`,
   productImages: `${baseUrl}/product-images`,
   conceptProducts: `${baseUrl}/concept-products`,
+  selectedProducts: `${baseUrl}/selected-products`,
+  newProducts: `${baseUrl}/new-products`,
+  bestSellers: `${baseUrl}/best-seller-products`,
 }
 
 export const requestByType = async (productRequestType, property=null) => {
@@ -44,13 +51,22 @@ export const requestByType = async (productRequestType, property=null) => {
       case "conceptProducts":
         response = await axios.get(url);
         break;
+      case "selectedProducts":
+        response = await axios.get(url);
+        break;
+      case "newProducts":
+        response = await axios.get(url);
+        break;
+      case "bestSellers":
+        response = await axios.get(url);
+        break;
       default:
         Logger.error(`Invalid product request type: ${productRequestType}`, TITLE_TAGS.PRODUCT_API);
         break;
     }
     return response;
   } catch (error) {
-    console.error('Error fetching products:', error);
+    Logger.error(`Error fetching ${productRequestType}: ERROR MESSAGE:\n${error}`, TITLE_TAGS.PRODUCT_API);
     return [];  
   }
   

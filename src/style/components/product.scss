@@ -239,8 +239,8 @@
                 .product-main {
                     .product-infor {
                         .product-name {
-                            opacity: 0;
-                            visibility: hidden;
+                            opacity: 0.8;
+                            transition: all ease 0.3s;
                         }
 
                         .list-color,
@@ -452,9 +452,11 @@
 @media (min-width: 1024px) {
     .lookbook-block.cos1 {
         .list-product {
+            overflow-x: hidden;
             .product-item {
                 &:last-child {
                     display: none;
+                    
                 }
             }
         }

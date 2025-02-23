@@ -13,7 +13,7 @@ import Menu from './Menu';
 const Header = ({ props }) => {
     const [isOpenLanguage, setIsOpenLanguage] = useState(false)
     const [isOpenCurrence, setIsOpenCurrence] = useState(false)
-    const [language, setLanguage] = useState('English')
+    const [language, setLanguage] = useState('Türkçe')
     const [currence, setCurrence] = useState('USD')
 
     return (
@@ -57,7 +57,7 @@ const Header = ({ props }) => {
                                     <p className="selected caption2">{language}</p>
                                     <ul className={`list-option bg-white ${isOpenLanguage ? 'open' : ''}`}>
                                         {
-                                            ['English', 'Espana', 'France'].map((item, index) => (
+                                            ['Türkçe', 'English'].map((item, index) => (
                                                 <li key={index} className="caption2" onClick={() => setLanguage(item)}>{item}</li>
                                             ))
                                         }
@@ -65,7 +65,8 @@ const Header = ({ props }) => {
                                 </div>
                                 <Icon.CaretDown size={12} />
                             </div>
-                            <div
+                            {
+                            /* <div
                                 className="choose-type choose-currency flex items-center gap-1.5"
                                 onClick={() => {
                                     setIsOpenCurrence(!isOpenCurrence)
@@ -83,13 +84,15 @@ const Header = ({ props }) => {
                                     </ul>
                                 </div>
                                 <Icon.CaretDown size={12} />
-                            </div>
-                            <Link to={'https://www.facebook.com/'} target='_blank'>
-                                <i className="icon-facebook text-black"></i>
-                            </Link>
+                            </div> */
+                            }
                             <Link to={'https://www.instagram.com/'} target='_blank'>
                                 <i className="icon-instagram text-black"></i>
                             </Link>
+                            {/* <Link to={'https://www.facebook.com/'} target='_blank'>
+                                <i className="icon-facebook text-black"></i>
+                            </Link>
+                            
                             <Link to={'https://www.youtube.com/'} target='_blank'>
                                 <i className="icon-youtube text-black"></i>
                             </Link>
@@ -98,7 +101,7 @@ const Header = ({ props }) => {
                             </Link>
                             <Link to={'https://pinterest.com/'} target='_blank'>
                                 <i className="icon-pinterest text-black"></i>
-                            </Link>
+                            </Link> */}
                         </div>
 
                     </div>

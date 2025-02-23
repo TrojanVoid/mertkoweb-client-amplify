@@ -25,8 +25,8 @@ const MainSlider = () => {
     }, []);
 
     return (
-        <div className="slider-block style-two w-full h-[70vh]">
-            <div className="container banner-block lg:pt-[30px] flex max-lg:flex-wrap gap-y-5 h-full w-full">
+        <div className="slider-block style-two w-full lg:h-[70vh]">
+            <div className="container banner-block pt-[10px] sm:pt-[20px] lg:pt-[30px] flex max-lg:flex-wrap gap-y-5 h-full w-full">
                 <div className="slider-main lg:w-full w-full lg:pr-[15px] max-lg:h-[300px] max-[420px]:h-[340px]">
                     <Swiper
                         spaceBetween={0}

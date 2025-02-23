@@ -66,14 +66,14 @@ const Menu = ({ props }) => {
         <>
             <div className={`header-menu style-one ${fixedHeader ? ' fixed' : 'relative'} w-full md:h-[74px] h-[56px] ${props}`}>
                 <div className="container mx-auto h-full">
-                    <div className="header-main flex items-center justify-between h-full">
+                    <div className="header-main flex items-center justify-start h-full">
                         <div className="menu-mobile-icon lg:hidden flex items-center" onClick={handleMenuMobile}>
                             <i className="icon-category text-2xl"></i>
                         </div>
-                        <Link to={'/'} className='flex items-center lg:hidden'>
+                        <Link to={'/'} className='flex items-center absolute left-1/2 transform -translate-x-1/2 lg:hidden'>
                             <div className="heading4">Mertko</div>
                         </Link>
-                        <div className="form-search relative max-lg:hidden z-[1]">
+                       {/*  <div className="form-search relative max-lg:hidden z-[1]">
                             <Icon.MagnifyingGlass
                                 size={16}
                                 className='absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer'
@@ -89,8 +89,8 @@ const Menu = ({ props }) => {
                                 onChange={(e) => setSearchKeyword(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSearch(searchKeyword)}
                             />
-                        </div>
-                        <div className="menu-main h-full xl:w-full flex items-center justify-center max-lg:hidden xl:absolute xl:top-1/2 xl:left-1/2 xl:-translate-x-1/2 xl:-translate-y-1/2">
+                        </div> */}
+                        <div className="menu-main h-full xl:w-full flex items-center absolute left-1/2 transform -translate-x-1/2 justify-center max-lg:hidden ">
                             <ul className='flex items-center gap-8 h-full'>
                                 <li className='h-full'>
                                     <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
@@ -290,7 +290,7 @@ const Menu = ({ props }) => {
 
                                 <li className='h-full'>
                                     <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
-                                        ÜRÜNLER
+                                        İLETİŞİM
                                     </Link>
                                     <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                                         <div className="container">
@@ -349,10 +349,11 @@ const Menu = ({ props }) => {
                                     </Link>
                                 </li>
                                 <li className='h-full'>
-                                    <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
+                                    <Link to="/hakkimizda" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
                                         HAKKIMIZDA
                                     </Link>
-                                    <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
+
+                                    {/* <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                                         <div className="container">
                                             <div className="flex justify-between py-8">
                                                 <div className="nav-link basis-2/3 flex justify-between xl:pr-14 pr-5">
@@ -404,21 +405,13 @@ const Menu = ({ props }) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
+
                                 </li>
                                 <li className='h-full relative'>
-                                    <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
+                                    <Link to="/blogs" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
                                         Blog
                                     </Link>
-                                    <div className="sub-menu py-3 px-5 -left-10 absolute bg-white rounded-b-xl">
-                                        <ul className='w-full'>
-                                            <li>
-                                                <Link to="/blog/default" className={`text-secondary duration-300 ${pathname === '/blog/default' ? 'active' : ''}`}>
-                                                    Blog Default
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -445,10 +438,10 @@ const Menu = ({ props }) => {
                                 </div>
                                 <Link to={'/'} className='logo text-3xl font-semibold text-center'>Mertko</Link>
                             </div>
-                            <div className="form-search relative mt-2">
+                            {/* <div className="form-search relative mt-2">
                                 <Icon.MagnifyingGlass size={20} className='absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer' />
                                 <input type="text" placeholder='What are you looking for?' className=' h-12 rounded-lg border border-line text-sm w-full pl-10 pr-4' />
-                            </div>
+                            </div> */}
                             <div className="list-nav mt-6">
                                 <ul>
                                     <li

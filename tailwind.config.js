@@ -4,6 +4,8 @@ export default {
     "./src/**/*.{js,jsx,html}",  // This ensures Tailwind scans all JSX and JS files
     "./public/index.html",       // Include the main HTML file
   ],
+  jit: true,
+  mode: 'jit',
   theme: {
     extend: {
       backgroundImage: {
