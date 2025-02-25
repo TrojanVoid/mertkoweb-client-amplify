@@ -1,8 +1,8 @@
-'use client'
 import React from 'react'
 import Breadcrumb from '../components/Breadcrumb';
 import Benefit from '../components/Benefit'
 import Layout from '../global/Layout';
+import LocationMap from '../components/LocationMap';
 
 const AboutContent = require("../data/AboutContent.json");
 
@@ -15,20 +15,34 @@ const About = () => {
                     <div className="container">
                         <div className="text flex items-center justify-center">
                             <div className="content md:w-5/6 w-full">
-                                <div className="heading3 text-center">
-                                    {
-                                      AboutContent["title"]
-                                    }
-                                </div>
-                                <div className="body1 text-center md:mt-7 mt-5">
-                                    {
-                                      AboutContent["content1"].split(' ').map((item, index) => {
-                                        if(item == "<br/>") return (<br/>)
-                                        return item + " "; 
-                                      })
-                                    }
-                                </div>
+                            <h1 className="heading3 text-center mt-5">
+                              {
+                                /* AboutContent["title"] */
+                                
+                              }
+                              HAKKIMIZDA
+                            </h1>
+
+                            <div className="w-100 d-flex flex-row justify-between align-items-center gap-[10rem]">
+                              <div className="body1 text-center md:mt-7 mt-5 w-50">
+                                  {
+                                    AboutContent["content1"].split(' ').map((item, index) => {
+                                      if(item == "<br/>") return (<br/>)
+                                      return item + " "; 
+                                    })
+                                  }
+                              </div>
+
+                              <div className="body1 text-center md:mt-7 mt-5 w-50">
+                                  {
+                                    AboutContent["content2"].split(' ').map((item, index) => {
+                                      if(item == "<br/>") return (<br/>)
+                                      return item + " "; 
+                                    })
+                                  }
+                              </div>
                             </div>
+                          </div>
                         </div>
                         <div className="list-img grid sm:grid-cols-3 gap-[30px] md:pt-20 pt-10">
                             <div className="bg-img">
@@ -59,6 +73,7 @@ const About = () => {
                                 />
                             </div>
                         </div>
+                        <LocationMap />
                     </div>
                 </div>
             </div>

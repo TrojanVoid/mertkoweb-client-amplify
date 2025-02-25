@@ -1,104 +1,208 @@
+
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Image, Spinner, Alert } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import * as Icon from "@phosphor-icons/react/dist/ssr";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Thumbs, FreeMode } from 'swiper/modules';
+import SwiperCore from 'swiper/core';
+import Marquee from 'react-fast-marquee';
+import { useNavigate } from 'react-router-dom';
+import { Spinner } from 'react-bootstrap';
+import 'swiper/css/bundle';
+
 import Layout from '../global/Layout';
-import "../style/pages/product-detail.scss";
-import {types, requestByType} from "../apis/ProductApi";
+
+const {types, requestByType} = require('../apis/ProductApi');
+const {TITLE_TAGS, Logger} = require('../util/Logger');
+
+const productCategories = require('../data/ProductCategories.json').productCategories;
 
 const ProductDetail = () => {
-  const { productId } = useParams();
-  const [product, setProduct] = useState(null);
-  const [images, setImages] = useState([]); 
-  const [loading, setLoading] = useState(true);
-  const [isImageLoading, setIsImageLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const [data, setData] = useState(null);
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    
+    const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    const fetchImages = async () => { 
-      try {
-        const response = await requestByType(types.productImages, productId);
-        setImages(response.data.images); 
-      } catch (error) {
-        setError('Error fetching product image');
-        console.error(error);
-      } finally {
-        setIsImageLoading(false); 
+    const fetchProductData = async(id) => {
+      const response = await requestByType(types.singleProduct, id);
+      const productData = response.data;
+      if(!productData){
+        Logger.error(`Error fetching product data with id: ${id}`, TITLE_TAGS.UI_COMPONENT);
+        navigate('/urunler');
       }
+      setData(productData);
+    };
+     
+    useEffect(() => {
+      const productId = searchParams.get('id');
+      if(!productId) {
+        navigate('/urunler');
+      }
+      fetchProductData(productId);
+
+    }, []);
+
+
+    const handleDetailProduct = (productId) => {
+        navigate(`/urun-detay?id=${productId}`);
     };
 
-    fetchImages();
-  }, [productId]);
+    const handleSwiper = (swiper) => {
+      setThumbsSwiper(swiper);
+  };
 
-  useEffect(() => {
-    const fetchProductDetails = async () => {
-      try {
-        const response = await requestByType(types.singleProduct, productId);
-        setProduct(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError('Error fetching product details');
-        setLoading(false);
-        console.error(error);
-      }
-    };
+    if(!data){
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <Spinner animation="border" variant="primary" />
+            </div>
+        );
+    }
 
-    fetchProductDetails();
-  }, [productId]);
+    return (
+        <Layout>
+            <div className="product-detail product-container h-auto  flex flex-col justify-center items-start md:pt-20 pt-14 px-0 mx-0">
+                <div className="container h-auto flex lg:items-start justify-between gap-y-6 flex-wrap px-5">
+                    <div className="list-img h-[75vh] md:w-1/2 md:pr-4 w-full">
+                        <Swiper
+                            slidesPerView={1}
+                            spaceBetween={0}
+                            thumbs={{ swiper: thumbsSwiper }}
+                            modules={[Thumbs]}
+                            className="mySwiper2 rounded-2xl overflow-hidden h-100"
+                        >
+                          {data.images.map((image, index) => (
+                            <SwiperSlide key={index}>
+                              <img
+                                src={image.imageUrl}
+                                width={1000}
+                                height={1000}
+                                alt={image.altDescription ? image.altDescription : data.name}
+                                className='w-full aspect-[3/4] object-cover h-100'
+                              />
+                            </SwiperSlide>
+                            )
+                          )}
+                        </Swiper>
 
-  let content = null;
+                        <Swiper
+                            onSwiper={handleSwiper}
+                            spaceBetween={0}
+                            slidesPerView={4}
+                            freeMode={true}
+                            watchSlidesProgress={true}
+                            modules={[Navigation, Thumbs, FreeMode]}
+                            className="mySwiper"
+                        >
+                          {data.images.map((image, index) => (
+                            <SwiperSlide key={index}>
+                              <img
+                                src={image.imageUrl}
+                                width={1000}
+                                height={1000}
+                                alt={image.altDescription ? image.altDescription : data.name}
+                                className='w-full aspect-[3/4] object-cover rounded-xl'
+                              />
+                            </SwiperSlide>
+                            )
+                          )}
+                        </Swiper>
+                        
+                    </div>
+                    <div className="product-infor h-full flex flex-col md:w-1/2 w-full lg:pl-16 md:pl-6">
+                        <h1 className="caption2 text-secondary font-semibold uppercase">
+                          {
+                            productCategories.find(category => category.shortKey === data.category).tr.nameSingle
+                          }
+                        </h1>
+                        <h2 className="heading4 mt-1">{data.name}</h2>
+                        
+                        <div className="flex items-center gap-3 flex-wrap mt-5 pb-6 border-b border-line">
+                            <h3 className="text-size-lg font-semibold">
+                              HACİM:
+                            </h3>
+                            <span className="text-size-lg text-secondary">
+                              {data.volume} ML
+                            </span>
+                            
+                            
+                        </div>
 
-  if (loading) {
-    content = (
-      <Container className="d-flex justify-content-center align-items-center vh-100">
-        <Spinner animation="border" variant="primary" />
-      </Container>
-    );
-  }
-
-  if (error) {
-    content = (
-      <Container className="d-flex justify-content-center align-items-center vh-100">
-        <Alert variant="danger">{error}</Alert>
-      </Container>
-    );
-  }
-
-  return (
-    <Layout>
-      <Container className="product-detail-page">
-        {(loading || error) && content}
-        {(!loading && !error) && 
-          (<Row className="justify-content-center">
-            <Col md={6} className="position-relative">
-              {isImageLoading && (
-                <div className="spinner-wrapper w-100 h-100 d-flex justify-content-center align-items-center">
-                  <Spinner animation="border" variant="primary" />
+                        <div className="flex items-center gap-3 flex-wrap mt-4 pb-6 border-b border-line">
+                          <h3 className="text-size-lg font-semibold">
+                            AÇIKLAMA
+                          </h3>
+                          <span className="text-size-lg text-secondary">
+                            {data.description}
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero pariatur excepturi earum officiis suscipit odit cum, distinctio beatae nulla tempore quasi voluptatibus possimus ex sint ea saepe eum non aliquam dicta. Architecto, repellendus? Tenetur temporibus magni cumque in nisi repellendus aperiam, beatae eligendi excepturi, laboriosam sit ipsam impedit amet mollitia.
+                          </span>
+                        
+                        </div>
+                        <div className="list-action mt-auto">
+                            
+                            <div className="button-block">
+                                <div className="button-main w-full text-center">Buy It Now</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              )}
-              {!isImageLoading && (
-                images.map( (image, index) => {
-                  <Image 
-                    src={images[index]} 
-                    alt={product?.name} 
-                    fluid 
-                    className="product-image" 
-                    onLoad={() => setIsImageLoading(false)} 
-                    onError={() => setIsImageLoading(false)}
-                />
-                })
-              )}
-            </Col>
-            <Col md={6} className="product-info">
-              <h1>{product?.name}</h1>
-              <p><strong>Kategori:</strong> {product?.category}</p>
-              <p><strong>Hacim:</strong> {product?.volume} mL</p>
-              <p><strong>Açıklama:</strong> {product?.description}</p>
-            </Col>
-          </Row>)
-        }
-      </Container>
-    </Layout>
-  );
-};
 
-export default ProductDetail;
+                <div className='desc-item description open w-[100%] ml-0 mt-[7rem] bg-surface p-6 pb-[4rem] rounded-t-2xl border-bottom border-line'>
+                    <div className='w-100 flex flex-col justify-center items-center '>
+                        <h6 className="heading6 pb-3 mt-3">
+                          ÜRÜNLERİMİZ HAKKINDA
+                        </h6>
+                            <div className="list-feature">
+                                <div className="item flex gap-1 text-secondary mt-1">
+                                    <Icon.Dot size={28} />
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                </div>
+                                <div className="item flex gap-1 text-secondary mt-1">
+                                    <Icon.Dot size={28} />
+                                    <p>Nulla luctus libero quis mauris vestibulum dapibus.</p>
+                                </div>
+                                <div className="item flex gap-1 text-secondary mt-1">
+                                    <Icon.Dot size={28} />
+                                    <p>Maecenas ullamcorper erat mi, vel consequat enim suscipit at.</p>
+                                </div>
+                                <div className="item flex gap-1 text-secondary mt-1">
+                                    <Icon.Dot size={28} />
+                                    <p>Quisque consectetur nibh ac urna molestie scelerisque.</p>
+                                </div>
+                                <div className="item flex gap-1 text-secondary mt-1">
+                                    <Icon.Dot size={28} />
+                                    <p>Mauris in nisl scelerisque massa consectetur pretium sed et mauris.</p>
+                                </div>
+                            </div>
+                    </div>
+                    <div className="grid px-10 lg:grid-cols-4 grid-cols-2 gap-[30px] md:mt-[5rem] mt-6">
+                        <div className="item">
+                            <div className="icon-delivery-truck text-4xl"></div>
+                            <div className="heading6 mt-4">Shipping Faster</div>
+                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
+                        </div>
+                        <div className="item">
+                            <div className="icon-cotton text-4xl"></div>
+                            <div className="heading6 mt-4">Cotton Material</div>
+                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
+                        </div>
+                        <div className="item">
+                            <div className="icon-guarantee text-4xl"></div>
+                            <div className="heading6 mt-4">High Quality</div>
+                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
+                        </div>
+                        <div className="item">
+                            <div className="icon-leaves-compatible text-4xl"></div>
+                            <div className="heading6 mt-4">highly compatible</div>
+                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </Layout>
+    )
+}
+
+export default ProductDetail

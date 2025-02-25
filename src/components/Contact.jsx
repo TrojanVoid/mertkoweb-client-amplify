@@ -26,6 +26,7 @@ const Contact = () => {
 
   return (
     <Container fluid className="contact-page mt-5 d-flex flex-column justify-content-center align-items-center">
+      
       <Row className="map-container mb-5">
         <Col>
           <iframe

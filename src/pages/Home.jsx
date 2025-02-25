@@ -8,20 +8,17 @@ import ProductTab from '../components/ProductTab';
 import Contact from '../components/Contact';
 import Benefit from '../components/Benefit';
 import { useState, useEffect } from 'react';
+import LocationMap from '../components/LocationMap';
 
-const SECTION_TAB_MAP = {
-  'home': 0,
-  'about': 1,
-  'products': 2,
-  'contact': 3,
-};
+const AboutContent = require("../data/AboutContent.json");
 
 const Home = () => {
-  window.addEventListener('scroll', detectActiveTab);
+
+  /* window.addEventListener('scroll', detectActiveTab);
   window.addEventListener('resize', detectActiveTab);
 
 
-  document.addEventListener('DOMContentLoaded', detectActiveTab);
+  document.addEventListener('DOMContentLoaded', detectActiveTab); */
   
   return (
     <Layout>
@@ -41,47 +38,72 @@ const Home = () => {
           </ProductTab>
 
 
-            <div id="about" className="page-label text-sm-center py-[1rem] text-xl">
-              <h3>
-                Hakkımızda
-              </h3>
+
+            <div className="about-container w-full">
+                <div className="text flex items-center justify-center">
+                    <div className="content md:w-5/6 w-full">
+                    
+                        <h1 className="heading3 text-center mt-5">
+                            {
+                              /* AboutContent["title"] */
+                              
+                            }
+                            HAKKIMIZDA
+                        </h1>
+
+                        <div className="w-100 d-flex flex-row justify-between align-items-center gap-[10rem]">
+                          <div className="body1 text-center md:mt-7 mt-5 w-50">
+                              {
+                                AboutContent["content1"].split(' ').map((item, index) => {
+                                  if(item == "<br/>") return (<br/>)
+                                  return item + " "; 
+                                })
+                              }
+                          </div>
+
+                          <div className="body1 text-center md:mt-7 mt-5 w-50">
+                              {
+                                AboutContent["content2"].split(' ').map((item, index) => {
+                                  if(item == "<br/>") return (<br/>)
+                                  return item + " "; 
+                                })
+                              }
+                          </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div className="list-img grid sm:grid-cols-3 gap-[30px] md:pt-20 pt-10">
+                    <div className="bg-img">
+                        <img
+                            src={'/images/other/about-us1.png'}
+                            width={2000}
+                            height={3000}
+                            alt='bg-img'
+                            className='w-full rounded-[30px]'
+                        />
+                    </div>
+                    <div className="bg-img">
+                        <img
+                            src={'/images/other/about-us2.png'}
+                            width={2000}
+                            height={3000}
+                            alt='bg-img'
+                            className='w-full rounded-[30px]'
+                        />
+                    </div>
+                    <div className="bg-img">
+                        <img
+                            src={'/images/other/about-us3.png'}
+                            width={2000}
+                            height={3000}
+                            alt='bg-img'
+                            className='w-full rounded-[30px]'
+                        />
+                    </div>
+                </div>
+                <LocationMap />
             </div>
-
-            <section className="about w-100 d-flex justify-content-center align-items-center py-[5rem]">
-              <div className="about-wrapper w-75 d-flex flex-wrap justify-content-between align-items-center">
-                
-                <div className="about-section col-12 col-md-6 d-flex flex-column justify-content-start align-items-start">
-                  <div className="title-container w-100 d-flex justify-content-between align-items-center flex-grow">
-                    <h3 className="title red">Mertko Plastik</h3>
-                    <div className="title-line red"></div>
-                  </div>
-                  <p>
-                    Kurulduğu yıl olan 1980 yılından bu yana firmamız, güven dolu geçmişi ile plastik ambalaj ürünleri ile kozmetik 
-                    sektörüne ışık tutmaya devam etmektedir. <br/><br/>  Konusunda uzman kadromuz ile, kozmetik sektörü başta olmak üzere; plastik 
-                    ambalaja ihtiyaç duyulan tüm sektörlerde en ön sayfa katılımı icra ediyoruz. <br/><br/> Fabrikamızda 6 adet Normal Şişirme, 
-                    3 adet Pet Şişirme, 10 adet Normal Enjeksiyon, 2 adet Pet Enjeksiyon, sıcak varak baskı, serigrafi baskı üniteleri 
-                    ve makineleri 50 kişilik deneyimli personeli, kendi kalıp atölyemiz ve uzman grafiker kadromuz değerlendirme ve 
-                    bilişim bölümümüz ile faaliyet göstermekteyiz.
-                  </p>
-                </div>
-
-                <div className="about-section col-12 col-md-6 d-flex flex-column justify-content-start align-items-start">
-                  <div className="title-container w-100 d-flex justify-content-between align-items-center flex-grow">
-                    <h3 className="title">Tescilli Ürünler</h3>
-                    <div className="title-line"></div>
-                  </div>
-                  <p>
-                    Mertko Plastik Ürünleri San. Tic. Ltd. Şti, üretimini yaptığı ve bünyesinde barındırdığı her ürünün tesciline sahiptir. 
-                    Herhangi bir taklit korkusu olmadan müşterilerimizin beğenisine sunduğumuz ürünler gönül rahatlığı ile pazarlanabilirler. 
-                    Bu konuda da firmamız ile yapacağınız anlaşmalarda bu avantajı da göz ardı etmemeniz rica olunur. <br/><br/> Yurt içinde ve yurt 
-                    dışında yüzlerce sayıdaki müşteri portföyümüz, 500’e yakın ürün yelpazemiz ile tüm siparişleriniz tarafınıza garantili 
-                    olarak teslim edilir. İstanbul içi alımlarınızda teslimat, firmamızca yapılmaktadır. Anadolu ve Trakya bölgelerindeki 
-                    firmalarımız için ise, anlaşmalı oldukları ya da firmamızın anlaşmalı olduğu ambarlar ve kargo firmaları ile teslimat 
-                    yapılmaktadır.
-                  </p>
-                </div>
-              </div>
-            </section>
 
             {/* <Contact /> */} // TODO: Maybe re-implement this?
             <Benefit>
@@ -93,7 +115,7 @@ const Home = () => {
   );
 };
 
-
+/* 
 const detectActiveTab = () => {
   const sections = Object.keys(SECTION_TAB_MAP).map(id => document.getElementById(id));
   let activeIndex = 0;
@@ -116,7 +138,7 @@ const detectActiveTab = () => {
       link.classList.remove('active');
     }
   });
-};
+}; */
 
 
 export default Home;

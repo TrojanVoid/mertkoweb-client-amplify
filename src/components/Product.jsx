@@ -24,13 +24,6 @@ const Product = ({ data, type, style }) => {
     const { openQuickview } = useModalQuickviewContext() */
     const navigate = useNavigate();
 
-    const handleActiveColor = (item) => {
-        setActiveColor(item)
-    }
-
-    const handleActiveSize = (item) => {
-        setActiveSize(item)
-    }
 
     /* const handleAddToCart = () => {
         if (!cartState.cartArray.find((item) => item.id === data.id)) {
@@ -75,11 +68,9 @@ const Product = ({ data, type, style }) => {
 
     const handleDetailProduct = (productId) => {
         // redirect to shop with category selected
-        navigate(`/product/default?id=${productId}`);
+        navigate(`/urun-detay?id=${productId}`);
     };
 
-    let percentSale = Math.floor(100 - ((data.price / data.originPrice) * 100))
-    let percentSold = Math.floor((data.sold / data.quantity) * 100)
 
     return (
         <>
@@ -87,16 +78,6 @@ const Product = ({ data, type, style }) => {
                 <div className={`product-item grid-type ${style}`}>
                     <div onClick={() => handleDetailProduct(data.id)} className="product-main cursor-pointer block">
                         <div className="product-thumb bg-white relative overflow-hidden rounded-2xl w-100 h-100">
-                            {data.new && (
-                                <div className="product-tag text-button-uppercase bg-green px-3 py-0.5 inline-block rounded-full absolute top-3 left-3 z-[1]">
-                                    New
-                                </div>
-                            )}
-                            {data.sale && (
-                                <div className="product-tag text-button-uppercase text-white bg-red px-3 py-0.5 inline-block rounded-full absolute top-3 left-3 z-[1]">
-                                    Sale
-                                </div>
-                            )}
                             <div className="product-img w-full h-full aspect-[4/3]">
                                 {activeColor ? (
                                     <>
@@ -148,7 +129,7 @@ const Product = ({ data, type, style }) => {
                                 </>
                             )} */}
                             
-                            <div className="list-action-icon flex items-center justify-center gap-2 absolute w-full bottom-3 z-[1] lg:hidden">
+                            {/* <div className="list-action-icon flex items-center justify-center gap-2 absolute w-full bottom-3 z-[1] lg:hidden">
                                 <div
                                     className="quick-view-btn w-9 h-9 flex items-center justify-center rounded-lg duration-300 bg-white hover:bg-black hover:text-white"
                                     onClick={(e) => {
@@ -167,10 +148,12 @@ const Product = ({ data, type, style }) => {
                                 >
                                     <Icon.ShoppingBagOpen className='text-lg' />
                                 </div>
-                            </div>
+                            </div> */}
+
                         </div>
                         <div className="product-infor mt-4 lg:mb-7">
-                            <div className="product-sold sm:pb-4 pb-2">
+
+                            {/* <div className="product-sold sm:pb-4 pb-2">
                                 <div className="progress bg-line h-1.5 w-full rounded-full overflow-hidden relative">
                                     <div
                                         className={`progress-sold bg-red absolute left-0 top-0 h-full`}
@@ -183,13 +166,21 @@ const Product = ({ data, type, style }) => {
                                         <span className='text-secondary2 max-sm:text-xs'>Hacim: </span>
                                         <span className='max-sm:text-xs'>{data.volume}</span>
                                     </div>
-                                    {/* <div className="text-button-uppercase">
+                                    <div className="text-button-uppercase">
                                         <span className='text-secondary2 max-sm:text-xs'>Available: </span>
                                         <span className='max-sm:text-xs'>{data.quantity - data.sold}</span>
-                                    </div> */}
+                                    </div>
                                 </div>
+                            </div> */}
+
+                            <div className="product-name d-flex justify-between text-title duration-300 text-black-0">
+                                <h5 className="text-2xl">
+                                    {data.name}
+                                </h5>
+                                <h5 className="text-2xl">
+                                    {data.volume} mL 
+                                </h5>
                             </div>
-                            <div className="product-name text-title duration-300 text-black-0 text-2xl">{data.name}</div>
                             {/* {data.variation.length > 0 && data.action === 'add to cart' && (
                                 <div className="list-color py-2 max-md:hidden flex items-center gap-2 flex-wrap duration-500">
                                     {data.variation.map((item, index) => (

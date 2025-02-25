@@ -39,7 +39,7 @@ export const requestByType = async (blogRequestType, property=null) => {
         response = await axios.post(url, property);
         break;
       case "getBlog":
-        response = await axios.get(`${url}/${property}`);
+        response = await axios.get(`${url}?id=${property}`);
         break;
       case "getBlogs":
         response = await axios.get(url);

@@ -63,8 +63,8 @@
 }
 
 // Featured Product Home Underwear
-.featured-product.underwear,
-.featured-product.cosmetic {
+.product-detail.product-container,
+.product-detail.cosmetic {
     .list-img {
         position: relative;
     }
@@ -130,7 +130,7 @@
     }
 }
 
-.featured-product.style-watch {
+.product-detail.style-watch {
     .list-action .choose-size {
         .size-item {
             background-color: var(--black);

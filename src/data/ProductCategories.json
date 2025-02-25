@@ -1,0 +1,44 @@
+{
+  "productCategories": [
+    {
+      "id": 1,
+      "key": "PlasticBottles",
+      "shortKey": "p",
+      "tr": {
+        "name": "Plastik Şişeler",
+        "nameSingle": "Plastik Şişe"
+      },
+      "en": {
+        "name": "Plastic Bottles",
+        "nameSingle": "Plastic Bottle"
+      }
+    },
+    {
+      "id": 2,
+      "key": "PlasticJars",
+      "shortKey": "k",
+      "tr": {
+        "name": "Plastik Kavanozlar",
+        "nameSingle": "Plastik Kavanoz"
+      },
+      "en": {
+        "name": "Plastic Jars",
+        "nameSingle": "Plastic Jar"
+      }
+    },
+    {
+      
+      "id": 3,
+      "key": "ConceptProducts",
+      "shortKey": "c",
+      "tr": {
+        "name": "Konsept Ürünler",
+        "nameSingle": "Konsept Ürün"
+      },
+      "en": {
+        "name": "Concept Products",
+        "nameSingle": "Concept Product"
+      }
+    }
+  ]
+}

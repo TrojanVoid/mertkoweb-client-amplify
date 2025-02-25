@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 const BlogItem = ({ data, type }) => {
     const navigate = useNavigate();
+
+    
     const handleBlogClick = (blogId) => {
         // Go to blog detail with blogId selected
         navigate(`/blog/detail?id=${blogId}`);
@@ -31,7 +33,9 @@ const BlogItem = ({ data, type }) => {
                             />
                         </div>
                         <div className="blog-infor mt-7">
-                            <div className="blog-tag bg-green py-1 px-2.5 rounded-full text-button-uppercase inline-block">{data.tag}</div>
+                            
+                            {/* <div className="blog-tag bg-green py-1 px-2.5 rounded-full text-button-uppercase inline-block">{data.tag}</div> */}
+                            
                             <div className="heading6 blog-title mt-3 duration-300">{data.title}</div>
                             <div className="flex items-center gap-2 mt-2">
                                 <div className="blog-author caption1 text-secondary">by {data.author}</div>

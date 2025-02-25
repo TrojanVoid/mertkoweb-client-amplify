@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumb';
 import HandlePagination from "../util/HandlePagination";
-import BlogItem from '../components/BlogDeatil';
+import BlogItem from '../components/BlogItem';
 
 import Layout from '../global/Layout';
 
@@ -23,6 +23,8 @@ const Blogs = () => {
     useEffect(() => {
         fetchBlogs();
     }, []);
+
+    
 
     const fetchBlogs = async () => {
         try {

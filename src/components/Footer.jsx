@@ -33,7 +33,7 @@ const Footer = () => {
                         <div className="right-content flex flex-wrap gap-y-8 basis-3/5 max-lg:basis-full">
                             <div className="list-nav flex justify-start basis-2/3 lg:justify-end max-md:basis-full gap-4">
                                 <div className="item flex flex-col basis-1/3 md:basis-1/3">
-                                    <div className="text-button-uppercase pb-3">Bilgi</div>
+                                    <div className="text-button-uppercase pb-3">BİLGİ</div>
                                     <Link className='caption1 has-line-before duration-300 w-fit' to={'/pages/contact'}>İletişim</Link>
                                     <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/my-account'}>Hakkımızda</Link>
                                     <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/pages/faqs'}>SSS</Link>
@@ -44,8 +44,8 @@ const Footer = () => {
                                 </div>
                                 <div className="item flex flex-col basis-1/3  md:basis-1/3">
                                     <div className="text-button-uppercase pb-3">Ürünler</div>
-                                    <Link className='caption1 has-line-before duration-300 w-fit' to={'/shop/breadcrumb1'}>Şişeler</Link>
-                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/shop/breadcrumb1'}>Kavanozlar</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit' to={'/shop/breadcrumb1'}>Plastik Şişeler</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/shop/breadcrumb1'}>Plastik Kavanozlar</Link>
                                     <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/shop/breadcrumb1'}>Konsept Ürünler</Link>
                                     
                                 </div>
@@ -95,7 +95,7 @@ const Footer = () => {
                             <div className="select-block flex items-center gap-5 max-md:hidden">
                                 <div className="choose-language flex items-center gap-1.5">
                                     <select name="language" id="chooseLanguageFooter" className='caption2 bg-transparent'>
-                                        <option value="Turkish">Turkish</option>
+                                        <option value="Turkish">Türkçe</option>
                                         <option value="English">English</option>
                                         {/* <option value="Espana">Espana</option>
                                         <option value="France">France</option> */}

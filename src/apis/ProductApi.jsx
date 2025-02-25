@@ -20,7 +20,8 @@ export const types = {
 }
 
 export const urls = {
-  allProducts: `${baseUrl}/products`,
+  allProducts: `${baseUrl}/all-products`,
+  productsByType: `${baseUrl}/products?category=`,
   singleProduct: `${baseUrl}/get-product`,
   carouselImages: `${baseUrl}/carousel-images`,
   productImages: `${baseUrl}/product-images`,
@@ -36,8 +37,15 @@ export const requestByType = async (productRequestType, property=null) => {
   let response = null;
   try { 
     switch (productRequestType) {
-      case "allProducts":
+      case 'allProducts':
         response = await axios.get(url);
+        break;
+      case "productsByType":
+        if(property === 'plastik-siseler') property = 'sise';
+        if(property === 'plastik-kavanozlar') property = 'kavanoz';
+        if(property === 'konsept-urunler') property = "konsept";
+        if(property === "hemen") property = "hemen";
+        response = await axios.get(`${url}${property}`);
         break;
       case "singleProduct":
         response = await axios.get(`${url}/${property}`);
