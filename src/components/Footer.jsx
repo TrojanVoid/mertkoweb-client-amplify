@@ -24,7 +24,7 @@ const Footer = () => {
                                       <span className=''>mertko@mertko.com</span>
                                     </a>
                                     <a href="tel:+90 212 223 05 01"  className='mt-3'>
-                                      <span>+90-212-223-0501</span>
+                                      <span>+90 212 223 0501</span>
                                     </a>
                                     <span className='mt-3 pt-px'>Gümüşsuyu Caddesi Ceyhan İş Merkezi No:17 / 42 Topkapı-Maltepe İstanbul</span>
                                 </address>
@@ -34,19 +34,19 @@ const Footer = () => {
                             <div className="list-nav flex justify-start basis-2/3 lg:justify-end max-md:basis-full gap-4">
                                 <div className="item flex flex-col basis-1/3 md:basis-1/3">
                                     <div className="text-button-uppercase pb-3">BİLGİ</div>
-                                    <Link className='caption1 has-line-before duration-300 w-fit' to={'/pages/contact'}>İletişim</Link>
-                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/my-account'}>Hakkımızda</Link>
-                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/pages/faqs'}>SSS</Link>
-                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/blog'}>Blog</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit' to={'/iletisim'}>İletişim</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/hakkimizda'}>Hakkımızda</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/sss'}>SSS</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/bloglar'}>Blog</Link>
                                     {/* <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'#!'}>Career</Link>
                                     <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/order-tracking'}>Order  & Returns</Link> */}
                                     
                                 </div>
                                 <div className="item flex flex-col basis-1/3  md:basis-1/3">
                                     <div className="text-button-uppercase pb-3">Ürünler</div>
-                                    <Link className='caption1 has-line-before duration-300 w-fit' to={'/shop/breadcrumb1'}>Plastik Şişeler</Link>
-                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/shop/breadcrumb1'}>Plastik Kavanozlar</Link>
-                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/shop/breadcrumb1'}>Konsept Ürünler</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit' to={'/urunler?category=plastik-siseler'}>Plastik Şişeler</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/urunler?category=plastik-kavanozlar'}>Plastik Kavanozlar</Link>
+                                    <Link className='caption1 has-line-before duration-300 w-fit pt-2' to={'/urunler?category=konsept-urunler'}>Konsept Ürünler</Link>
                                     
                                 </div>
                                 {/* <div className="item flex flex-col basis-1/3 ">
@@ -69,7 +69,7 @@ const Footer = () => {
                                     </form>
                                 </div>
                                 <div className="list-social flex items-center gap-6 mt-4">
-                                    <Link to={'https://www.instagram.com/'} target='_blank'>
+                                    <Link to={'https://www.instagram.com/mertkoplastik/'} target='_blank'>
                                         <div className="icon-instagram text-2xl text-black"></div>
                                     </Link>
                                     {/* <Link to={'https://www.facebook.com/'} target='_blank'>

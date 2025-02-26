@@ -24,23 +24,13 @@ const Header = ({ props }) => {
                         <div className="left-content flex items-center">
                             <ul className='flex items-center gap-5'>
                                 <li>
-                                    <Link to={'/pages/about'} className='caption2 hover:underline'>
-                                        About
+                                    <Link to={'/hakkimizda'} className='caption2 hover:underline'>
+                                        Hakkımızda
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to={'/pages/contact'} className='caption2 hover:underline'>
-                                        Contact
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to={'/pages/store-list'} className='caption2 hover:underline'>
-                                        Store Location
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to={'/pages/faqs'} className='caption2 hover:underline'>
-                                        Help
+                                    <Link to={'/iletisim'} className='caption2 hover:underline'>
+                                        İletişim
                                     </Link>
                                 </li>
                             </ul>
@@ -86,7 +76,7 @@ const Header = ({ props }) => {
                                 <Icon.CaretDown size={12} />
                             </div> */
                             }
-                            <Link to={'https://www.instagram.com/'} target='_blank'>
+                            <Link to={'https://www.instagram.com/mertkoplastik/'} target='_blank'>
                                 <i className="icon-instagram text-black"></i>
                             </Link>
                             {/* <Link to={'https://www.facebook.com/'} target='_blank'>

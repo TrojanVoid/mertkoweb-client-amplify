@@ -9,12 +9,14 @@ const AboutContent = require("../data/AboutContent.json");
 const About = () => {
     return (
         <Layout>
-            <Breadcrumb heading='Hakkımızda' subHeading='Hakkımızda' />
-            <div className='about md:pt-20 pt-10'>
+            <Breadcrumb heading='MERTKO PLASTİK' subHeading='Hakkımızda' />
+            <div className='md:pt-20 pt-10'>
                 <div className="about-us-block">
                     <div className="container">
                         <div className="text flex items-center justify-center">
+
                             <div className="content md:w-5/6 w-full">
+
                             <h1 className="heading3 text-center mt-5">
                               {
                                 /* AboutContent["title"] */
@@ -23,25 +25,33 @@ const About = () => {
                               HAKKIMIZDA
                             </h1>
 
-                            <div className="w-100 d-flex flex-row justify-between align-items-center gap-[10rem]">
-                              <div className="body1 text-center md:mt-7 mt-5 w-50">
+                            <div className="w-100 d-flex flex-col md:flex-row justify-between items-center md:items-start gap-[6rem] md:gap-[10rem] md:mt-10">
+                              {/* First Text Block */}
+                              <div className="body1 text-center mt-5 md:!mt-7 w-[90%] md:w-1/2 pb-2 md:pb-5">
                                   {
-                                    AboutContent["content1"].split(' ').map((item, index) => {
-                                      if(item == "<br/>") return (<br/>)
-                                      return item + " "; 
-                                    })
+                                      AboutContent["content1"].split(' ').map((item, index) => {
+                                          if (item === "<br/>") return (<br key={index} />);
+                                          return item + " ";
+                                      })
                                   }
                               </div>
 
-                              <div className="body1 text-center md:mt-7 mt-5 w-50">
+                              {/* Divider*/}
+                              <div className="md:block self-stretch md:self-stretch w-full h-[0.5px] md:w-[1px] md:h-auto bg-black"></div>
+
+                              {/* Second Text Block */}
+                              <div className="body1 text-center mt-2 md:!mt-7 w-[90%] md:w-1/2 pb-5">
                                   {
-                                    AboutContent["content2"].split(' ').map((item, index) => {
-                                      if(item == "<br/>") return (<br/>)
-                                      return item + " "; 
-                                    })
+                                      AboutContent["content2"].split(' ').map((item, index) => {
+                                          if (item === "<br/>") return (<br key={index} />);
+                                          return item + " ";
+                                      })
                                   }
                               </div>
                             </div>
+
+
+
                           </div>
                         </div>
                         <div className="list-img grid sm:grid-cols-3 gap-[30px] md:pt-20 pt-10">

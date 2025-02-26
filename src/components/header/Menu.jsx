@@ -71,7 +71,7 @@ const Menu = ({ props }) => {
                             <i className="icon-category text-2xl"></i>
                         </div>
                         <Link to={'/'} className='flex items-center absolute left-1/2 transform -translate-x-1/2 lg:hidden'>
-                            <div className="heading4">Mertko</div>
+                            <h1 className="heading4">Mertko</h1>
                         </Link>
                        {/*  <div className="form-search relative max-lg:hidden z-[1]">
                             <Icon.MagnifyingGlass
@@ -93,7 +93,7 @@ const Menu = ({ props }) => {
                         <div className="menu-main h-full xl:w-full flex items-center absolute left-1/2 transform -translate-x-1/2 justify-center max-lg:hidden ">
                             <ul className='flex items-center gap-8 h-full'>
                                 <li className='h-full'>
-                                    <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
+                                    <Link to="/urunler" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
                                         ÜRÜNLER
                                     </Link>
                                     <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
@@ -157,59 +157,9 @@ const Menu = ({ props }) => {
                                 </li>
 
                                 <li className='h-full'>
-                                    <Link to="#!" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
+                                    <Link to="/iletisim" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
                                         İLETİŞİM
                                     </Link>
-                                    <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
-                                        <div className="container">
-                                            <div className="flex justify-between py-8">
-                                                <div className="nav-link basis-2/3 flex justify-between pr-12">
-                                                    <div className="nav-item">
-                                                        <div className="text-button-uppercase pb-2">Shop Features</div>
-                                                        <ul>
-                                                            <li>
-                                                                <Link
-                                                                    to={'/shop/breadcrumb-img'}
-                                                                    className={`link text-secondary duration-300 ${pathname === '/shop/breadcrumb-img' ? 'active' : ''}`}
-                                                                >
-                                                                    Shop Breadcrumb IMG
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="nav-item">
-                                                        <div className="text-button-uppercase pb-2">Shop Features</div>
-                                                        <ul>
-                                                            <li>
-                                                                <Link
-                                                                    to={'/shop/filter-canvas'}
-                                                                    className={`link text-secondary duration-300 ${pathname === '/shop/filter-canvas' ? 'active' : ''}`}
-                                                                >
-                                                                    Shop Filter Canvas
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="nav-item">
-                                                        <div className="text-button-uppercase pb-2">Shop Layout</div>
-                                                        <ul>
-                                                            <li>
-                                                                <Link
-                                                                    to={'/shop/default'}
-                                                                    className={`link text-secondary duration-300 cursor-pointer ${pathname === '/shop/default' ? 'active' : ''}`}
-                                                                >
-                                                                    Shop Default
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="nav-item">
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
                                 </li>
                                 <li className='h-full flex items-center justify-center logo'>
                                     <Link to={'/'} className='heading4'>
@@ -277,7 +227,7 @@ const Menu = ({ props }) => {
 
                                 </li>
                                 <li className='h-full relative'>
-                                    <Link to="/blogs" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
+                                    <Link to="/bloglar" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
                                         Blog
                                     </Link>
                                 </li>
@@ -304,7 +254,9 @@ const Menu = ({ props }) => {
                                 >
                                     <Icon.X size={14} />
                                 </div>
-                                <Link to={'/'} className='logo text-3xl font-semibold text-center'>Mertko</Link>
+                                <Link to={'/'} className='logo text-3xl font-semibold text-center'>
+                                    <h1>Mertko</h1>
+                                </Link>
                             </div>
                             {/* <div className="form-search relative mt-2">
                                 <Icon.MagnifyingGlass size={20} className='absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer' />
@@ -316,7 +268,9 @@ const Menu = ({ props }) => {
                                         className={`${openSubNavMobile === 2 ? 'open' : ''}`}
                                         onClick={() => handleOpenSubNavMobile(2)}
                                     >
-                                        <a href={'#!'} className='text-xl font-semibold flex items-center justify-between mt-5'>Features
+                                        <a href={'#!'} className='text-xl font-semibold flex items-center justify-between mt-5'>
+                                            
+                                            <h2>Ürünler</h2>
                                             <span className='text-right'>
                                                 <Icon.CaretRight size={20} />
                                             </span>
@@ -327,10 +281,20 @@ const Menu = ({ props }) => {
                                                 onClick={() => handleOpenSubNavMobile(2)}
                                             >
                                                 <Icon.CaretLeft />
-                                                Back
+                                                <span className="text-lg font-bold">Geri</span>
                                             </div>
-                                            <div className="list-nav-item w-full pt-3 pb-12">
-                                                <div className="nav-link grid grid-cols-2 gap-5 gap-y-6">
+                                            <div className="list-nav-item flex flex-col gap-4 text-lg w-full pt-4 pb-[15rem] pl-[2rem]">
+                                                <Link to="urunler?category=plastik-siseler"  className="hover:underline decoration-[1.5px]">
+                                                    Plastik Şişeler
+                                                </Link>
+                                                <Link to="urunler?category=plastik-kavanozlar"  className="hover:underline decoration-[1.5px]">
+                                                    Plastik Kavanozlar
+                                                </Link>
+                                                <Link to="urunler?category=konsept-urunler" className="hover:underline decoration-[1.5px]" >
+                                                    Konsept Ürünler
+                                                </Link>
+
+                                                {/* <div className="nav-link grid grid-cols-2 gap-5 gap-y-6">
                                                     <div className="nav-item">
                                                         <div className="text-button-uppercase pb-1">For Men</div>
                                                         <ul>
@@ -457,7 +421,9 @@ const Menu = ({ props }) => {
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                </div>
+                                                </div> */}
+
+{/* 
                                                 <div className="banner-ads-block grid sm:grid-cols-2 items-center gap-6 pt-6">
                                                     <div className="banner-ads-item bg-linear rounded-2xl relative overflow-hidden" onClick={() => handleTypeClick('swimwear')}>
                                                         <div className="text-content py-14 pl-8 relative z-[1]">
@@ -491,190 +457,44 @@ const Menu = ({ props }) => {
                                                             className='basis-1/3 absolute right-0 top-0'
                                                         />
                                                     </div>
-                                                </div>
+                                                </div> */}
+
                                             </div>
                                         </div>
                                     </li>
                                     <li
-                                        className={`${openSubNavMobile === 3 ? 'open' : ''}`}
-                                        onClick={() => handleOpenSubNavMobile(3)}
+                                        /* className={`${openSubNavMobile === 3 ? 'open' : ''}`}
+                                        onClick={() => handleOpenSubNavMobile(3)} */
                                     >
-                                        <a href={'#!'} className='text-xl font-semibold flex items-center justify-between mt-5'>Shop
-                                            <span className='text-right'>
+                                        <a href={'/iletisim'} className='text-xl font-semibold flex items-center justify-between mt-5'>
+                                            <h2>İletişim</h2>
+                                            {/* <span className='text-right'>
                                                 <Icon.CaretRight size={20} />
-                                            </span>
+                                            </span> */}
                                         </a>
-                                        <div className="sub-nav-mobile">
-                                            <div
-                                                className="back-btn flex items-center gap-3"
-                                                onClick={() => handleOpenSubNavMobile(3)}
-                                            >
-                                                <Icon.CaretLeft />
-                                                Back
-                                            </div>
-                                            <div className="list-nav-item w-full pt-3 pb-12">
-                                                <div className="">
-                                                    <div className="nav-link grid grid-cols-2 gap-5 gap-y-6 justify-between">
-                                                        <div className="nav-item">
-                                                            <div className="text-button-uppercase pb-1">Shop Features</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/shop/breadcrumb-img'}
-                                                                        className={`text-secondary duration-300 ${pathname === '/shop/breadcrumb-img' ? 'active' : ''}`}
-                                                                    >
-                                                                        Shop Breadcrumb IMG
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="nav-item">
-                                                            <div className="text-button-uppercase pb-1">Shop Features</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/shop/filter-canvas'}
-                                                                        className={`text-secondary duration-300 ${pathname === '/shop/filter-canvas' ? 'active' : ''}`}
-                                                                    >
-                                                                        Shop Filter Canvas
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="nav-item">
-                                                            <div className="text-button-uppercase pb-1">Shop Layout</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/shop/default'}
-                                                                        className={`link text-secondary duration-300 cursor-pointer ${pathname === '/shop/default' ? 'active' : ''}`}
-                                                                    >
-                                                                        Shop Default
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="nav-item">
-                                                            <div className="text-button-uppercase pb-1">Products Pages</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/wishlist'}
-                                                                        className={`text-secondary duration-300 ${pathname === '/wishlist' ? 'active' : ''}`}
-                                                                    >
-                                                                        Wish List
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div className="recent-product pt-3">
-                                                        <div className="text-button-uppercase pb-1">Recent Products</div>
-                                                        <div className="list-product hide-product-sold  grid grid-cols-2 gap-5 mt-3">
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </li>
                                     <li
-                                        className={`${openSubNavMobile === 4 ? 'open' : ''}`}
-                                        onClick={() => handleOpenSubNavMobile(4)}
+                                        /* className={`${openSubNavMobile === 4 ? 'open' : ''}`}
+                                        onClick={() => handleOpenSubNavMobile(4)} */
                                     >
-                                        <a href={'#!'} className='text-xl font-semibold flex items-center justify-between mt-5'>Product
-                                            <span className='text-right'>
+                                        <a href={'/hakkimizda'} className='text-xl font-semibold flex items-center justify-between mt-5'>
+                                            <h2>Hakkımızda</h2>
+                                            {/* <span className='text-right'>
                                                 <Icon.CaretRight size={20} />
-                                            </span>
+                                            </span> */}
                                         </a>
-                                        <div className="sub-nav-mobile">
-                                            <div
-                                                className="back-btn flex items-center gap-3"
-                                                onClick={() => handleOpenSubNavMobile(4)}
-                                            >
-                                                <Icon.CaretLeft />
-                                                Back
-                                            </div>
-                                            <div className="list-nav-item w-full pt-3 pb-12">
-                                                <div className="">
-                                                    <div className="nav-link grid grid-cols-2 gap-5 gap-y-6 justify-between">
-                                                        <div className="nav-item">
-                                                            <div className="text-button-uppercase pb-1">Products Features</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/product/default'}
-                                                                        className={`text-secondary duration-300 ${pathname === '/product/default' ? 'active' : ''}`}
-                                                                    >
-                                                                        Products Defaults
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="nav-item">
-                                                            <div className="text-button-uppercase pb-1">Products Features</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/product/external'}
-                                                                        className={`text-secondary duration-300 ${pathname === '/product/external' ? 'active' : ''}`}
-                                                                    >
-                                                                        Products External
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="nav-item col-span-2">
-                                                            <div className="text-button-uppercase pb-1">Products Layout</div>
-                                                            <ul>
-                                                                <li>
-                                                                    <Link
-                                                                        to={'/product/thumbnail-left'}
-                                                                        className={`link text-secondary duration-300 ${pathname === '/product/thumbnail-left' ? 'active' : ''}`}
-                                                                    >
-                                                                        Products Thumbnails Left
-                                                                    </Link>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div className="recent-product pt-4">
-                                                        <div className="text-button-uppercase pb-1">Recent Products</div>
-                                                        <div className="list-product hide-product-sold  grid grid-cols-2 gap-5 mt-3">
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </li>
                                     <li
-                                        className={`${openSubNavMobile === 5 ? 'open' : ''}`}
-                                        onClick={() => handleOpenSubNavMobile(5)}
+                                        /* className={`${openSubNavMobile === 5 ? 'open' : ''}`}
+                                        onClick={() => handleOpenSubNavMobile(5)} */
                                     >
-                                        <a href={'#!'} className='text-xl font-semibold flex items-center justify-between mt-5'>Blog
-                                            <span className='text-right'>
+                                        <a href={'/bloglar'} className='text-xl font-semibold flex items-center justify-between mt-5'>
+                                            <h2>Blog</h2>
+                                            {/* <span className='text-right'>
                                                 <Icon.CaretRight size={20} />
-                                            </span>
+                                            </span> */}
                                         </a>
-                                        <div className="sub-nav-mobile">
-                                            <div
-                                                className="back-btn flex items-center gap-3"
-                                                onClick={() => handleOpenSubNavMobile(5)}
-                                            >
-                                                <Icon.CaretLeft />
-                                                Back
-                                            </div>
-                                            <div className="list-nav-item w-full pt-2 pb-6">
-                                                <ul className='w-full'>
-                                                    <li>
-                                                        <Link to="/blog/default" className={`text-secondary duration-300 ${pathname === '/blog/default' ? 'active' : ''}`}>
-                                                            Blog Default
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
                                     </li>
                                 </ul>
                             </div>

@@ -12,24 +12,11 @@ import '../style/pages/products.scss';
 
 const {types, requestByType} = require("../apis/ProductApi");
 const productCategoriesData = require("../data/ProductCategories.json")["productCategories"];
-const productCategories = productCategoriesData.map((entry) => {
-    return entry["key"];
-});
-const productCategoryNames = productCategoriesData.map((entry) => {
-   return entry["tr"]["name"]
-}); 
 
 const convertShortKeyToCategory = (shortKey) => {
     return productCategoriesData.find(entry => entry["shortKey"] === shortKey)["key"];
 }
 
-console.log("categories data: ", productCategoriesData);
-/* interface Props {
-    data: Array<ProductType>;
-    productPerPage: number
-    dataType: string | null
-}
- */
 
 const sortBy = {
   VOLUME: 'volume',

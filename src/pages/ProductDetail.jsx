@@ -102,7 +102,7 @@ const ProductDetail = () => {
                                 width={1000}
                                 height={1000}
                                 alt={image.altDescription ? image.altDescription : data.name}
-                                className='w-full aspect-[3/4] object-cover rounded-xl'
+                                className='w-full aspect-[3/4] object-cover rounded-xl border-white border-1'
                               />
                             </SwiperSlide>
                             )
