@@ -8,7 +8,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../util/HandlePagination';
 import Layout from '../global/Layout';
-import '../style/pages/products.scss';
+import '../style/pages/Products.scss';
 
 const {types, requestByType} = require("../apis/ProductApi");
 const productCategoriesData = require("../data/ProductCategories.json")["productCategories"];
