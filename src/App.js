@@ -10,20 +10,18 @@ import BlogDetail from './pages/BlogDetail';
 import Main from './panel/layouts/Main';
 import Signin from "./panel/pages/Signin";
 import Signup from "./panel/pages/Signup";
-
+import { UserProvider } from './panel/context/UserContext';
 import publicRoutes from "./panel/routes/PublicRoutes";
 import protectedRoutes from "./panel/routes/ProtectedRoutes";
 
 // import css
 import "./panel/assets/css/remixicon.css";
-
 // import scss
-import "./panel/scss/style.scss";
-
+import "./panel/scss/style.module.scss";
 
 const App = () => {
   return (
-
+<UserProvider>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="anasayfa" element={<Home />} />
@@ -34,7 +32,6 @@ const App = () => {
       <Route path="urun-detay" element={<ProductDetail />} />
       <Route path="urunler" element={<Products />} />
       <Route path="urunler/:productId" element={<ProductDetail />} />
-      
       <Route path="/panel" element={<Main />}>
               {protectedRoutes.map((route, index) => {
                 return (
@@ -60,6 +57,7 @@ const App = () => {
             <Route path="*" element={<Home />} />
      
     </Routes>
+    </UserProvider>
   );
 };
 
