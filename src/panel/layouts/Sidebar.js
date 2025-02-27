@@ -29,7 +29,7 @@ export default function Sidebar() {
     return (
         <div className="sidebar">
             <div className="sidebar-header">
-                <Link to="/" className="sidebar-logo">MeraklıKids</Link>
+                <Link to="/dashboard" className="sidebar-logo">Mertko Dashboard</Link>
             </div>
             <PerfectScrollbar className="sidebar-body" ref={scrollBarRef}>
                 <SidebarMenu onUpdateSize={updateScroll} />

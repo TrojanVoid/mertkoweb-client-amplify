@@ -102,7 +102,11 @@ const Home = () => {
                         />
                     </div>
                 </div>
-                <LocationMap />
+
+                <div className="container">
+                  <LocationMap />
+
+                </div>
             </div>
 
             {/* <Contact /> */} // TODO: Maybe re-implement this?

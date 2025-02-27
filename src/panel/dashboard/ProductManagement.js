@@ -13,6 +13,8 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+const {requestByType, types} = require("../../apis/ProductApi"); // TODO Use this API definition to fetch products
+
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
