@@ -4,8 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Thumbs, FreeMode } from 'swiper/modules';
-import SwiperCore from 'swiper/core';
-import Marquee from 'react-fast-marquee';
+import Benefit from '../components/Benefit';
 import { useNavigate } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import 'swiper/css/bundle';
@@ -175,29 +174,14 @@ const ProductDetail = () => {
                                     <p>Mauris in nisl scelerisque massa consectetur pretium sed et mauris.</p>
                                 </div>
                             </div>
+
+                          <div className='pt-[3rem]'>
+                            <Benefit/>
+                          </div>
                     </div>
-                    <div className="grid px-10 lg:grid-cols-4 grid-cols-2 gap-[30px] md:mt-[5rem] mt-6">
-                        <div className="item">
-                            <div className="icon-delivery-truck text-4xl"></div>
-                            <div className="heading6 mt-4">Shipping Faster</div>
-                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
-                        </div>
-                        <div className="item">
-                            <div className="icon-cotton text-4xl"></div>
-                            <div className="heading6 mt-4">Cotton Material</div>
-                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
-                        </div>
-                        <div className="item">
-                            <div className="icon-guarantee text-4xl"></div>
-                            <div className="heading6 mt-4">High Quality</div>
-                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
-                        </div>
-                        <div className="item">
-                            <div className="icon-leaves-compatible text-4xl"></div>
-                            <div className="heading6 mt-4">highly compatible</div>
-                            <div className="text-secondary mt-2">Use on walls, furniture, doors and many more surfaces. The possibilities are endless.</div>
-                        </div>
-                    </div>
+                    
+                    
+
                 </div>
             </div>
         

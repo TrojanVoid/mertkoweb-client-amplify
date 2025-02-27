@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Offcanvas, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import "../style/components/Sidebar.scss";
+import "../style/components/sidebar.scss";
 
 const Sidebar = () => {
   const [show, setShow] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import "../style/components/Contact.scss";
+import "../style/components/contact.scss";
 
 const Contact = () => {
   const [contactInfo, setContactInfo] = useState({
@@ -26,7 +26,7 @@ const Contact = () => {
 
   return (
     <Container fluid className="contact-page mt-5 d-flex flex-column justify-content-center align-items-center">
-      
+
       <Row className="map-container mb-5">
         <Col>
           <iframe

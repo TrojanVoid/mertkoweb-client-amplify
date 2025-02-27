@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../global/Layout';
-import "../style/pages/Home.scss";
+import "../style/pages/home.scss";
 import DynamicCarousel from '../components/DynamicCarousel';
 import MainSlider from '../components/MainSlider';
 import ProductSlider from '../components/ProductSlider';
@@ -22,11 +22,6 @@ const Home = () => {
   
   return (
     <Layout>
-        <div id="home" className="page-label disabled">
-          <h3>
-            Ana Sayfa
-          </h3>
-        </div>
         <div className="home-page d-flex flex-column justify-content-center align-items-center">
           <div className="carousel-container w-100">
             <MainSlider />
@@ -42,31 +37,36 @@ const Home = () => {
             <div className="about-container w-full">
                 <div className="text flex items-center justify-center">
                     <div className="content md:w-5/6 w-full">
-                    
-                        <h1 className="heading3 text-center mt-5">
-                            {
-                              /* AboutContent["title"] */
-                              
-                            }
-                            HAKKIMIZDA
+
+                    <h1 className="heading3 text-center mt-5">
+                          {
+                            /* AboutContent["title"] */
+                            
+                          }
+                          HAKKIMIZDA
                         </h1>
 
-                        <div className="w-100 d-flex flex-row justify-between align-items-center gap-[10rem]">
-                          <div className="body1 text-center md:mt-7 mt-5 w-50">
+                        <div className="w-100 d-flex flex-col md:flex-row justify-between items-center md:items-start gap-[6rem] md:gap-[10rem] md:mt-10">
+                          {/* First Text Block */}
+                          <div className="body1 text-center mt-5 md:!mt-7 w-[90%] md:w-1/2 pb-2 md:pb-5">
                               {
-                                AboutContent["content1"].split(' ').map((item, index) => {
-                                  if(item == "<br/>") return (<br/>)
-                                  return item + " "; 
-                                })
+                                  AboutContent["content1"].split(' ').map((item, index) => {
+                                      if (item === "<br/>") return (<br key={index} />);
+                                      return item + " ";
+                                  })
                               }
                           </div>
 
-                          <div className="body1 text-center md:mt-7 mt-5 w-50">
+                          {/* Divider*/}
+                          <div className="md:block self-stretch md:self-stretch w-full h-[0.5px] md:w-[1px] md:h-auto bg-white"></div>
+
+                          {/* Second Text Block */}
+                          <div className="body1 text-center mt-2 md:!mt-7 w-[90%] md:w-1/2 pb-5">
                               {
-                                AboutContent["content2"].split(' ').map((item, index) => {
-                                  if(item == "<br/>") return (<br/>)
-                                  return item + " "; 
-                                })
+                                  AboutContent["content2"].split(' ').map((item, index) => {
+                                      if (item === "<br/>") return (<br key={index} />);
+                                      return item + " ";
+                                  })
                               }
                           </div>
                         </div>

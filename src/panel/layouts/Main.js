@@ -19,8 +19,10 @@ export default function Main() {
 
   return (
     <React.Fragment>
-      <Sidebar />
-      <Outlet />
-    </React.Fragment>
+      <div className="panel-wrapper">
+        <Sidebar />
+        <Outlet />
+      </div>
+    </React.Fragment> 
   )
 }

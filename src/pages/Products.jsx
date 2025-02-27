@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import * as Icon from "@phosphor-icons/react/dist/ssr";
 /* import { ProductType } from '@/type/ProductType' */
 import Product from '../components/Product';
@@ -8,8 +8,9 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../util/HandlePagination';
 import Layout from '../global/Layout';
-import '../style/pages/Products.scss';
+import '../style/pages/products.scss';
 
+const {Logger, TITLE_TAGS} = require('../util/Logger');
 const {types, requestByType} = require("../apis/ProductApi");
 const productCategoriesData = require("../data/ProductCategories.json")["productCategories"];
 
@@ -59,11 +60,17 @@ const Products = () => {
     const [searchParams] = useSearchParams();
     const categoryParam = searchParams.get('category');
 
+    const navigate = useNavigate();
+
 
     const fetchProducts = async () => {
         try {
             const response = await requestByType(types.allProducts);
             const products = response.data;
+            if(!products){
+              Logger.error(`Error fetching products`, TITLE_TAGS.UI_COMPONENT);
+              navigate('/');
+            }
             setProducts(products);
             setFilteredProducts(products);
             setPageCount(Math.ceil(products.length / productsPerPage));
@@ -73,7 +80,7 @@ const Products = () => {
             setVolumeRange([0, maxVolumeInProducts]);
             setMaxVolume(maxVolumeInProducts);
         } catch (error) {
-            console.error('Error fetching products:', error);
+            Logger.error(`Error fetching products: ${error}`, TITLE_TAGS.UI_COMPONENT);
         }
     }
 
