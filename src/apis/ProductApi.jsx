@@ -1,4 +1,3 @@
-import { Feather } from "@phosphor-icons/react";
 import axios from "axios";
 
 const {TITLE_TAGS, Logger} = require("../util/Logger");
@@ -8,7 +7,7 @@ const baseUrl = (envMode == "development" || envMode == "production")
   ? apiConfig[envMode]["apiUrl"] 
   : apiConfig["production"]["apiUrl"];
 
-export const types = {
+export const types = {  
   allProducts: "allProducts",
   singleProduct: "singleProduct",
   carouselImages: "carouselImages",

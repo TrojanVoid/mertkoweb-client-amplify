@@ -8,7 +8,6 @@ import ProductDetail from './pages/ProductDetail';
 import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
 import Main from './panel/layouts/Main';
-//import Signin from "./panel/pages/Signin";
 import Signin2 from './panel/pages/Signin2';
 import Signup from "./panel/pages/Signup";
 import { UserProvider } from './panel/context/UserContext';
@@ -24,7 +23,6 @@ const App = () => {
   return (
     <UserProvider>
       <Routes>
-
         {/* Mertko Website Routes */}
         <Route path="/" element={<Home />} />
         <Route path="anasayfa" element={<Home />} />
@@ -56,11 +54,9 @@ const App = () => {
             />
           );
         })}
-
-        <Route path="/panel/signin" element={<Signin2 />} />
+        <Route path="/admin" element={<Signin2 />} />
         <Route path="/panel/signup" element={<Signup />} />
         <Route path="*" element={<Home />} />
-      
       </Routes>
     </UserProvider>
   );

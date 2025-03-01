@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Icon from "@phosphor-icons/react";
-import "../style/components/Footer.scss";
+import "../style/components/footer.scss";
 
 const Footer = () => {
     return (

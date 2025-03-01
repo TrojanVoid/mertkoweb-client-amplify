@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import * as Icon from "@phosphor-icons/react/dist/ssr";
-import "../../style/components/Header.scss";
+import "../../style/components/header.scss";
 import Banner from './Banner';
 import HeaderSlider from './HeaderSlider';
 import Menu from './Menu';
