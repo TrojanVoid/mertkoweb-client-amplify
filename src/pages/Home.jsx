@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../global/Layout';
-import "../style/pages/home.scss";
+import "../style/pages/Home.scss";
 import DynamicCarousel from '../components/DynamicCarousel';
 import MainSlider from '../components/MainSlider';
 import ProductSlider from '../components/ProductSlider';

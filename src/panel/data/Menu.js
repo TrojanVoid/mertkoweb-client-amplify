@@ -44,64 +44,17 @@ const dashboardMenu = [
   },
   {
     "label": "Tanımlar",
-    "link": "/dashboard/sales",
-    "icon": "ri-settings-3-line",
+    "link": "/dashboard/variants",
+    "icon": "ri-settings-line",
     "submenu": [
-      {
-        "label": "Birimler",
-        "link": "/dashboard/sales/units",
-        "icon": "ri-ruler-line"
-      },
-      {
-        "label": "Vergi",
-        "link": "/dashboard/sales/tax",
-        "icon": "ri-file-paper-2-line"
-      },
-      {
-        "label": "Döviz",
-        "link": "/dashboard/sales/currency",
-        "icon": "ri-exchange-dollar-line"
-      },
-      {
-        "label": "Kargo",
-        "link": "/dashboard/sales/shipping",
-        "icon": "ri-truck-line"
-      },
-      {
-        "label": "Marka",
-        "link": "/dashboard/sales/brand",
-        "icon": "ri-star-line"
-      },
-      {
-        "label": "Slider",
-        "link": "/dashboard/sales/slider",
-        "icon": "ri-slideshow-line"
-      },
       {
         "label": "Banner",
-        "link": "/dashboard/sales/banner",
-        "icon": "ri-image-line"
-      }
-    ]
-  },
-  {
-    "label": "Kullanıcı Sistemi",
-    "link": "/dashboard/analytics",
-    "icon": "ri-user-settings-line",
-    "submenu": [
-      {
-        "label": "Müşteriler",
-        "link": "/dashboard/analytics/customers",
-        "icon": "ri-group-line"
+        "link": "/dashboard/variants",
+        "icon": "ri-key-line"
       },
       {
-        "label": "Kullanıcılar",
-        "link": "/dashboard/analytics/users",
-        "icon": "ri-user-line"
-      },
-      {
-        "label": "Yetkilendirmeler",
-        "link": "/dashboard/analytics/roles",
+        "label": "Hakkımızda",
+        "link": "/dashboard/hakkimizda",
         "icon": "ri-key-line"
       }
     ]
@@ -111,16 +64,7 @@ const dashboardMenu = [
     "link": "/dashboard/crypto",
     "icon": "ri-article-line",
     "submenu": [
-      {
-        "label": "Kategoriler",
-        "link": "/dashboard/crypto/categories",
-        "icon": "ri-folders-line"
-      },
-      {
-        "label": "Yazılar",
-        "link": "/dashboard/crypto/posts",
-        "icon": "ri-file-list-line"
-      }
+     {"label": "Bloglar", "link": "/dashboard/variants", "icon": "ri-article-line"},
     ]
   },
   {
@@ -155,7 +99,7 @@ const dashboardMenu = [
   {
     "label": "Genel Ayarlar",
     "link": "/dashboard/product",
-    "icon": "ri-settings-line",
+    "icon": "ri-settings-3-line",
     "submenu": [
       {
         "label": "META",

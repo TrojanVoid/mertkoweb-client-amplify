@@ -65,7 +65,7 @@ export default function HelpdeskService() {
                 <Link to="#">Dashboard</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-              Banner Tanımları
+               Hakkımızda
               </li>
             </ol>
           </div>

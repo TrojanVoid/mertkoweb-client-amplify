@@ -12,7 +12,7 @@ export default function VerifyAccount() {
     <div className="page-auth">
       <div className="header">
         <Container>
-          <Link to="/" className="header-logo">MeraklıKids</Link>
+          <Link to="/" className="header-logo">CBS</Link>
           <Nav className="nav-icon">
             <Nav.Link href=""><i className="ri-twitter-fill"></i></Nav.Link>
             <Nav.Link href=""><i className="ri-github-fill"></i></Nav.Link>

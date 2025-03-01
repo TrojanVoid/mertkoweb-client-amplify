@@ -11,6 +11,7 @@ import StorageManagement from "../dashboard/StorageManagement";
 import ProductManagement from "../dashboard/ProductManagement";
 import Variants from "../dashboard/Variants";
 import VariantTypes from "../dashboard/VariantTypes";
+import Hakkimizda from "../dashboard/Hakkimizda";
 
 // Apps
 import GalleryMusic from "../apps/GalleryMusic";
@@ -85,6 +86,7 @@ import IconFeather from "../docs/IconFeather";
 
 const protectedRoutes = [
   { path: "finance", element: <FinanceMonitoring /> },
+    {path: "hakkimizda", element: <Hakkimizda/>},
   { path: "studio", element: <AnimationStudio /> },
   { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },

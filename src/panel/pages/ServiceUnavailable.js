@@ -10,7 +10,7 @@ export default function ServiceUnavailable() {
     <div className="page-error">
       <div className="header">
         <Container>
-          <a href="/" className="sidebar-logo">MeraklıKids</a>
+          <a href="/" className="sidebar-logo">CBS</a>
           <Nav className="nav-icon">
             <Nav.Link href=""><i className="ri-twitter-fill"></i></Nav.Link>
             <Nav.Link href=""><i className="ri-github-fill"></i></Nav.Link>

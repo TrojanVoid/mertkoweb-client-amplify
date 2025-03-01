@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import {
@@ -13,130 +13,203 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const {requestByType, types} = require("../../apis/ProductApi"); // TODO Use this API definition to fetch products
-
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  // Drag & Drop için state ve handler fonksiyonları ekleyin:
+const [dragActive, setDragActive] = useState(false);
 
-  // Modal durumları
+const handleDragOver = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setDragActive(true);
+};
+
+const handleDragLeave = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setDragActive(false);
+};
+
+const handleDrop = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setDragActive(false);
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    handleFileChange(e); 
+  }
+};
+
+  
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
 
-  // Seçili ürün
+  
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Sıralama ayarları
+  
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  // Sayfalama ayarları
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 40;
 
-  // Sütun bazlı arama state'leri
+  
   const [searchName, setSearchName] = useState("");
-  const [searchBrand, setSearchBrand] = useState("");
-  const [searchSKU, setSearchSKU] = useState("");
-  const [searchStock, setSearchStock] = useState("");
-  const [searchSeason, setSearchSeason] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
-
+  const [searchVolume, setSearchVolume] = useState("");
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch("http://localhost:3000/api/products");
+        
+        const response = await fetch("http://localhost:5001/api/all-products");
         if (!response.ok) {
           throw new Error("Ürünler çekilemedi.");
         }
         const data = await response.json();
+       
         const mappedProducts = data.map((product) => ({
-          id: product.sku,
-          name: product.baslik,
-          aciklama: product.aciklama,
-          brand: product.marka,
-          sku: product.sku,
-          stock: product.stok,
-          season: product.sezon,
-          category: product.kategori,
-          anaKategori: product.anaKategori,
-          alisFiyati: product.alisFiyati,
-          satisFiyati: product.satisFiyati,
-          paraBirimi: product.paraBirimi,
-          barkod: product.barkod,
-          vergi: product.vergi,
-          birim: product.birim,
-          birimAdet: product.birimAdet,
-          grup: product.grup,
-          createdAt: product.createdAt,
-          updatedAt: product.updatedAt,
-          selected: false,
-          status: true,
+          ...product,
+          isSelected: product.isSelected || false,
+          
         }));
+        
+        for(let i=0; i<mappedProducts.length; i++){
+          if(mappedProducts[i].category==="p"){
+            mappedProducts[i].category="Plastik Şişe";
+          }
+          else if(mappedProducts[i].category=="k"){
+            mappedProducts[i].category="Plastik Kavanoz"
+          }
+          else if(mappedProducts[i].category==="c"){
+            mappedProducts[i].category="Konsept Ürün";
+          }
+         
+          
+        }
         setProducts(mappedProducts);
       } catch (error) {
         console.error("Ürünleri çekme hatası:", error);
       }
       setLoading(false);
     }
+
     fetchProducts();
   }, []);
 
-  // Ürün ekleme (geçici)
+  
   const addProduct = () => {
     const newProduct = {
       id: `NEW-${Date.now()}`,
       name: `Yeni Ürün ${products.length + 1}`,
-      aciklama: "Detay girilmedi",
-      brand: "Bilinmeyen",
-      sku: `SKU${Math.floor(100000 + Math.random() * 900000)}`,
-      stock: 100,
-      season: "Belirtilmemiş",
+      volume: 0,
       category: "Genel",
-      anaKategori: "Genel",
-      alisFiyati: "0",
-      satisFiyati: "0",
-      paraBirimi: "TL",
-      barkod: "",
-      vergi: "0",
-      birim: "Adet",
-      birimAdet: "1",
-      grup: "",
+      description: "Detay girilmedi",
+      isBestSeller: false,
+      isNewRelease: false,
+      isSelected: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      selected: false,
-      status: true,
+      images: [],
     };
     setProducts([...products, newProduct]);
   };
 
-  // Seçili ürünleri silme
+
   const deleteSelectedProducts = () => {
-    setProducts(products.filter((p) => !p.selected));
+    setProducts(products.filter((p) => !p.isSelected));
   };
 
-  // Tek ürün silme
+
   const deleteProduct = (id, e) => {
     e.stopPropagation();
     setProducts(products.filter((p) => p.id !== id));
   };
 
-  // Ürün seçme
+   // Çoklu dosya seçimi için:
+const handleMultipleFileChange = (e) => {
+  const files = Array.from(e.target.files);
+  if (files.length > 0) {
+    const newImages = files.map((file) => ({
+      image: file,
+      imageUrl: URL.createObjectURL(file),
+    }));
+    setSelectedProduct({
+      ...selectedProduct,
+      images: [...(selectedProduct.images || []), ...newImages],
+    });
+  }
+};
+
+// Drag & Drop olayları (daha önce tanımladığınız handleDragOver/Leave ile uyumlu)
+const handleImageDrop = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setDragActive(false);
+  const files = Array.from(e.dataTransfer.files);
+  if (files.length > 0) {
+    const newImages = files.map((file) => ({
+      image: file,
+      imageUrl: URL.createObjectURL(file),
+    }));
+    setSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      images: [...(prevProduct.images || []), ...newImages],
+    }));
+  }
+};
+
+
+// Görsel silme
+const removeImage = (index) => {
+  const updatedImages = selectedProduct.images.filter((_, i) => i !== index);
+  setSelectedProduct({
+    ...selectedProduct,
+    images: updatedImages,
+  });
+};
+
+// Görsel sıralamasını değiştirme: Yukarı taşıma
+const moveImageUp = (index) => {
+  if (index <= 0) return;
+  const updatedImages = [...selectedProduct.images];
+  [updatedImages[index - 1], updatedImages[index]] = [updatedImages[index], updatedImages[index - 1]];
+  setSelectedProduct({
+    ...selectedProduct,
+    images: updatedImages,
+  });
+};
+
+// Görsel sıralamasını değiştirme: Aşağı taşıma
+const moveImageDown = (index) => {
+  if (index >= selectedProduct.images.length - 1) return;
+  const updatedImages = [...selectedProduct.images];
+  [updatedImages[index], updatedImages[index + 1]] = [updatedImages[index + 1], updatedImages[index]];
+  setSelectedProduct({
+    ...selectedProduct,
+    images: updatedImages,
+  });
+};
+
+ 
   const toggleSelectProduct = (id, e) => {
     e.stopPropagation();
     setProducts(
-      products.map((p) => (p.id === id ? { ...p, selected: !p.selected } : p))
+      products.map((p) =>
+        p.id === id ? { ...p, isSelected: !p.isSelected } : p
+      )
     );
   };
+  
 
-  // Tümünü seçme
   const toggleSelectAll = (e) => {
     e.stopPropagation();
-    const allSelected = products.every((p) => p.selected);
-    setProducts(products.map((p) => ({ ...p, selected: !allSelected })));
+    const allSelected = products.every((p) => p.isSelected);
+    setProducts(products.map((p) => ({ ...p, isSelected: !allSelected })));
   };
 
-  // Sıralama
+  
   const sortColumn = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -145,7 +218,7 @@ export default function ProductManagement() {
     setSortConfig({ key, direction });
   };
 
-  // Sıralama ikonu
+
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) {
       return <i className="ri-arrow-up-down-line ms-1 text-muted"></i>;
@@ -157,17 +230,30 @@ export default function ProductManagement() {
     );
   };
 
-  // Detay modalı
+
   const openDetailModal = (product) => {
     setSelectedProduct(product);
     setShowDetailModal(true);
   };
+
   const closeDetailModal = () => {
     setSelectedProduct(null);
     setShowDetailModal(false);
   };
 
-  // Düzenleme modalı
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedProduct({
+        ...selectedProduct,
+        image: file, // Dosya nesnesi, sunucuya FormData ile gönderilebilir
+        imageUrl: URL.createObjectURL(file) // Önizleme için geçici URL
+      });
+    }
+  };
+  
+
+
   const openEditModal = (product, e) => {
     e.stopPropagation();
     setSelectedProduct(product);
@@ -178,45 +264,40 @@ export default function ProductManagement() {
     setShowEditModal(false);
   };
   const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setSelectedProduct({ ...selectedProduct, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setSelectedProduct({
+      ...selectedProduct,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
-  const saveProductChanges = () => {
-    setProducts(
-      products.map((p) => (p.id === selectedProduct.id ? selectedProduct : p))
-    );
-    closeEditModal();
+  const saveProductChanges = async () => {
+    try {
+      const response = await fetch(`http://localhost:5001/api/update-product/${selectedProduct.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(selectedProduct)
+      });
+      if (!response.ok) {
+        console.log("ürün güncelleme başarısız");
+        throw new Error("Ürün güncelleme başarısız");
+      }
+      const updatedProduct = await response.json();
+      setProducts(
+        products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+      );
+      console.log("Ürün güncellendi:", updatedProduct);
+      closeEditModal();
+    } catch (error) {
+      console.error("Ürün güncellenirken hata:", error);
+    }
   };
 
-  // Çoklu sütun arama + sıralama -> filteredProducts
-  const multiFilteredProducts = React.useMemo(() => {
-    // Önce çoklu sütun arama yapalım
+
+  const multiFilteredProducts = useMemo(() => {
     let temp = products.filter((p) => {
-      // "görsel" hariç diğer sütunlarda arıyoruz
       if (
         searchName &&
         !p.name.toLowerCase().includes(searchName.toLowerCase())
-      ) {
-        return false;
-      }
-      if (
-        searchBrand &&
-        !p.brand.toLowerCase().includes(searchBrand.toLowerCase())
-      ) {
-        return false;
-      }
-      if (searchSKU && !p.sku.toLowerCase().includes(searchSKU.toLowerCase())) {
-        return false;
-      }
-      if (
-        searchStock &&
-        !String(p.stock).toLowerCase().includes(searchStock.toLowerCase())
-      ) {
-        return false;
-      }
-      if (
-        searchSeason &&
-        !p.season.toLowerCase().includes(searchSeason.toLowerCase())
       ) {
         return false;
       }
@@ -226,46 +307,36 @@ export default function ProductManagement() {
       ) {
         return false;
       }
+      if (searchVolume && !String(p.volume).includes(searchVolume)) {
+        return false;
+      }
       return true;
     });
 
-    // Sonra sıralama (sortConfig)
     if (sortConfig.key) {
       const { key, direction } = sortConfig;
       temp.sort((a, b) => {
-        const valA = key === "stock" ? Number(a[key]) : a[key];
-        const valB = key === "stock" ? Number(b[key]) : b[key];
+        const valA = key === "volume" ? Number(a[key]) : a[key];
+        const valB = key === "volume" ? Number(b[key]) : b[key];
         if (valA < valB) return direction === "asc" ? -1 : 1;
         if (valA > valB) return direction === "asc" ? 1 : -1;
         return 0;
       });
     }
-
     return temp;
-  }, [
-    products,
-    sortConfig,
-    searchName,
-    searchBrand,
-    searchSKU,
-    searchStock,
-    searchSeason,
-    searchCategory,
-  ]);
+  }, [products, sortConfig, searchName, searchCategory, searchVolume]);
 
-  // Sayfalama (pagination)
+
   const totalPages = Math.ceil(multiFilteredProducts.length / itemsPerPage);
   const currentProducts = multiFilteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  // Sayfa değişimi
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  // Pagination butonları
   const renderPaginationItems = () => {
     let items = [];
     items.push(
@@ -336,7 +407,7 @@ export default function ProductManagement() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Header />
       <div className="main main-app p-3 p-lg-4">
         <div className="mb-4">
@@ -344,7 +415,7 @@ export default function ProductManagement() {
             <li className="breadcrumb-item">
               <Link to="#">Ürün ve Kategori</Link>
             </li>
-            <li className="breadcrumb-item active text-white" aria-current="page">
+            <li className="breadcrumb-item active text-black" aria-current="page">
               Ürün Yönetimi
             </li>
           </ol>
@@ -359,7 +430,7 @@ export default function ProductManagement() {
               <Button
                 variant="danger"
                 onClick={deleteSelectedProducts}
-                disabled={!products.some((p) => p.selected)}
+                disabled={!products.some((p) => p.isSelected)}
               >
                 <i className="ri-delete-bin-line"></i> Seçilenleri Sil
               </Button>
@@ -373,167 +444,148 @@ export default function ProductManagement() {
               </div>
             ) : (
               <>
-                <Table
-                  bordered
-                  hover
-                  responsive
-                  className="align-middle text-center table-dark"
-                >
-                  <thead>
-                    {/* 1. Satır (Ana Başlıklar) */}
-                    <tr>
-                      <th>
-                        <Form.Check
-                          type="checkbox"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleSelectAll(e);
-                          }}
-                          checked={products.every((p) => p.selected)}
-                        />
-                      </th>
-                      <th>Görsel</th>
-                      <th onClick={() => sortColumn("name")}>
-                        Ürün Adı {getSortIcon("name")}
-                      </th>
-                      <th onClick={() => sortColumn("brand")}>
-                        Marka {getSortIcon("brand")}
-                      </th>
-                      <th onClick={() => sortColumn("sku")}>
-                        SKU {getSortIcon("sku")}
-                      </th>
-                      <th onClick={() => sortColumn("stock")}>
-                        <span className="d-inline-flex align-items-center">
-                          Stok {getSortIcon("stock")}
-                        </span>
-                      </th>
-                      <th onClick={() => sortColumn("season")}>
-                        Sezon {getSortIcon("season")}
-                      </th>
-                      <th onClick={() => sortColumn("category")}>
-                        Kategori {getSortIcon("category")}
-                      </th>
-                      <th>Eylemler</th>
-                    </tr>
-                    {/* 2. Satır (Arama Inputları) */}
-                    <tr>
-                      <th></th>
-                      <th></th> {/* Görsel sütunu için boş */}
-                      <th>
-                        <Form.Control
-                          type="text"                        
-                          value={searchName}
-                          onChange={(e) => setSearchName(e.target.value)}
-                          size="sm"
-                        />
-                      </th>
-                      <th>
-                        <Form.Control
-                          type="text"                  
-                          value={searchBrand}
-                          onChange={(e) => setSearchBrand(e.target.value)}
-                          size="sm"
-                        />
-                      </th>
-                      <th>
-                        <Form.Control
-                          type="text"                   
-                          value={searchSKU}
-                          onChange={(e) => setSearchSKU(e.target.value)}
-                          size="sm"
-                        />
-                      </th>
-                      <th>
-                        <Form.Control
-                          type="text"                
-                          value={searchStock}
-                          onChange={(e) => setSearchStock(e.target.value)}
-                          size="sm"
-                        />
-                      </th>
-                      <th>
-                        <Form.Control
-                          type="text"        
-                          value={searchSeason}
-                          onChange={(e) => setSearchSeason(e.target.value)}
-                          size="sm"
-                        />
-                      </th>
-                      <th>
-                        <Form.Control
-                          type="text"
-                          value={searchCategory}
-                          onChange={(e) => setSearchCategory(e.target.value)}
-                          size="sm"
-                        />
-                      </th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentProducts.map((product) => (
-                      <tr
-                        key={product.id}
-                        onClick={() => openDetailModal(product)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <td onClick={(e) => e.stopPropagation()}>
-                          <Form.Check
-                            type="checkbox"
-                            checked={product.selected || false}
-                            onChange={(e) => toggleSelectProduct(product.id, e)}
-                          />
-                        </td>
-                        <td onClick={(e) => e.stopPropagation()}>
-                          <div
-                            style={{
-                              width: 60,
-                              height: 60,
-                              backgroundColor: "#f0f0f0",
-                              borderRadius: 5,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              margin: "auto",
-                            }}
-                          >
-                            <i className="ri-image-line text-secondary fs-3"></i>
-                          </div>
-                        </td>
-                        <td>{product.name}</td>
-                        <td>{product.brand}</td>
-                        <td>{product.sku}</td>
-                        <td className="text-success fw-bold">{product.stock}</td>
-                        <td>{product.season}</td>
-                        <td>
-                          <Badge bg="primary">{product.category}</Badge>
-                        </td>
-                        <td onClick={(e) => e.stopPropagation()}>
-                          <Button
-                            variant="link"
-                            size="sm"
-                            onClick={(e) => openEditModal(product, e)}
-                            className="p-0"
-                          >
-                            <i className="ri-edit-line fs-4"></i>
-                          </Button>
-                          <Button
-                            variant="link"
-                            size="sm"
-                            onClick={(e) => deleteProduct(product.id, e)}
-                            className="p-0"
-                          >
-                            <i className="ri-delete-bin-line fs-4"></i>
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
+                <Table bordered hover responsive className="align-middle text-center  ">
+  <thead>
+
+    <tr>
+      <th></th>
+      <th>Görsel</th>
+      <th onClick={() => sortColumn("name")}>
+        Ürün Adı {getSortIcon("name")}
+      </th>
+      <th onClick={() => sortColumn("volume")}>
+        Hacim {getSortIcon("volume")}
+      </th>
+      <th onClick={() => sortColumn("category")}>
+        Kategori {getSortIcon("category")}
+      </th>
+      <th>Eylemler</th>
+    </tr>
+
+
+    <tr>
+
+      <th>
+        <Form.Check
+          type="checkbox"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleSelectAll(e);
+          }}
+          checked={products.every((p) => p.isSelected)}
+        />
+      </th>
+
+
+      <th>
+       
+      </th>
+
+      <th>
+      <Form.Control
+          type="text"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          size="sm"
+          placeholder="Ara..."
+        />
+      </th>
+
+      <th>
+      <Form.Control
+          type="text"
+          value={searchVolume}
+          onChange={(e) => setSearchVolume(e.target.value)}
+          size="sm"
+          placeholder="Ara..."
+        />
+      </th>
+      <th> 
+      <Form.Control
+          type="text"
+          value={searchCategory}
+          onChange={(e) => setSearchCategory(e.target.value)}
+          size="sm"
+          placeholder="Ara..."
+        />
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {currentProducts.map((product) => (
+    <tr
+      key={product.id}
+      onClick={() => openDetailModal(product)}
+      style={{ cursor: "pointer" }}
+      className={product.isSelected ? "table-active" : ""}
+    >
+      <td onClick={(e) => e.stopPropagation()}>
+        <Form.Check
+          type="checkbox"
+          checked={product.isSelected}
+          onChange={(e) => toggleSelectProduct(product.id, e)}
+        />
+      </td>
+      <td onClick={(e) => e.stopPropagation()}>
+        <div
+          style={{
+            width: 60,
+            height: 60,
+            backgroundColor: "#f0f0f0",
+            borderRadius: 5,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "auto",
+          }}
+        >
+          {product.images && product.images.length > 0 ? (
+            <img
+              src={product.images[0].imageUrl}
+              alt={product.name}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 5,
+              }}
+            />
+          ) : (
+            <i className="ri-image-line text-secondary fs-3"></i>
+          )}
+        </div>
+      </td>
+      <td>{product.name}</td>
+      <td>{product.volume}</td>
+      <td>{product.category}</td>
+      <td onClick={(e) => e.stopPropagation()}>
+        <Button
+          variant="link"
+          size="sm"
+          onClick={(e) => openEditModal(product, e)}
+          className="p-0 me-2"
+        >
+          <i className="ri-edit-line fs-4"></i>
+        </Button>
+        <Button
+          variant="link"
+          size="sm"
+          onClick={(e) => deleteProduct(product.id, e)}
+          className="p-0"
+        >
+          <i className="ri-delete-bin-line fs-4"></i>
+        </Button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+            </Table>
                 <div className="d-flex justify-content-between align-items-center mt-3 text-white">
                   <div>
-                    Toplam {multiFilteredProducts.length} ürün, Sayfa {currentPage} /{" "}
-                    {totalPages}
+                    Toplam {multiFilteredProducts.length} ürün, Sayfa {currentPage} / {totalPages}
                   </div>
                   <Pagination className="mb-0">{renderPaginationItems()}</Pagination>
                 </div>
@@ -543,16 +595,16 @@ export default function ProductManagement() {
         </Card>
       </div>
 
-      {/* Ürün Düzenleme Modalı */}
+      {/* Edit Product Modal */}
       <Modal show={showEditModal} onHide={closeEditModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ürünü Düzenle</Modal.Title>
+        <Modal.Header className="bg-primary" closeButton>
+          <Modal.Title className="text-white">Ürünü Düzenle</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {selectedProduct && (
             <Form>
               <Form.Group controlId="editProductName" className="mb-3">
-                <Form.Label>Ürün Adı (MALINCINSI)</Form.Label>
+                <Form.Label>Ürün Adı</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
@@ -560,45 +612,17 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
-              <Form.Group controlId="editProductBrand" className="mb-3">
-                <Form.Label>Marka (KOD1)</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="brand"
-                  value={selectedProduct.brand}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="editProductSKU" className="mb-3">
-                <Form.Label>SKU (STOKKODU)</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="sku"
-                  value={selectedProduct.sku}
-                  onChange={handleEditChange}
-                  disabled
-                />
-              </Form.Group>
-              <Form.Group controlId="editProductStock" className="mb-3">
-                <Form.Label>Stok (MERKEZENVANTER)</Form.Label>
+              <Form.Group controlId="editProductVolume" className="mb-3">
+                <Form.Label>Hacim</Form.Label>
                 <Form.Control
                   type="number"
-                  name="stock"
-                  value={selectedProduct.stock}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="editProductSeason" className="mb-3">
-                <Form.Label>Sezon (KOD7)</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="season"
-                  value={selectedProduct.season}
+                  name="volume"
+                  value={selectedProduct.volume}
                   onChange={handleEditChange}
                 />
               </Form.Group>
               <Form.Group controlId="editProductCategory" className="mb-3">
-                <Form.Label>Kategori (KOD6)</Form.Label>
+                <Form.Label>Kategori</Form.Label>
                 <Form.Control
                   type="text"
                   name="category"
@@ -606,6 +630,114 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+              <Form.Group controlId="editProductDescription" className="mb-3">
+                <Form.Label>Açıklama</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  name="description"
+                  value={selectedProduct.description || ""}
+                  onChange={handleEditChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="editProductBestSeller" className="mb-3">
+                <Form.Check
+                  type="checkbox"
+                  name="isBestSeller"
+                  label="Best Seller"
+                  checked={selectedProduct.isBestSeller}
+                  onChange={handleEditChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="editProductNewRelease" className="mb-3">
+                <Form.Check
+                  type="checkbox"
+                  name="isNewRelease"
+                  label="New Release"
+                  checked={selectedProduct.isNewRelease}
+                  onChange={handleEditChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="editProductImages" className="mb-3">
+  <Form.Label className="fw-bold">Ürün Görselleri</Form.Label>
+  <Form.Text className="text-muted d-block mb-2">
+    Görselleri sürükleyip bırakın veya tıklayarak seçin.
+  </Form.Text>
+  <div className="d-flex flex-wrap gap-2">
+    {selectedProduct.images && selectedProduct.images.map((img, index) => (
+      <div key={index} style={{ position: 'relative', width: '120px', height: '120px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
+        <img
+          src={img.imageUrl}
+          alt={`Görsel ${index + 1}`}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+        {/* Silme Butonu */}
+        <Button
+          variant="light"
+          size="sm"
+          style={{ position: 'absolute', top: '2px', right: '2px' }}
+          onClick={() => removeImage(index)}
+        >
+          <i className="ri-close" style={{ fontSize: '1.8rem', color: '#dc3545', zIndex:10 }}></i>
+        </Button>
+        {/* Sıralama Butonları */}
+        {index > 0 && (
+          <Button
+            variant="light"
+            size="sm"
+            style={{ position: 'absolute', bottom: '2px', left: '2px' }}
+            onClick={() => moveImageUp(index)}
+          >
+            <i className="ri-arrow-up-s-line"></i>
+          </Button>
+        )}
+        {index < selectedProduct.images.length - 1 && (
+          <Button
+            variant="light"
+            size="sm"
+            style={{ position: 'absolute', bottom: '2px', right: '2px' }}
+            onClick={() => moveImageDown(index)}
+          >
+            <i className="ri-arrow-down-s-line"></i>
+          </Button>
+        )}
+      </div>
+    ))}
+    {/* Yeni Görsel Eklemek için Drop Zone */}
+    <div
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleImageDrop}
+      onClick={() => document.getElementById("hiddenMultipleFileInput").click()}
+      style={{
+        border: dragActive ? "3px dashed #28a745" : "3px dashed #ccc",
+        borderRadius: "8px",
+        padding: "20px",
+        textAlign: "center",
+        width: "120px",
+        height: "120px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        backgroundColor: dragActive ? "#e9f7ef" : "#f8f9fa",
+      }}
+    >
+      <p style={{ color: "#6c757d", fontSize: "14px", margin: 0 }}>+ Ekle</p>
+    </div>
+  </div>
+  <Form.Control
+    id="hiddenMultipleFileInput"
+    type="file"
+    name="images"
+    accept="image/*"
+    multiple
+    style={{ display: "none" }}
+    onChange={handleMultipleFileChange}
+  />
+</Form.Group>
+
+
             </Form>
           )}
         </Modal.Body>
@@ -619,69 +751,55 @@ export default function ProductManagement() {
         </Modal.Footer>
       </Modal>
 
-      {/* Ürün Detay Modalı */}
       <Modal show={showDetailModal} onHide={closeDetailModal}>
         <Modal.Header className="bg-primary" closeButton>
-          <Modal.Title>Ürün Detayları</Modal.Title>
+          <Modal.Title className="text-white" >Ürün Detayları</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedProduct && (
-            <div>
-              <p>
-                <strong>Ürün Adı:</strong> {selectedProduct.name}
-              </p>
-              <p>
-                <strong>Marka:</strong> {selectedProduct.brand}
-              </p>
-              <p>
-                <strong>SKU:</strong> {selectedProduct.sku}
-              </p>
-              <p>
-                <strong>Stok:</strong> {selectedProduct.stock}
-              </p>
-              <p>
-                <strong>Sezon:</strong> {selectedProduct.season}
-              </p>
-              <p>
-                <strong>Kategori:</strong> {selectedProduct.category}
-              </p>
-              <p>
-                <strong>Açıklama:</strong> {selectedProduct.aciklama}
-              </p>
-              <p>
-                <strong>Ana Kategori:</strong> {selectedProduct.anaKategori}
-              </p>
-              <p>
-                <strong>Alış Fiyatı:</strong> {selectedProduct.alisFiyati}
-              </p>
-              <p>
-                <strong>Satış Fiyatı:</strong> {selectedProduct.satisFiyati}
-              </p>
-              <p>
-                <strong>Para Birimi:</strong> {selectedProduct.paraBirimi}
-              </p>
-              <p>
-                <strong>Barkod:</strong> {selectedProduct.barkod}
-              </p>
-              <p>
-                <strong>Vergi:</strong> {selectedProduct.vergi}
-              </p>
-              <p>
-                <strong>Birim:</strong> {selectedProduct.birim}
-              </p>
-              <p>
-                <strong>Birim Adet:</strong> {selectedProduct.birimAdet}
-              </p>
-              <p>
-                <strong>Grup:</strong> {selectedProduct.grup}
-              </p>
-           
-            </div>
-          )}
-        </Modal.Body>
+  {selectedProduct && (
+    <div style={{ textAlign: "center" }}>
+      {selectedProduct.images && selectedProduct.images.length > 0 && (
+        <div style={{ textAlign: "center", marginBottom: "15px" }}>
+          <img
+            src={selectedProduct.images[0].imageUrl}
+            alt={selectedProduct.name}
+            style={{
+              display: "block",
+              marginLeft: "auto",
+              marginRight: "auto",
+              maxWidth: "100%",
+              height: "auto",
+              borderRadius: "5px",
+            }}
+          />
+        </div>
+        
+      )}
+      <p>
+        <strong>Ürün Adı:</strong> {selectedProduct.name}
+      </p>
+      <p>
+        <strong>Hacim:</strong> {selectedProduct.volume}
+      </p>
+      <p>
+        <strong>Kategori:</strong> {selectedProduct.category}
+      </p>
+      <p>
+        <strong>Açıklama:</strong> {selectedProduct.description}
+      </p>
+      <p>
+        <strong>Best Seller:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
+      </p>
+      <p>
+        <strong>New Release:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+      </p>
+     
+    </div>
+  )}
+</Modal.Body>
 
       </Modal>
       <Footer />
-    </React.Fragment>
+    </>
   );
-}
+} 

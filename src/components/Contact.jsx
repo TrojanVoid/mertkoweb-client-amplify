@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import "../style/components/contact.scss";
+import "../style/components/Contact.scss";
 
 const Contact = () => {
   const [contactInfo, setContactInfo] = useState({

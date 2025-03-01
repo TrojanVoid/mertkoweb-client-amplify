@@ -33,7 +33,7 @@ export default function Signup() {
     <div className="page-sign">
       <Card className="card-sign">
         <Card.Header>
-          <Link to="/" className="header-logo mb-4">MeraklıKids</Link>
+          <Link to="/" className="header-logo mb-4">CBS</Link>
           <Card.Title>Sign Up</Card.Title>
           <Card.Text>It's free to signup and only takes a minute.</Card.Text>
         </Card.Header>

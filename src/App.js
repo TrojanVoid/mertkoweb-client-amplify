@@ -8,7 +8,7 @@ import ProductDetail from './pages/ProductDetail';
 import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
 import Main from './panel/layouts/Main';
-import Signin from "./panel/pages/Signin";
+import Signin2 from './panel/pages/Signin2';
 import Signup from "./panel/pages/Signup";
 import { UserProvider } from './panel/context/UserContext';
 import publicRoutes from "./panel/routes/PublicRoutes";
@@ -56,7 +56,7 @@ const App = () => {
           );
         })}
 
-        <Route path="/panel/signin" element={<Signin />} />
+        <Route path="/panel" element={<Signin2 />} />
         <Route path="/panel/signup" element={<Signup />} />
         <Route path="*" element={<Home />} />
       
