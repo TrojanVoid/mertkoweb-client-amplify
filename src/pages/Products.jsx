@@ -8,7 +8,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../util/HandlePagination';
 import Layout from '../global/Layout';
-import '../style/pages/Products.scss';
+import '../style/pages/products.scss';
 
 const {Logger, TITLE_TAGS} = require('../util/Logger');
 const {types, requestByType} = require("../apis/ProductApi");
@@ -281,7 +281,7 @@ const Products = () => {
                         </div>
 
                         <div
-                            className={`sidebar style-dropdown flex-wrap bg-white grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 md:gap-[30px] sm:gap-6 mt-4 ${openSidebar ? 'open' : ''}`}
+                            className={`sidebar style-dropdown flex-wrap grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 md:gap-[30px] sm:gap-6 mt-4 ${openSidebar ? 'open' : ''}`}
                         >
 
                             <div className="filter-type">

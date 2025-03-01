@@ -34,6 +34,7 @@ const App = () => {
         <Route path="urunler" element={<Products />} />
 
         {/* Panel Routes */}
+        <Route path="panel" element={<Main/>} />
         <Route path="dashboard" element={<Main />}>
           {protectedRoutes.map((route, index) => {
             return (
