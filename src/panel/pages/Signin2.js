@@ -5,7 +5,7 @@ import bg1 from "../assets/img/bg1.jpg";
 
 export default function Signin2() {
   return (
-    <div className="page-sign d-block py-0">
+    <div className="page-sign d-block py-0 panel-wrapper flex justify-center items-center pt-20">
       <Row className="g-0">
         <Col md="7" lg="5" xl="4" className="col-wrapper">
           <Card className="card-sign">

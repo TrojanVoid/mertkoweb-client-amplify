@@ -35,7 +35,7 @@ export default function Signin() {
   };
 
   return (
-    <div className="page-sign">
+    <div className="page-sign panel-wrapper flex justify-center items-center pt-20">
       <Card className="card-sign">
         <Card.Header>
           <Link to="/" className="header-logo mb-4">MeraklıKids</Link>

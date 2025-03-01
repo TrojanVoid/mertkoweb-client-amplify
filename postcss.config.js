@@ -10,13 +10,19 @@ module.exports = ({ file }) => {
   const relativePath = path.relative(process.cwd(), file).replace(/\\/g, '/'); // Normalize slashes
 
   // check if the file should be blacklisted
-  const isBlacklisted = relativePath.startsWith('src/style/') || relativePath === 'src/index.css' || relativePath.startsWith('node_modules/');
+  const isNativeMainSite = relativePath.startsWith('src/style/');
+  const isBlacklisted =  relativePath === 'src/index.css' || relativePath.startsWith('node_modules/');
 
   return {
     plugins: [
       tailwindcss,
       autoprefixer,
-      ...(!isBlacklisted ? [postcssPrefixwrap('.panel-wrapper')] : []), // Apply prefix only if current file is not blacklisted
+      ...(!isBlacklisted && !isNativeMainSite  // apply conditional prefixing
+        ? [postcssPrefixwrap('.panel-wrapper')] 
+        : (isNativeMainSite 
+          ? [postcssPrefixwrap('.main-site')] 
+          : []
+          )), 
     ],
   };
 };
