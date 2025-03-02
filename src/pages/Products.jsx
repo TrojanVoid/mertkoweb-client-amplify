@@ -8,7 +8,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../util/HandlePagination';
 import Layout from '../global/Layout';
-import '../style/pages/Products.scss';
+import '../style/pages/products.scss';
 
 const {Logger, TITLE_TAGS} = require('../util/Logger');
 const {types, requestByType} = require("../apis/ProductApi");
@@ -285,7 +285,7 @@ const Products = () => {
                         >
 
                             <div className="filter-type">
-                                <h6 className="heading6">Ürün Kategorileri</h6>
+                                <h3 className="heading6">Ürün Kategorileri</h3>
                                 <div className="list-type d-flex flex-row mt-2">
                                     {productCategoriesData.map((item, index) => (
                                         <div
