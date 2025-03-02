@@ -85,7 +85,6 @@ import IconRemix from "../docs/IconRemix";
 import IconFeather from "../docs/IconFeather";
 import About from "../dashboard/About";
 import Blog from "../dashboard/Blog";
-import path from "path";
 
 const protectedRoutes = [
   { path: "finance", element: <FinanceMonitoring /> },
