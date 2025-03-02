@@ -32,27 +32,7 @@ export default function HelpdeskService() {
     switchSkin(skin);
   }, [skin]);
 
-  const [soapUrl, setSoapUrl] = useState("http://78.186.167.150:6034/VegaWebService.asmx?wsdl");
-  const [adet, setAdet] = useState(5);
-  const [responseMessage, setResponseMessage] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/soap", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: soapUrl, adet: adet }),
-      });
-      const data = await res.json();
-      setResponseMessage("Response: " + JSON.stringify(data, null, 2));
-    } catch (error) {
-      console.error("Error sending SOAP request", error);
-      setResponseMessage("Error: " + error.message);
-    }
-  };
+  
 
   return (
     <React.Fragment>

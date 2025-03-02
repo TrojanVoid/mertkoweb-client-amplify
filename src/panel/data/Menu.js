@@ -54,7 +54,7 @@ const dashboardMenu = [
       },
       {
         "label": "Hakkımızda",
-        "link": "/dashboard/hakkimizda",
+        "link": "/dashboard/about",
         "icon": "ri-key-line"
       }
     ]
@@ -64,7 +64,7 @@ const dashboardMenu = [
     "link": "/dashboard/crypto",
     "icon": "ri-article-line",
     "submenu": [
-     {"label": "Bloglar", "link": "/dashboard/variants", "icon": "ri-article-line"},
+     {"label": "Bloglar", "link": "/dashboard/blog", "icon": "ri-article-line"},
     ]
   },
   {

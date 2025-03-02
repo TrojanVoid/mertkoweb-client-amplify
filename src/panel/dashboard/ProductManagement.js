@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
+import { Carousel } from "react-bootstrap";
 import {
   Button,
   Card,
@@ -16,8 +17,7 @@ import { Link } from "react-router-dom";
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  // Drag & Drop için state ve handler fonksiyonları ekleyin:
-const [dragActive, setDragActive] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
 
 const handleDragOver = (e) => {
   e.preventDefault();
@@ -752,53 +752,70 @@ const moveImageDown = (index) => {
       </Modal>
 
       <Modal show={showDetailModal} onHide={closeDetailModal}>
-        <Modal.Header className="bg-primary" closeButton>
-          <Modal.Title className="text-white" >Ürün Detayları</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-  {selectedProduct && (
-    <div style={{ textAlign: "center" }}>
-      {selectedProduct.images && selectedProduct.images.length > 0 && (
-        <div style={{ textAlign: "center", marginBottom: "15px" }}>
-          <img
-            src={selectedProduct.images[0].imageUrl}
-            alt={selectedProduct.name}
-            style={{
-              display: "block",
-              marginLeft: "auto",
-              marginRight: "auto",
-              maxWidth: "100%",
-              height: "auto",
-              borderRadius: "5px",
-            }}
-          />
-        </div>
-        
-      )}
-      <p>
-        <strong>Ürün Adı:</strong> {selectedProduct.name}
-      </p>
-      <p>
-        <strong>Hacim:</strong> {selectedProduct.volume}
-      </p>
-      <p>
-        <strong>Kategori:</strong> {selectedProduct.category}
-      </p>
-      <p>
-        <strong>Açıklama:</strong> {selectedProduct.description}
-      </p>
-      <p>
-        <strong>Best Seller:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
-      </p>
-      <p>
-        <strong>New Release:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
-      </p>
-     
-    </div>
-  )}
-</Modal.Body>
+  <Modal.Header className="bg-primary" closeButton>
+    <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {selectedProduct && (
+      <div style={{ textAlign: "center" }}>
+        {selectedProduct.images && selectedProduct.images.length > 0 && (
+          selectedProduct.images.length > 1 ? (
+            <Carousel indicators={false} controls={true} interval={3000} style={{ marginBottom: "15px" }}>
+              {selectedProduct.images.map((img, index) => (
+                <Carousel.Item key={index}>
+                  <img
+                    className="d-block w-100"
+                    src={img.imageUrl}
+                    alt={`Slide ${index + 1}`}
+                    style={{
+                      maxWidth: "100%",
+                      height: "auto",
+                      borderRadius: "5px",
+                    }}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          ) : (
+            <div style={{ marginBottom: "15px" }}>
+              <img
+                src={selectedProduct.images[0].imageUrl}
+                alt={selectedProduct.name}
+                style={{
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  maxWidth: "100%",
+                  height: "auto",
+                  borderRadius: "5px",
+                }}
+              />
+            </div>
+          )
+        )}
+        <p>
+          <strong>Ürün Adı:</strong> {selectedProduct.name}
+        </p>
+        <p>
+          <strong>Hacim:</strong> {selectedProduct.volume}
+        </p>
+        <p>
+          <strong>Kategori:</strong> {selectedProduct.category}
+        </p>
+        <p>
+          <strong>Açıklama:</strong> {selectedProduct.description}
+        </p>
+        <p>
+          <strong>Best Seller:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
+        </p>
+        <p>
+          <strong>New Release:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+        </p>
+      </div>
+    )}
+  </Modal.Body>
+</Modal>
 
-      </Modal>
       <Footer />
     </>
   );

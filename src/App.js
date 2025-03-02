@@ -54,7 +54,7 @@ const App = () => {
               key={index}
             />
           );
-        })}
+        })} 
         <Route path="/admin" element={<Signin2 />} />
         <Route path="/panel/signup" element={<Signup />} />
         <Route path="*" element={<Home />} />

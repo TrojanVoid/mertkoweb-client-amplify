@@ -11,7 +11,7 @@ import StorageManagement from "../dashboard/StorageManagement";
 import ProductManagement from "../dashboard/ProductManagement";
 import Variants from "../dashboard/Variants";
 import VariantTypes from "../dashboard/VariantTypes";
-import Hakkimizda from "../dashboard/Hakkimizda";
+import Hakkimizda from "../dashboard/About";
 
 // Apps
 import GalleryMusic from "../apps/GalleryMusic";
@@ -83,10 +83,14 @@ import MapLeaflet from "../docs/MapLeaflet";
 import MapVector from "../docs/MapVector";
 import IconRemix from "../docs/IconRemix";
 import IconFeather from "../docs/IconFeather";
+import About from "../dashboard/About";
+import Blog from "../dashboard/Blog";
+import path from "path";
 
 const protectedRoutes = [
   { path: "finance", element: <FinanceMonitoring /> },
-    {path: "hakkimizda", element: <Hakkimizda/>},
+    {path: "about", element: <About/>},
+    {path: "blog", element: <Blog/>},
   { path: "studio", element: <AnimationStudio /> },
   { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },
