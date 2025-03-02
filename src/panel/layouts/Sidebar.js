@@ -98,10 +98,22 @@ function SidebarMenu({ onUpdateSize }) {
     const toggleMenu = (e) => {
         e.preventDefault();
 
-        let parent = e.target.closest('.nav-group');
+        /* let parent = e.target.closest('.nav-group');
         parent.classList.toggle('show');
 
-        onUpdateSize();
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarShown = sidebar.classList.contains('sidebar-show');
+        if (sidebarShown) {
+            sidebar.classList.remove('sidebar-show');
+            sidebar.classList.add('sidebar');
+        } else {
+            sidebar.classList.remove('sidebar');
+            sidebar.classList.add('sidebar-show');  
+        }
+
+        console.log('sidebar click event');
+
+        onUpdateSize(); */
     }
 
     // Toggle submenu while closing siblings' submenu
@@ -125,7 +137,7 @@ function SidebarMenu({ onUpdateSize }) {
     return (
         <React.Fragment>
             <div className="nav-group show">
-                <div className="nav-label" onClick={toggleMenu}>Admin Paneli</div>
+                <div className="nav-label no-arrow" onClick={toggleMenu}>Admin Paneli</div>
                 {populateMenu(dashboardMenu)}
             </div>
         </React.Fragment>
@@ -136,7 +148,7 @@ window.addEventListener("click", function (e) {
     // Close sidebar footer menu when clicked outside of it
     let tar = e.target;
     let sidebar = document.querySelector(".sidebar");
-    if (!tar.closest(".sidebar-footer") && sidebar) {
+    if (!tar.closest(".sidebar") && sidebar) {
         sidebar.classList.remove("footer-menu-show");
     }
 

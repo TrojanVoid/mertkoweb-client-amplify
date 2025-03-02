@@ -137,8 +137,17 @@
     border-bottom: 1px solid $gray-200;
 
     &.show {
-      .nav-label::after { content: '\EA4E'; }
-      .nav-sidebar { display: block; }
+      .nav-label::after {
+        content: '\EA4E';
+      }
+    
+      .nav-label.no-arrow::after {
+        content: none;
+      }
+    
+      .nav-sidebar {
+        display: block;
+      }
     }
   }
 

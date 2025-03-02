@@ -44,7 +44,7 @@ const Blogs = () => {
     }
 
     const handleBlogClick = (blogId) => {
-        navigate(`/blog/detail1?id=${blogId}`);
+        navigate(`/blog?id=${blogId}`);
     };
 
 

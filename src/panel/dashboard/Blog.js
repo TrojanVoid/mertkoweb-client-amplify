@@ -145,7 +145,7 @@ export default function HelpdeskService() {
                 </Card.Header>
                 <Card.Body>
                   <Card.Text>{blog.content}</Card.Text>
-                  <Link to={`/blog/${blog.id}`}>Detaylar</Link>
+                  <Link to={`/blog?id=${blog.id}`}>Detaylar</Link>
                 </Card.Body>
               </Card>
             ))

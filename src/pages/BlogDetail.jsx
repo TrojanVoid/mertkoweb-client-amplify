@@ -50,7 +50,7 @@ const BlogDetail = () => {
 
     const handleBlogDetail = (id) => {
         // Go to blog detail with id selected
-        navigate(`/blog/detail?id=${id}`);
+        navigate(`/blog?id=${id}`);
     };
 
     return (

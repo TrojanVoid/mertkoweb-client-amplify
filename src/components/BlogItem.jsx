@@ -12,7 +12,7 @@ const BlogItem = ({ data, type }) => {
     
     const handleBlogClick = (blogId) => {
         // Go to blog detail with blogId selected
-        navigate(`/blog/detail?id=${blogId}`);
+        navigate(`/blog?id=${blogId}`);
     };
 
     return (

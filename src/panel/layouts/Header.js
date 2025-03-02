@@ -26,7 +26,20 @@ export default function Header({ onSkin }) {
   const toggleSidebar = (e) => {
     e.preventDefault();
     let isOffset = document.body.classList.contains("sidebar-offset");
-    if (isOffset) {
+
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarShown = document.querySelector('.sidebar-show');
+    if (sidebarShown !== null) {
+        sidebarShown.classList.remove('sidebar-show');
+        sidebarShown.classList.add('sidebar');
+    } else if(sidebar !== null) {
+        sidebar.classList.remove('sidebar');
+        sidebar.classList.add('sidebar-show');  
+    }
+
+    console.log('sidebar click event');
+
+    /* if (isOffset) {
       document.body.classList.toggle("sidebar-show");
     } else {
       if (window.matchMedia("(max-width: 991px)").matches) {
@@ -34,7 +47,7 @@ export default function Header({ onSkin }) {
       } else {
         document.body.classList.toggle("sidebar-hide");
       }
-    }
+    } */
   }
 
   function NotificationList() {
@@ -112,7 +125,7 @@ export default function Header({ onSkin }) {
 
   return (
     <div className="header-main px-3 px-lg-4">
-      <Link onClick={toggleSidebar} className="menu-link me-3 me-lg-4"><i className="ri-menu-2-fill"></i></Link>
+      <Link onClick={toggleSidebar} className="menu-link me-3 me-lg-4 !inline-block"><i className="ri-menu-2-fill"></i></Link>
 
       <div className="form-search me-auto">
         <input type="text" className="form-control" placeholder="Search" />
