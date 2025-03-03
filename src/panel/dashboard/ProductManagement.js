@@ -209,6 +209,18 @@ const tableColumns = [
     sortable: true,
   },
   {
+    header: 'Best Seller',
+    accessor: 'isBestSeller',
+    sortable: true,
+    cell: (row) => (row.isBestSeller ? 'Evet' : 'Hayır'),
+  },
+  {
+    header: 'New Release',
+    accessor: 'isNewRelease',
+    sortable: true,
+    cell: (row) => (row.isNewRelease ? 'Evet' : 'Hayır'),
+  },
+  {
     header: 'Eylemler',
     accessor: 'actions',
     sortable: false,
