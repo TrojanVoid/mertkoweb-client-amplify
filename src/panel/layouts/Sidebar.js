@@ -16,7 +16,8 @@ export default function Sidebar() {
 
     const toggleFooterMenu = (e) => {
         e.preventDefault();
-        let parent = e.target.closest(".sidebar");
+        let parent = document.getElementsByClassName('sidebar')[0] || document.getElementsByClassName('sidebar-show')[0];
+        console.log('parent:', parent);
         parent.classList.toggle("footer-menu-show");
     }
 
@@ -27,9 +28,9 @@ export default function Sidebar() {
     }
 
     return (
-        <div className="sidebar">
+        <div className="sidebar h-[90vh]">
             <div className="sidebar-header">
-                <Link to="/dashboard" className="sidebar-logo">Mertko Dashboard</Link>
+                <Link to="/dashboard" className="sidebar-logo">Mertko Panel</Link>
             </div>
             <PerfectScrollbar className="sidebar-body" ref={scrollBarRef}>
                 <SidebarMenu onUpdateSize={updateScroll} />

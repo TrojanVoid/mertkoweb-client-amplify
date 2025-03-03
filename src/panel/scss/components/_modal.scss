@@ -2,8 +2,13 @@
   border-width: 0;
 }
 
-.modal-backdrop {
+.modal-dialog{
+  width: 90% !important;
+  max-width: 90% !important;
+}
+
+/* .modal-backdrop {
   background-color: darken($gray-900, 5%);
 
   &.show { opacity: .8; }
-}
+} */

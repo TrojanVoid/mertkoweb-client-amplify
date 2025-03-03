@@ -11,7 +11,7 @@ module.exports = ({ file }) => {
 
   // check if the file should be blacklisted
   const isNativeMainSite = relativePath.startsWith('src/style/');
-  const isBlacklisted =  relativePath === 'src/index.css' || relativePath.startsWith('node_modules/');
+  const isBlacklisted = (relativePath === 'src/index.css' || relativePath.startsWith('node_modules/'));
 
   return {
     plugins: [

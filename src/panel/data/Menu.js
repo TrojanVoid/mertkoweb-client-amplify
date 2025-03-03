@@ -49,7 +49,7 @@ const dashboardMenu = [
     "submenu": [
       {
         "label": "Banner",
-        "link": "/dashboard/variants",
+        "link": "/dashboard/banner",
         "icon": "ri-key-line"
       },
       {

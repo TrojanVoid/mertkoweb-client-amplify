@@ -85,11 +85,13 @@ import IconRemix from "../docs/IconRemix";
 import IconFeather from "../docs/IconFeather";
 import About from "../dashboard/About";
 import Blog from "../dashboard/Blog";
+import Banner from "../dashboard/Banner";
 
 const protectedRoutes = [
   { path: "finance", element: <FinanceMonitoring /> },
-    {path: "about", element: <About/>},
-    {path: "blog", element: <Blog/>},
+  { path: "about", element: <About/>},
+  { path: "blog", element: <Blog/>},
+  { path: "banner", element: <Banner></Banner>},
   { path: "studio", element: <AnimationStudio /> },
   { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },

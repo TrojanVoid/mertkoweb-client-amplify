@@ -154,7 +154,12 @@ export default function HelpdeskService() {
       </div>
 
       {/* Blog Düzenleme Modal'i */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+      <Modal 
+        className="w-full" 
+        show={showEditModal} 
+        onHide={() => setShowEditModal(false)}
+        dialogClassName="w-[90%] max-w-[90%]"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Blog Düzenle</Modal.Title>
         </Modal.Header>
@@ -204,7 +209,11 @@ export default function HelpdeskService() {
       </Modal>
 
       {/* Yeni Blog Oluşturma Modal'i */}
-      <Modal show={showCreateModal} onHide={() => setShowCreateModal(false)}>
+      <Modal 
+        show={showCreateModal} 
+        onHide={() => setShowCreateModal(false)}
+        dialogClassName="w-[90%] max-w-[90%]"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Yeni Blog Oluştur</Modal.Title>
         </Modal.Header>

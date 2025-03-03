@@ -10,15 +10,24 @@ import Benefit from '../components/Benefit';
 import { useState, useEffect } from 'react';
 import LocationMap from '../components/LocationMap';
 
-const AboutContent = require("../data/AboutContent.json");
+const {requestByType, types} = require('../apis/AboutApi');
 
 const Home = () => {
 
-  /* window.addEventListener('scroll', detectActiveTab);
-  window.addEventListener('resize', detectActiveTab);
+  const [aboutData, setAboutData] = useState([]);
 
+  const fetchAboutData = async() => {
+      try {
+          const response = await requestByType(types.getAbout);
+          setAboutData(response.data);
+      } catch (err) {
+          console.error("About data fetch error:", err);
+      }
+  }
 
-  document.addEventListener('DOMContentLoaded', detectActiveTab); */
+  useEffect(() => {
+      fetchAboutData();
+  }, []);
   
   return (
     <Layout>
@@ -38,22 +47,24 @@ const Home = () => {
                 <div className="text flex items-center justify-center">
                     <div className="content md:w-5/6 w-full">
 
-                    <h1 className="heading3 text-center mt-5">
-                          {
-                            /* AboutContent["title"] */
-                            
-                          }
-                          HAKKIMIZDA
+                        <h1 className="heading3 text-center mt-5">
+                          {(aboutData && aboutData.title && aboutData.title.length > 0
+                            ? aboutData.title
+                            : "HAKKIMIZDA"
+                          )}
                         </h1>
 
-                        <div className="w-100 d-flex flex-col md:flex-row justify-between items-center md:items-start gap-[6rem] md:gap-[10rem] md:mt-10">
+                        <div className="w-100 d-flex flex-col md:flex-row justify-between items-center md:items-start gap-[6rem] sm:gap-[3rem] md:gap-[4rem] lg:gap-[6rem] md:mt-10">
                           {/* First Text Block */}
                           <div className="body1 text-center mt-5 md:!mt-7 w-[90%] md:w-1/2 pb-2 md:pb-5">
                               {
-                                  AboutContent["content1"].split(' ').map((item, index) => {
-                                      if (item === "<br/>") return (<br key={index} />);
+                                (aboutData && aboutData.content1 &&
+                                  aboutData["content1"].replaceAll('\n', ' <br/> ').split(' ').map((item, index) => {
+                                      console.log("item:", item);
+                                      if (item.includes("<br/>") ) return (<br key={index} />);
                                       return item + " ";
                                   })
+                                )
                               }
                           </div>
 
@@ -63,10 +74,12 @@ const Home = () => {
                           {/* Second Text Block */}
                           <div className="body1 text-center mt-2 md:!mt-7 w-[90%] md:w-1/2 pb-5">
                               {
-                                  AboutContent["content2"].split(' ').map((item, index) => {
+                                (aboutData && aboutData.content2 &&
+                                  aboutData["content2"].split(' ').map((item, index) => {
                                       if (item === "<br/>") return (<br key={index} />);
                                       return item + " ";
                                   })
+                                )
                               }
                           </div>
                         </div>

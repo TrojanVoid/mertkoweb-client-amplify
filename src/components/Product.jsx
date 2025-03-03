@@ -174,12 +174,12 @@ const Product = ({ data, type, style }) => {
                             </div> */}
 
                             <div className="product-name d-flex justify-between text-title duration-300 text-black-0">
-                                <h5 className="text-2xl">
+                                <h3 className="text-2xl">
                                     {data.name}
-                                </h5>
-                                <h5 className="text-2xl">
+                                </h3>
+                                <h4 className="text-2xl">
                                     {data.volume} mL 
-                                </h5>
+                                </h4>
                             </div>
                             {/* {data.variation.length > 0 && data.action === 'add to cart' && (
                                 <div className="list-color py-2 max-md:hidden flex items-center gap-2 flex-wrap duration-500">
