@@ -583,14 +583,24 @@ const moveImageDown = (index) => {
                 />
               </Form.Group>
               <Form.Group controlId="editProductCategory" className="mb-3">
-                <Form.Label>Kategori</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="category"
-                  value={selectedProduct.displayCategory}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
+              <Form.Label>Kategori</Form.Label>
+              <Form.Select 
+                name="category"
+                value={selectedProduct.category} 
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSelectedProduct({
+                    ...selectedProduct,
+                    category: value,
+                    displayCategory: getCategoryDisplayName(value)
+                  });
+                }}
+              >
+                <option value="p">Plastik Şişe</option>
+                <option value="k">Plastik Kavanoz</option>
+                <option value="c">Konsept Ürün</option>
+              </Form.Select>
+            </Form.Group>
               <Form.Group controlId="editProductDescription" className="mb-3">
                 <Form.Label>Açıklama</Form.Label>
                 <Form.Control
@@ -620,19 +630,19 @@ const moveImageDown = (index) => {
                 />
               </Form.Group>
               <Form.Group controlId="editProductImages" className="mb-3">
-  <Form.Label className="fw-bold">Ürün Görselleri</Form.Label>
-  <Form.Text className="text-muted d-block mb-2">
-    Görselleri sürükleyip bırakın veya tıklayarak seçin.
-  </Form.Text>
-  <div className="d-flex flex-wrap gap-2">
-    {selectedProduct.images && selectedProduct.images.map((img, index) => (
-      <div key={index} style={{ position: 'relative', width: '120px', height: '120px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
-        <img
-          src={img.imageUrl}
-          alt={`Görsel ${index + 1}`}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-        {/* Silme Butonu */}
+            <Form.Label className="fw-bold">Ürün Görselleri</Form.Label>
+            <Form.Text className="text-muted d-block mb-2">
+              Görselleri sürükleyip bırakın veya tıklayarak seçin.
+            </Form.Text>
+            <div className="d-flex flex-wrap gap-2">
+              {selectedProduct.images && selectedProduct.images.map((img, index) => (
+                <div key={index} style={{ position: 'relative', width: '120px', height: '120px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
+                  <img
+                    src={img.imageUrl}
+                    alt={`Görsel ${index + 1}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+
         <Button
           variant="light"
           size="sm"
@@ -641,7 +651,7 @@ const moveImageDown = (index) => {
         >
           <i className="ri-close" style={{ fontSize: '1.8rem', color: '#dc3545', zIndex:10 }}></i>
         </Button>
-        {/* Sıralama Butonları */}
+   
         {index > 0 && (
           <Button
             variant="light"
@@ -664,7 +674,7 @@ const moveImageDown = (index) => {
         )}
       </div>
     ))}
-    {/* Yeni Görsel Eklemek için Drop Zone */}
+    
     <div
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
