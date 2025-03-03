@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { Carousel } from "react-bootstrap";
+import DynamicTable from "../components/DynamicTable";
 import {
   Button,
   Card,
@@ -59,6 +60,15 @@ const handleDrop = (e) => {
   const [searchCategory, setSearchCategory] = useState("");
   const [searchVolume, setSearchVolume] = useState("");
 
+  function getCategoryDisplayName(categoryCode) {
+    const categoryMap = {
+      'p': 'Plastik Şişe',
+      'k': 'Plastik Kavanoz',
+      'c': 'Konsept Ürün'
+    };
+    return categoryMap[categoryCode] || categoryCode; 
+  }
+
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -72,22 +82,10 @@ const handleDrop = (e) => {
         const mappedProducts = data.map((product) => ({
           ...product,
           isSelected: product.isSelected || false,
+          displayCategory:getCategoryDisplayName(product.category)
           
         }));
         
-        for(let i=0; i<mappedProducts.length; i++){
-          if(mappedProducts[i].category==="p"){
-            mappedProducts[i].category="Plastik Şişe";
-          }
-          else if(mappedProducts[i].category=="k"){
-            mappedProducts[i].category="Plastik Kavanoz"
-          }
-          else if(mappedProducts[i].category==="c"){
-            mappedProducts[i].category="Konsept Ürün";
-          }
-         
-          
-        }
         setProducts(mappedProducts);
       } catch (error) {
         console.error("Ürünleri çekme hatası:", error);
@@ -127,7 +125,7 @@ const handleDrop = (e) => {
     setProducts(products.filter((p) => p.id !== id));
   };
 
-   // Çoklu dosya seçimi için:
+
 const handleMultipleFileChange = (e) => {
   const files = Array.from(e.target.files);
   if (files.length > 0) {
@@ -142,7 +140,91 @@ const handleMultipleFileChange = (e) => {
   }
 };
 
-// Drag & Drop olayları (daha önce tanımladığınız handleDragOver/Leave ile uyumlu)
+
+const tableColumns = [
+  {
+    header: '',
+    accessor: 'isSelected',
+    sortable: false,
+    onSelectAll: (e) => toggleSelectAll(e),
+    allSelected:products.every((p) => p.isSelected),
+    cell: (row) => (
+      <Form.Check
+        type="checkbox"
+        checked={row.isSelected}
+        onChange={(e) => toggleSelectProduct(row.id, e)}
+        onClick={(e) => e.stopPropagation()}
+      />
+    ),
+  },
+  {
+    header: 'Görsel',
+    accessor: 'images',
+    sortable: false,
+    cell: (row) => (
+      <div
+        style={{
+          width: 60,
+          height: 60,
+          backgroundColor: "#f0f0f0",
+          borderRadius: 5,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          margin: "auto",
+     
+        }}
+      >
+        {row.images && row.images.length > 0 ? (
+          <img
+            src={row.images[0].imageUrl}
+            alt={row.name}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: 5,
+              verticalAlign: "middle",
+            }}
+          />
+        ) : (
+          <i className="ri-image-line text-secondary fs-3"></i>
+        )}
+      </div>
+    ),
+  },
+  {
+    header: 'Ürün Adı',
+    accessor: 'name',
+    sortable: true,
+  },
+  {
+    header: 'Hacim',
+    accessor: 'volume',
+    sortable: true,
+  },
+  {
+    header: 'Kategori',
+    accessor: 'displayCategory',
+    sortable: true,
+  },
+  {
+    header: 'Eylemler',
+    accessor: 'actions',
+    sortable: false,
+    cell: (row) => (
+      <div onClick={(e) => e.stopPropagation()}>
+        <Button variant="link" size="sm" onClick={(e) => openEditModal(row, e)} className="p-0 me-2">
+          <i className="ri-edit-line fs-4"></i>
+        </Button>
+        <Button variant="link" size="sm" onClick={(e) => deleteProduct(row.id, e)} className="p-0">
+          <i className="ri-delete-bin-line fs-4"></i>
+        </Button>
+      </div>
+    ),
+  },
+];
+
 const handleImageDrop = (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -161,7 +243,7 @@ const handleImageDrop = (e) => {
 };
 
 
-// Görsel silme
+
 const removeImage = (index) => {
   const updatedImages = selectedProduct.images.filter((_, i) => i !== index);
   setSelectedProduct({
@@ -170,7 +252,7 @@ const removeImage = (index) => {
   });
 };
 
-// Görsel sıralamasını değiştirme: Yukarı taşıma
+
 const moveImageUp = (index) => {
   if (index <= 0) return;
   const updatedImages = [...selectedProduct.images];
@@ -181,7 +263,6 @@ const moveImageUp = (index) => {
   });
 };
 
-// Görsel sıralamasını değiştirme: Aşağı taşıma
 const moveImageDown = (index) => {
   if (index >= selectedProduct.images.length - 1) return;
   const updatedImages = [...selectedProduct.images];
@@ -246,8 +327,8 @@ const moveImageDown = (index) => {
     if (file) {
       setSelectedProduct({
         ...selectedProduct,
-        image: file, // Dosya nesnesi, sunucuya FormData ile gönderilebilir
-        imageUrl: URL.createObjectURL(file) // Önizleme için geçici URL
+        image: file, 
+        imageUrl: URL.createObjectURL(file) 
       });
     }
   };
@@ -444,150 +525,18 @@ const moveImageDown = (index) => {
               </div>
             ) : (
               <>
-                <Table bordered hover responsive className="align-middle text-center  ">
-  <thead>
+              <DynamicTable
+              data={multiFilteredProducts}
+              columns={tableColumns}
+              onRowClick={openDetailModal}
+              initialItemsPerPage={20}
 
-    <tr>
-      <th></th>
-      <th>Görsel</th>
-      <th onClick={() => sortColumn("name")}>
-        Ürün Adı {getSortIcon("name")}
-      </th>
-      <th onClick={() => sortColumn("volume")}>
-        Hacim {getSortIcon("volume")}
-      </th>
-      <th onClick={() => sortColumn("category")}>
-        Kategori {getSortIcon("category")}
-      </th>
-      <th>Eylemler</th>
-    </tr>
-
-
-    <tr>
-
-      <th>
-        <Form.Check
-          type="checkbox"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleSelectAll(e);
-          }}
-          checked={products.every((p) => p.isSelected)}
-        />
-      </th>
-
-
-      <th>
-       
-      </th>
-
-      <th>
-      <Form.Control
-          type="text"
-          value={searchName}
-          onChange={(e) => setSearchName(e.target.value)}
-          size="sm"
-          placeholder="Ara..."
-        />
-      </th>
-
-      <th>
-      <Form.Control
-          type="text"
-          value={searchVolume}
-          onChange={(e) => setSearchVolume(e.target.value)}
-          size="sm"
-          placeholder="Ara..."
-        />
-      </th>
-      <th> 
-      <Form.Control
-          type="text"
-          value={searchCategory}
-          onChange={(e) => setSearchCategory(e.target.value)}
-          size="sm"
-          placeholder="Ara..."
-        />
-      </th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-  {currentProducts.map((product) => (
-    <tr
-      key={product.id}
-      onClick={() => openDetailModal(product)}
-      style={{ cursor: "pointer" }}
-      className={product.isSelected ? "table-active" : ""}
-    >
-      <td onClick={(e) => e.stopPropagation()}>
-        <Form.Check
-          type="checkbox"
-          checked={product.isSelected}
-          onChange={(e) => toggleSelectProduct(product.id, e)}
-        />
-      </td>
-      <td onClick={(e) => e.stopPropagation()}>
-        <div
-          style={{
-            width: 60,
-            height: 60,
-            backgroundColor: "#f0f0f0",
-            borderRadius: 5,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "auto",
-          }}
-        >
-          {product.images && product.images.length > 0 ? (
-            <img
-              src={product.images[0].imageUrl}
-              alt={product.name}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: 5,
-              }}
             />
-          ) : (
-            <i className="ri-image-line text-secondary fs-3"></i>
-          )}
-        </div>
-      </td>
-      <td>{product.name}</td>
-      <td>{product.volume}</td>
-      <td>{product.category}</td>
-      <td onClick={(e) => e.stopPropagation()}>
-        <Button
-          variant="link"
-          size="sm"
-          onClick={(e) => openEditModal(product, e)}
-          className="p-0 me-2"
-        >
-          <i className="ri-edit-line fs-4"></i>
-        </Button>
-        <Button
-          variant="link"
-          size="sm"
-          onClick={(e) => deleteProduct(product.id, e)}
-          className="p-0"
-        >
-          <i className="ri-delete-bin-line fs-4"></i>
-        </Button>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
-            </Table>
                 <div className="d-flex justify-content-between align-items-center mt-3 text-white">
                   <div>
                     Toplam {multiFilteredProducts.length} ürün, Sayfa {currentPage} / {totalPages}
                   </div>
-                  <Pagination className="mb-0">{renderPaginationItems()}</Pagination>
+                
                 </div>
               </>
             )}
@@ -626,7 +575,7 @@ const moveImageDown = (index) => {
                 <Form.Control
                   type="text"
                   name="category"
-                  value={selectedProduct.category}
+                  value={selectedProduct.displayCategory}
                   onChange={handleEditChange}
                 />
               </Form.Group>
@@ -800,7 +749,7 @@ const moveImageDown = (index) => {
           <strong>Hacim:</strong> {selectedProduct.volume}
         </p>
         <p>
-          <strong>Kategori:</strong> {selectedProduct.category}
+          <strong>Kategori:</strong> {selectedProduct.displayCategory}
         </p>
         <p>
           <strong>Açıklama:</strong> {selectedProduct.description}
