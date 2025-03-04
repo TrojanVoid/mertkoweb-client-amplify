@@ -389,9 +389,11 @@ export default function ProductManagement() {
 
       {/* Edit Product Modal */}
       <Modal show={showEditModal} onHide={closeEditModal}>
+
         <Modal.Header className="bg-primary" closeButton>
           <Modal.Title className="text-white">Ürünü Düzenle</Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           {selectedProduct && (
             <Form>
@@ -404,6 +406,7 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+
               <Form.Group controlId="editProductVolume" className="mb-3">
                 <Form.Label>Hacim</Form.Label>
                 <Form.Control
@@ -413,25 +416,27 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+
               <Form.Group controlId="editProductCategory" className="mb-3">
-              <Form.Label>Kategori</Form.Label>
-              <Form.Select 
-                name="category"
-                value={selectedProduct.category} 
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setSelectedProduct({
-                    ...selectedProduct,
-                    category: value,
-                    displayCategory: getCategoryDisplayName(value)
-                  });
-                }}
-              >
-                <option value="p">Plastik Şişe</option>
-                <option value="k">Plastik Kavanoz</option>
-                <option value="c">Konsept Ürün</option>
-              </Form.Select>
-            </Form.Group>
+                <Form.Label>Kategori</Form.Label>
+                <Form.Select 
+                  name="category"
+                  value={selectedProduct.category} 
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      category: value,
+                      displayCategory: getCategoryDisplayName(value)
+                    });
+                  }}
+                >
+                  <option value="p">Plastik Şişe</option>
+                  <option value="k">Plastik Kavanoz</option>
+                  <option value="c">Konsept Ürün</option>
+                </Form.Select>
+              </Form.Group>
+
               <Form.Group controlId="editProductDescription" className="mb-3">
                 <Form.Label>Açıklama</Form.Label>
                 <Form.Control
@@ -442,6 +447,7 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+
               <Form.Group controlId="editProductBestSeller" className="mb-3">
                 <Form.Check
                   type="checkbox"
@@ -451,6 +457,7 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+
               <Form.Group controlId="editProductNewRelease" className="mb-3">
                 <Form.Check
                   type="checkbox"
@@ -460,89 +467,94 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
-              <Form.Group controlId="editProductImages" className="mb-3">
-            <Form.Label className="fw-bold">Ürün Görselleri</Form.Label>
-            <Form.Text className="text-muted d-block mb-2">
-              Görselleri sürükleyip bırakın veya tıklayarak seçin.
-            </Form.Text>
-            <div className="d-flex flex-wrap gap-2">
-              {selectedProduct.images && selectedProduct.images.map((img, index) => (
-                <div key={index} style={{ position: 'relative', width: '120px', height: '120px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
-                  <img
-                    src={img.imageUrl}
-                    alt={`Görsel ${index + 1}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
 
-        <Button
-          variant="light"
-          size="sm"
-          style={{ position: 'absolute', top: '2px', right: '2px' }}
-          onClick={() => removeImage(index)}
-        >
-          <i className="ri-close" style={{ fontSize: '1.8rem', color: '#dc3545', zIndex:10 }}></i>
-        </Button>
-   
-        {index > 0 && (
-          <Button
-            variant="light"
-            size="sm"
-            style={{ position: 'absolute', bottom: '2px', left: '2px' }}
-            onClick={() => moveImageUp(index)}
-          >
-            <i className="ri-arrow-up-s-line"></i>
-          </Button>
-        )}
-        {index < selectedProduct.images.length - 1 && (
-          <Button
-            variant="light"
-            size="sm"
-            style={{ position: 'absolute', bottom: '2px', right: '2px' }}
-            onClick={() => moveImageDown(index)}
-          >
-            <i className="ri-arrow-down-s-line"></i>
-          </Button>
-        )}
-      </div>
-    ))}
+              <Form.Group controlId="editProductImages" className="mb-3">
+                <Form.Label className="fw-bold">Ürün Görselleri</Form.Label>
+                <Form.Text className="text-muted d-block mb-2">
+                  Görselleri sürükleyip bırakın veya tıklayarak seçin.
+                </Form.Text>
+                <div className="d-flex flex-wrap gap-2">
+                  {selectedProduct.images && selectedProduct.images.map((img, index) => (
+                    <div key={index} style={{ position: 'relative', width: '120px', height: '120px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
+                      <img
+                        src={img.imageUrl}
+                        alt={`Görsel ${index + 1}`}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+
+                      <Button
+                        variant="light"
+                        size="sm"
+                        style={{ position: 'absolute', top: '2px', right: '2px' }}
+                        onClick={() => removeImage(index)}
+                      >
+                        <i className="ri-close" style={{ fontSize: '1.8rem', color: '#dc3545', zIndex:10 }}></i>
+                      </Button>
+              
+                      {index > 0 && (
+                        <Button
+                          variant="light"
+                          size="sm"
+                          style={{ position: 'absolute', bottom: '2px', left: '2px' }}
+                          onClick={() => moveImageUp(index)}
+                        >
+                          <i className="ri-arrow-up-s-line"></i>
+                        </Button>
+                      )}
+
+                      {index < selectedProduct.images.length - 1 && (
+                        <Button
+                          variant="light"
+                          size="sm"
+                          style={{ position: 'absolute', bottom: '2px', right: '2px' }}
+                          onClick={() => moveImageDown(index)}
+                        >
+                          <i className="ri-arrow-down-s-line"></i>
+                        </Button>
+                      )}
+                    </div>
+                  ))}
     
-    <div
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleImageDrop}
-      onClick={() => document.getElementById("hiddenMultipleFileInput").click()}
-      style={{
-        border: dragActive ? "3px dashed #28a745" : "3px dashed #ccc",
-        borderRadius: "8px",
-        padding: "20px",
-        textAlign: "center",
-        width: "120px",
-        height: "120px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-        backgroundColor: dragActive ? "#e9f7ef" : "#f8f9fa",
-      }}
-    >
-      <p style={{ color: "#6c757d", fontSize: "14px", margin: 0 }}>+ Ekle</p>
-    </div>
-  </div>
-  <Form.Control
-    id="hiddenMultipleFileInput"
-    type="file"
-    name="images"
-    accept="image/*"
-    multiple
-    style={{ display: "none" }}
-    onChange={handleMultipleFileChange}
-  />
-</Form.Group>
+                  <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleImageDrop}
+                    onClick={() => document.getElementById("hiddenMultipleFileInput").click()}
+                    style={{
+                      border: dragActive ? "3px dashed #28a745" : "3px dashed #ccc",
+                      borderRadius: "8px",
+                      padding: "20px",
+                      textAlign: "center",
+                      width: "120px",
+                      height: "120px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      backgroundColor: dragActive ? "#e9f7ef" : "#f8f9fa",
+                    }}
+                  >
+                    <p style={{ color: "#6c757d", fontSize: "14px", margin: 0 }}>+ Ekle</p>
+                  </div>
+                </div>
+
+                <Form.Control
+                  id="hiddenMultipleFileInput"
+                  type="file"
+                  name="images"
+                  accept="image/*"
+                  multiple
+                  style={{ display: "none" }}
+                  onChange={handleMultipleFileChange}
+                />
+              </Form.Group>
 
 
             </Form>
           )}
         </Modal.Body>
+
+
         <Modal.Footer>
           <Button variant="secondary" onClick={closeEditModal}>
             İptal
@@ -551,72 +563,76 @@ export default function ProductManagement() {
             Kaydet
           </Button>
         </Modal.Footer>
+
+
       </Modal>
 
       <Modal show={showDetailModal} onHide={closeDetailModal}>
-  <Modal.Header className="bg-primary" closeButton>
-    <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {selectedProduct && (
-      <div style={{ textAlign: "center" }}>
-        {selectedProduct.images && selectedProduct.images.length > 0 && (
-          selectedProduct.images.length > 1 ? (
-            <Carousel indicators={false} controls={true} interval={3000} style={{ marginBottom: "15px" }}>
-              {selectedProduct.images.map((img, index) => (
-                <Carousel.Item key={index}>
-                  <img
-                    className="d-block w-100"
-                    src={img.imageUrl}
-                    alt={`Slide ${index + 1}`}
-                    style={{
-                      maxWidth: "100%",
-                      height: "auto",
-                      borderRadius: "5px",
-                    }}
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          ) : (
-            <div style={{ marginBottom: "15px" }}>
-              <img
-                src={selectedProduct.images[0].imageUrl}
-                alt={selectedProduct.name}
-                style={{
-                  display: "block",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  maxWidth: "100%",
-                  height: "auto",
-                  borderRadius: "5px",
-                }}
-              />
+
+        <Modal.Header className="bg-primary" closeButton>
+          <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {selectedProduct && (
+            <div style={{ textAlign: "center" }}>
+              {selectedProduct.images && selectedProduct.images.length > 0 && (
+                selectedProduct.images.length > 1 ? (
+                  <Carousel indicators={false} controls={true} interval={3000} style={{ marginBottom: "15px" }}>
+                    {selectedProduct.images.map((img, index) => (
+                      <Carousel.Item key={index}>
+                        <img
+                          className="d-block w-100"
+                          src={img.imageUrl}
+                          alt={`Slide ${index + 1}`}
+                          style={{
+                            maxWidth: "100%",
+                            height: "auto",
+                            borderRadius: "5px",
+                          }}
+                        />
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                ) : (
+                  <div style={{ marginBottom: "15px" }}>
+                    <img
+                      src={selectedProduct.images[0].imageUrl}
+                      alt={selectedProduct.name}
+                      style={{
+                        display: "block",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        maxWidth: "100%",
+                        height: "auto",
+                        borderRadius: "5px",
+                      }}
+                    />
+                  </div>
+                )
+              )}
+              <p>
+                <strong>Ürün Adı:</strong> {selectedProduct.name}
+              </p>
+              <p>
+                <strong>Hacim:</strong> {selectedProduct.volume}
+              </p>
+              <p>
+                <strong>Kategori:</strong> {selectedProduct.displayCategory}
+              </p>
+              <p>
+                <strong>Açıklama:</strong> {selectedProduct.description}
+              </p>
+              <p>
+                <strong>Best Seller:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
+              </p>
+              <p>
+                <strong>New Release:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+              </p>
             </div>
-          )
-        )}
-        <p>
-          <strong>Ürün Adı:</strong> {selectedProduct.name}
-        </p>
-        <p>
-          <strong>Hacim:</strong> {selectedProduct.volume}
-        </p>
-        <p>
-          <strong>Kategori:</strong> {selectedProduct.displayCategory}
-        </p>
-        <p>
-          <strong>Açıklama:</strong> {selectedProduct.description}
-        </p>
-        <p>
-          <strong>Best Seller:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
-        </p>
-        <p>
-          <strong>New Release:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
-        </p>
-      </div>
-    )}
-  </Modal.Body>
-</Modal>
+          )}
+        </Modal.Body>
+      </Modal>
 
       <Footer />
     </>
