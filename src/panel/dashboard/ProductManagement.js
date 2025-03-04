@@ -254,8 +254,6 @@ const handleImageDrop = (e) => {
   }
 };
 
-
-
 const removeImage = (index) => {
   const updatedImages = selectedProduct.images.filter((_, i) => i !== index);
   setSelectedProduct({
@@ -265,25 +263,25 @@ const removeImage = (index) => {
 };
 
 
-const moveImageUp = (index) => {
-  if (index <= 0) return;
-  const updatedImages = [...selectedProduct.images];
-  [updatedImages[index - 1], updatedImages[index]] = [updatedImages[index], updatedImages[index - 1]];
-  setSelectedProduct({
-    ...selectedProduct,
-    images: updatedImages,
-  });
-};
+  const moveImageUp = (index) => {
+    if (index <= 0) return;
+    const updatedImages = [...selectedProduct.images];
+    [updatedImages[index - 1], updatedImages[index]] = [updatedImages[index], updatedImages[index - 1]];
+    setSelectedProduct({
+      ...selectedProduct,
+      images: updatedImages,
+    });
+  };
 
-const moveImageDown = (index) => {
-  if (index >= selectedProduct.images.length - 1) return;
-  const updatedImages = [...selectedProduct.images];
-  [updatedImages[index], updatedImages[index + 1]] = [updatedImages[index + 1], updatedImages[index]];
-  setSelectedProduct({
-    ...selectedProduct,
-    images: updatedImages,
-  });
-};
+  const moveImageDown = (index) => {
+    if (index >= selectedProduct.images.length - 1) return;
+    const updatedImages = [...selectedProduct.images];
+    [updatedImages[index], updatedImages[index + 1]] = [updatedImages[index + 1], updatedImages[index]];
+    setSelectedProduct({
+      ...selectedProduct,
+      images: updatedImages,
+    });
+  };
 
  
   const toggleSelectProduct = (id, e) => {
@@ -345,17 +343,17 @@ const moveImageDown = (index) => {
     }
   };
   
-
-
   const openEditModal = (product, e) => {
     e.stopPropagation();
     setSelectedProduct(product);
     setShowEditModal(true);
   };
+
   const closeEditModal = () => {
     setSelectedProduct(null);
     setShowEditModal(false);
   };
+
   const handleEditChange = (e) => {
     const { name, value, type, checked } = e.target;
     setSelectedProduct({
@@ -363,6 +361,7 @@ const moveImageDown = (index) => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
+
   const saveProductChanges = async () => {
     try {
       const response = await fetch(`http://localhost:5001/api/update-product/${selectedProduct.id}`, {
@@ -421,6 +420,7 @@ const moveImageDown = (index) => {
 
 
   const totalPages = Math.ceil(multiFilteredProducts.length / itemsPerPage);
+  
   const currentProducts = multiFilteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
