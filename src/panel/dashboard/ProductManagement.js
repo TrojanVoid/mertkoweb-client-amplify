@@ -19,46 +19,21 @@ export default function ProductManagement() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dragActive, setDragActive] = useState(false);
-
-const handleDragOver = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  setDragActive(true);
-};
-
-const handleDragLeave = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  setDragActive(false);
-};
-
-const handleDrop = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  setDragActive(false);
-  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-    handleFileChange(e); 
-  }
-};
-
-  
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
-
-  
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
 
-  
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 40;
-
-  
-  const [searchName, setSearchName] = useState("");
-  const [searchCategory, setSearchCategory] = useState("");
-  const [searchVolume, setSearchVolume] = useState("");
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
 
   function getCategoryDisplayName(categoryCode) {
     const categoryMap = {
@@ -126,141 +101,141 @@ const handleDrop = (e) => {
   };
 
 
-const handleMultipleFileChange = (e) => {
-  const files = Array.from(e.target.files);
-  if (files.length > 0) {
-    const newImages = files.map((file) => ({
-      image: file,
-      imageUrl: URL.createObjectURL(file),
-    }));
+  const handleMultipleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      const newImages = files.map((file) => ({
+        image: file,
+        imageUrl: URL.createObjectURL(file),
+      }));
+      setSelectedProduct({
+        ...selectedProduct,
+        images: [...(selectedProduct.images || []), ...newImages],
+      });
+    }
+  };
+
+
+  const tableColumns = [
+    {
+      header: '',
+      accessor: 'isSelected',
+      sortable: false,
+      onSelectAll: (e) => toggleSelectAll(e),
+      allSelected:products.every((p) => p.isSelected),
+      cell: (row) => (
+        <Form.Check
+          type="checkbox"
+          checked={row.isSelected}
+          onChange={(e) => toggleSelectProduct(row.id, e)}
+          onClick={(e) => e.stopPropagation()}
+        />
+      ),
+    },
+    {
+      header: 'Görsel',
+      accessor: 'images',
+      sortable: false,
+      cell: (row) => (
+        <div
+          style={{
+            width: 60,
+            height: 60,
+            backgroundColor: "#f0f0f0",
+            borderRadius: 5,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "auto",
+      
+          }}
+        >
+          {row.images && row.images.length > 0 ? (
+            <img
+              src={row.images[0].imageUrl}
+              alt={row.name}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 5,
+                verticalAlign: "middle",
+              }}
+            />
+          ) : (
+            <i className="ri-image-line text-secondary fs-3"></i>
+          )}
+        </div>
+      ),
+    },
+    {
+      header: 'Ürün Adı',
+      accessor: 'name',
+      sortable: true,
+    },
+    {
+      header: 'Hacim',
+      accessor: 'volume',
+      sortable: true,
+    },
+    {
+      header: 'Kategori',
+      accessor: 'displayCategory',
+      sortable: true,
+    },
+    {
+      header: 'Best Seller',
+      accessor: 'isBestSeller',
+      sortable: true,
+      cell: (row) => (row.isBestSeller ? 'Evet' : 'Hayır'),
+    },
+    {
+      header: 'New Release',
+      accessor: 'isNewRelease',
+      sortable: true,
+      cell: (row) => (row.isNewRelease ? 'Evet' : 'Hayır'),
+    },
+    {
+      header: 'Eylemler',
+      accessor: 'actions',
+      sortable: false,
+      cell: (row) => (
+        <div onClick={(e) => e.stopPropagation()}>
+          <Button variant="link" size="sm" onClick={(e) => openEditModal(row, e)} className="p-0 me-2">
+            <i className="ri-edit-line fs-4"></i>
+          </Button>
+          <Button variant="link" size="sm" onClick={(e) => deleteProduct(row.id, e)} className="p-0">
+            <i className="ri-delete-bin-line fs-4"></i>
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  const handleImageDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length > 0) {
+      const newImages = files.map((file) => ({
+        image: file,
+        imageUrl: URL.createObjectURL(file),
+      }));
+      setSelectedProduct((prevProduct) => ({
+        ...prevProduct,
+        images: [...(prevProduct.images || []), ...newImages],
+      }));
+    }
+};
+
+  const removeImage = (index) => {
+    const updatedImages = selectedProduct.images.filter((_, i) => i !== index);
     setSelectedProduct({
       ...selectedProduct,
-      images: [...(selectedProduct.images || []), ...newImages],
+      images: updatedImages,
     });
-  }
-};
-
-
-const tableColumns = [
-  {
-    header: '',
-    accessor: 'isSelected',
-    sortable: false,
-    onSelectAll: (e) => toggleSelectAll(e),
-    allSelected:products.every((p) => p.isSelected),
-    cell: (row) => (
-      <Form.Check
-        type="checkbox"
-        checked={row.isSelected}
-        onChange={(e) => toggleSelectProduct(row.id, e)}
-        onClick={(e) => e.stopPropagation()}
-      />
-    ),
-  },
-  {
-    header: 'Görsel',
-    accessor: 'images',
-    sortable: false,
-    cell: (row) => (
-      <div
-        style={{
-          width: 60,
-          height: 60,
-          backgroundColor: "#f0f0f0",
-          borderRadius: 5,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          margin: "auto",
-     
-        }}
-      >
-        {row.images && row.images.length > 0 ? (
-          <img
-            src={row.images[0].imageUrl}
-            alt={row.name}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: 5,
-              verticalAlign: "middle",
-            }}
-          />
-        ) : (
-          <i className="ri-image-line text-secondary fs-3"></i>
-        )}
-      </div>
-    ),
-  },
-  {
-    header: 'Ürün Adı',
-    accessor: 'name',
-    sortable: true,
-  },
-  {
-    header: 'Hacim',
-    accessor: 'volume',
-    sortable: true,
-  },
-  {
-    header: 'Kategori',
-    accessor: 'displayCategory',
-    sortable: true,
-  },
-  {
-    header: 'Best Seller',
-    accessor: 'isBestSeller',
-    sortable: true,
-    cell: (row) => (row.isBestSeller ? 'Evet' : 'Hayır'),
-  },
-  {
-    header: 'New Release',
-    accessor: 'isNewRelease',
-    sortable: true,
-    cell: (row) => (row.isNewRelease ? 'Evet' : 'Hayır'),
-  },
-  {
-    header: 'Eylemler',
-    accessor: 'actions',
-    sortable: false,
-    cell: (row) => (
-      <div onClick={(e) => e.stopPropagation()}>
-        <Button variant="link" size="sm" onClick={(e) => openEditModal(row, e)} className="p-0 me-2">
-          <i className="ri-edit-line fs-4"></i>
-        </Button>
-        <Button variant="link" size="sm" onClick={(e) => deleteProduct(row.id, e)} className="p-0">
-          <i className="ri-delete-bin-line fs-4"></i>
-        </Button>
-      </div>
-    ),
-  },
-];
-
-const handleImageDrop = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  setDragActive(false);
-  const files = Array.from(e.dataTransfer.files);
-  if (files.length > 0) {
-    const newImages = files.map((file) => ({
-      image: file,
-      imageUrl: URL.createObjectURL(file),
-    }));
-    setSelectedProduct((prevProduct) => ({
-      ...prevProduct,
-      images: [...(prevProduct.images || []), ...newImages],
-    }));
-  }
-};
-
-const removeImage = (index) => {
-  const updatedImages = selectedProduct.images.filter((_, i) => i !== index);
-  setSelectedProduct({
-    ...selectedProduct,
-    images: updatedImages,
-  });
-};
+  };
 
 
   const moveImageUp = (index) => {
@@ -293,34 +268,11 @@ const removeImage = (index) => {
     );
   };
   
-
   const toggleSelectAll = (e) => {
     e.stopPropagation();
     const allSelected = products.every((p) => p.isSelected);
     setProducts(products.map((p) => ({ ...p, isSelected: !allSelected })));
   };
-
-  
-  const sortColumn = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
-
-  const getSortIcon = (key) => {
-    if (sortConfig.key !== key) {
-      return <i className="ri-arrow-up-down-line ms-1 text-muted"></i>;
-    }
-    return sortConfig.direction === "asc" ? (
-      <i className="ri-arrow-up-s-line ms-1"></i>
-    ) : (
-      <i className="ri-arrow-down-s-line ms-1"></i>
-    );
-  };
-
 
   const openDetailModal = (product) => {
     setSelectedProduct(product);
@@ -384,121 +336,6 @@ const removeImage = (index) => {
     }
   };
 
-
-  const multiFilteredProducts = useMemo(() => {
-    let temp = products.filter((p) => {
-      if (
-        searchName &&
-        !p.name.toLowerCase().includes(searchName.toLowerCase())
-      ) {
-        return false;
-      }
-      if (
-        searchCategory &&
-        !p.category.toLowerCase().includes(searchCategory.toLowerCase())
-      ) {
-        return false;
-      }
-      if (searchVolume && !String(p.volume).includes(searchVolume)) {
-        return false;
-      }
-      return true;
-    });
-
-    if (sortConfig.key) {
-      const { key, direction } = sortConfig;
-      temp.sort((a, b) => {
-        const valA = key === "volume" ? Number(a[key]) : a[key];
-        const valB = key === "volume" ? Number(b[key]) : b[key];
-        if (valA < valB) return direction === "asc" ? -1 : 1;
-        if (valA > valB) return direction === "asc" ? 1 : -1;
-        return 0;
-      });
-    }
-    return temp;
-  }, [products, sortConfig, searchName, searchCategory, searchVolume]);
-
-
-  const totalPages = Math.ceil(multiFilteredProducts.length / itemsPerPage);
-  
-  const currentProducts = multiFilteredProducts.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  const renderPaginationItems = () => {
-    let items = [];
-    items.push(
-      <Pagination.First
-        key="first"
-        onClick={() => handlePageChange(1)}
-        disabled={currentPage === 1}
-      />
-    );
-    items.push(
-      <Pagination.Prev
-        key="prev"
-        onClick={() => handlePageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      />
-    );
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, currentPage + 2);
-    if (startPage > 1) {
-      items.push(
-        <Pagination.Item key={1} onClick={() => handlePageChange(1)}>
-          1
-        </Pagination.Item>
-      );
-      if (startPage > 2) {
-        items.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
-      }
-    }
-    for (let i = startPage; i <= endPage; i++) {
-      items.push(
-        <Pagination.Item
-          key={i}
-          active={i === currentPage}
-          onClick={() => handlePageChange(i)}
-        >
-          {i}
-        </Pagination.Item>
-      );
-    }
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) {
-        items.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
-      }
-      items.push(
-        <Pagination.Item
-          key={totalPages}
-          onClick={() => handlePageChange(totalPages)}
-        >
-          {totalPages}
-        </Pagination.Item>
-      );
-    }
-    items.push(
-      <Pagination.Next
-        key="next"
-        onClick={() => handlePageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      />
-    );
-    items.push(
-      <Pagination.Last
-        key="last"
-        onClick={() => handlePageChange(totalPages)}
-        disabled={currentPage === totalPages}
-      />
-    );
-    return items;
-  };
-
   return (
     <>
       <Header />
@@ -538,18 +375,12 @@ const removeImage = (index) => {
             ) : (
               <>
               <DynamicTable
-              data={multiFilteredProducts}
+              data={products}
               columns={tableColumns}
               onRowClick={openDetailModal}
               initialItemsPerPage={20}
 
             />
-                <div className="d-flex justify-content-between align-items-center mt-3 text-white">
-                  <div>
-                    Toplam {multiFilteredProducts.length} ürün, Sayfa {currentPage} / {totalPages}
-                  </div>
-                
-                </div>
               </>
             )}
           </Card.Body>
