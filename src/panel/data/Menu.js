@@ -15,31 +15,6 @@ const dashboardMenu = [
         "link": "/dashboard/product",
         "icon": "ri-shopping-basket-line"
       },
-      {
-        "label": "Kategori Görüntüle/Düzenle",
-        "link": "/dashboard/studio/categories",
-        "icon": "ri-folder-line"
-      },
-      {
-        "label": "Kategori Eşleştirme",
-        "link": "/dashboard/studio/category-matching",
-        "icon": "ri-link-line"
-      },
-      {
-        "label": "Varyant Tipleri",
-        "link": "/dashboard/variant-types",
-        "icon": "ri-node-tree"
-      },
-      {
-        "label": "Varyantlar",
-        "link": "/dashboard/variants",
-        "icon": "ri-shape-line"
-      },
-      {
-        "label": "Etiketler",
-        "link": "/dashboard/studio/tags",
-        "icon": "ri-price-tag-3-line"
-      }
     ]
   },
   {
@@ -68,27 +43,10 @@ const dashboardMenu = [
     ]
   },
   {
-    "label": "Entegrasyon",
-    "link": "/dashboard/helpdesk",
-    "icon": "ri-plug-line",
-    "submenu": [
-      {
-        "label": "Vega Ayarları",
-        "link": "/dashboard/vega",
-        "icon": "ri-tools-line"
-      }
-    ]
-  },
-  {
     "label": "SSS",
     "link": "/dashboard/storage",
     "icon": "ri-question-line",
     "submenu": [
-      {
-        "label": "Kategoriler",
-        "link": "/dashboard/storage/categories",
-        "icon": "ri-folder-3-line"
-      },
       {
         "label": "SSS",
         "link": "/dashboard/storage/faq",

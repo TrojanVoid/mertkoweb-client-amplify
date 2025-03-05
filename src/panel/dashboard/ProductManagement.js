@@ -73,21 +73,21 @@ export default function ProductManagement() {
 
   
   const addProduct = () => {
-    const newProduct = {
-      id: `NEW-${Date.now()}`,
-      name: `Yeni Ürün ${products.length + 1}`,
-      volume: 0,
-      category: "Genel",
-      description: "Detay girilmedi",
+    setSelectedProduct({
+      id: null, 
+      name: "",
+      volume: null,
+      category: "", 
+      displayCategory: "",
+      description: "",
       isBestSeller: false,
       isNewRelease: false,
       isSelected: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
       images: [],
-    };
-    setProducts([...products, newProduct]);
+    });
+    setShowEditModal(true); 
   };
+  
 
 
   const deleteSelectedProducts = () => {
@@ -316,25 +316,68 @@ export default function ProductManagement() {
 
   const saveProductChanges = async () => {
     try {
-      const response = await fetch(`http://localhost:5001/api/update-product/${selectedProduct.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(selectedProduct)
-      });
-      if (!response.ok) {
-        console.log("ürün güncelleme başarısız");
-        throw new Error("Ürün güncelleme başarısız");
-      }
-      const updatedProduct = await response.json();
-      setProducts(
-        products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+ 
+      const processedImages = await Promise.all(
+        selectedProduct.images.map(async (img) => {
+          if (!img.driveId) {
+            const formData = new FormData();
+            formData.append("image", img.image);
+     
+            const uploadResponse = await fetch("http://localhost:5001/api/upload-image", {
+              method: "POST",
+              body: formData,
+            });
+            if (!uploadResponse.ok) {
+              throw new Error("Görsel yükleme başarısız");
+            }
+            const uploadedImage = await uploadResponse.json();
+            return {
+              ...img,
+              name: uploadedImage.name, 
+              driveId: uploadedImage.driveId, 
+            };
+          }
+          return img;
+        })
       );
-      console.log("Ürün güncellendi:", updatedProduct);
+  
+      const productData = {
+        ...selectedProduct,
+        images: processedImages,
+      };
+  
+      let response;
+      if (!selectedProduct.id) {
+        response = await fetch("http://localhost:5001/api/create-product", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(productData),
+        });
+      } else {
+
+        response = await fetch(`http://localhost:5001/api/update-product/${selectedProduct.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(productData),
+        });
+      }
+      if (!response.ok) {
+        throw new Error("Ürün kaydetme başarısız");
+      }
+      const savedProduct = await response.json();
+      if (!selectedProduct.id) {
+        setProducts([...products, savedProduct]);
+      } else {
+        setProducts(products.map((p) => (p.id === savedProduct.id ? savedProduct : p)));
+      }
       closeEditModal();
     } catch (error) {
-      console.error("Ürün güncellenirken hata:", error);
+      console.error("Ürün kaydedilirken hata:", error);
     }
   };
+  
+  
+  
 
   return (
     <>
@@ -391,7 +434,10 @@ export default function ProductManagement() {
       <Modal show={showEditModal} onHide={closeEditModal}>
 
         <Modal.Header className="bg-primary" closeButton>
-          <Modal.Title className="text-white">Ürünü Düzenle</Modal.Title>
+        <Modal.Title className="text-white">
+          {selectedProduct && !selectedProduct.id ? "Yeni Ürün Ekle" : "Ürünü Düzenle"}
+        </Modal.Title>
+
         </Modal.Header>
 
         <Modal.Body>
