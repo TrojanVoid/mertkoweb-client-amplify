@@ -28,15 +28,22 @@ const DynamicTable = ({ data, columns, onRowClick, initialItemsPerPage = 12 }) =
         let aValue = a[sortConfig.key];
         let bValue = b[sortConfig.key];
 
-        if (typeof aValue === 'string') {
-          return sortConfig.direction === 'ascending'
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue);
-        } else {
-          return sortConfig.direction === 'ascending'
-            ? aValue - bValue
-            : bValue - aValue;
+        try{
+          if (typeof aValue === 'string') {
+            return sortConfig.direction === 'ascending'
+              ? aValue.localeCompare(bValue)
+              : bValue.localeCompare(aValue);
+          } else {
+            return sortConfig.direction === 'ascending'
+              ? aValue - bValue
+              : bValue - aValue;
+          }
         }
+        catch(err){
+          console.error("Value sort type error:", err);
+          return 0;
+        }
+        
       });
     }
     return sortableData;
