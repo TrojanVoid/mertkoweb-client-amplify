@@ -95,6 +95,9 @@ export const requestByType = async (productRequestType, property=null) => {
           data: property
         });
         break;
+      case "deleteProduct":
+        response = await axios.delete(`${url}?id=${property}`);
+        break;
       case "deleteProductImage":
         response = await axios.delete(`${url}?productId=${property.productId}&imageDriveId=${property.imageDriveId}`);
         break;

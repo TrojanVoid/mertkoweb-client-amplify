@@ -100,9 +100,14 @@ export default function ProductManagement() {
   };
 
 
-  const deleteProduct = (id, e) => {
+  const deleteProduct = async (id, e) => {
     e.stopPropagation();
     setProducts(products.filter((p) => p.id !== id));
+
+    const deleteProductResponse = await requestByType(types.deleteProduct, id);
+    if (!deleteProductResponse) {
+      console.error("Ürün silme başarısız");
+    }
   };
 
 
