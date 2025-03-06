@@ -87,6 +87,7 @@ export default function ProductManagement() {
       category: "", 
       displayCategory: "",
       description: "",
+      material:"",
       isBestSeller: false,
       isNewRelease: false,
       isSelected: false,
@@ -193,6 +194,11 @@ export default function ProductManagement() {
       accessor: 'displayCategory',
       sortable: true,
     },
+    {
+      header: 'Malzeme',
+      accessor: 'material',
+      sortable: true,
+    },    
     {
       header: 'Best Seller',
       accessor: 'isBestSeller',
@@ -324,6 +330,7 @@ export default function ProductManagement() {
       const preparedProductData = {
         name: selectedProduct.name,
         volume: selectedProduct.volume,
+        material:selectedProduct.material,
         category: selectedProduct.category,
         description: selectedProduct.description,
         isBestSeller: selectedProduct.isBestSeller,
@@ -519,6 +526,7 @@ export default function ProductManagement() {
                 />
               </Form.Group>
 
+             
               <Form.Group controlId="editProductCategory" className="mb-3">
                 <Form.Label>Kategori</Form.Label>
                 <Form.Select 
@@ -533,7 +541,7 @@ export default function ProductManagement() {
                     });
                   }}
                 >
-                  {selectedProduct.category !== null && selectedProduct.category !== "" ? (
+                  {selectedProduct.category ? (
                     <option value={selectedProduct.category}>
                       {getCategoryDisplayName(selectedProduct.category)}
                     </option>
@@ -556,6 +564,17 @@ export default function ProductManagement() {
                   onChange={handleEditChange}
                 />
               </Form.Group>
+
+              <Form.Group controlId="editProductMaterial" className="mb-3">
+              <Form.Label>Malzeme</Form.Label>
+              <Form.Control
+                type="text"
+                name="material"
+                value={selectedProduct.material || ""}
+                onChange={handleEditChange}
+              />
+            </Form.Group>
+
 
               <Form.Group controlId="editProductBestSeller" className="mb-3">
                 <Form.Check
@@ -729,6 +748,9 @@ export default function ProductManagement() {
               <p>
                 <strong>Kategori:</strong> {selectedProduct.displayCategory}
               </p>
+              <p>
+              <strong>Malzeme:</strong> {selectedProduct.material}
+            </p>
               <p>
                 <strong>Açıklama:</strong> {selectedProduct.description}
               </p>
