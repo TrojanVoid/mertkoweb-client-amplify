@@ -21,6 +21,8 @@ export default function ProductManagement() {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [imagesToDelete, setImagesToDelete] = useState([]);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
+
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -97,7 +99,8 @@ export default function ProductManagement() {
   };
   
   const deleteSelectedProducts = () => {
-    setProducts(products.filter((p) => !p.isSelected));
+    setProducts(products.filter((p) => !selectedProductIds.includes(p.id)));
+    setSelectedProductIds([]);
   };
 
 
@@ -112,6 +115,7 @@ export default function ProductManagement() {
   };
 
 
+  
   const handleMultipleFileChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -137,7 +141,7 @@ export default function ProductManagement() {
       cell: (row) => (
         <Form.Check
           type="checkbox"
-          checked={row.isSelected}
+          checked={selectedProductIds.includes(row.id)}
           onChange={(e) => toggleSelectProduct(row.id, e)}
           onClick={(e) => e.stopPropagation()}
         />
@@ -280,20 +284,24 @@ export default function ProductManagement() {
     });
   };
 
- 
   const toggleSelectProduct = (id, e) => {
     e.stopPropagation();
-    setProducts(
-      products.map((p) =>
-        p.id === id ? { ...p, isSelected: !p.isSelected } : p
-      )
-    );
+    if (selectedProductIds.includes(id)) {
+      setSelectedProductIds(selectedProductIds.filter(pid => pid !== id));
+    } else {
+      setSelectedProductIds([...selectedProductIds, id]);
+    }
   };
+  
+
   
   const toggleSelectAll = (e) => {
     e.stopPropagation();
-    const allSelected = products.every((p) => p.isSelected);
-    setProducts(products.map((p) => ({ ...p, isSelected: !allSelected })));
+    if (selectedProductIds.length === products.length) {
+      setSelectedProductIds([]);
+    } else {
+      setSelectedProductIds(products.map((p) => p.id));
+    }
   };
 
   const openDetailModal = (product) => {
@@ -528,31 +536,27 @@ export default function ProductManagement() {
 
              
               <Form.Group controlId="editProductCategory" className="mb-3">
-                <Form.Label>Kategori</Form.Label>
-                <Form.Select 
-                  name="category"
-                  value={selectedProduct.category} 
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setSelectedProduct({
-                      ...selectedProduct,
-                      category: value,
-                      displayCategory: getCategoryDisplayName(value)
-                    });
-                  }}
-                >
-                  {selectedProduct.category ? (
-                    <option value={selectedProduct.category}>
-                      {getCategoryDisplayName(selectedProduct.category)}
-                    </option>
-                  ) : (
-                    <option disabled value="">Kategori Seçin</option>
-                  )}
-                  <option value="p">Plastik Şişe</option>
-                  <option value="k">Plastik Kavanoz</option>
-                  <option value="c">Konsept Ürün</option>
-                </Form.Select>
-              </Form.Group>
+  <Form.Label>Kategori</Form.Label>
+  <Form.Select 
+    name="category"
+    value={selectedProduct.category} 
+    onChange={(e) => {
+      const value = e.target.value;
+      setSelectedProduct({
+        ...selectedProduct,
+        category: value,
+        displayCategory: getCategoryDisplayName(value)
+      });
+    }}
+  >
+    <option disabled value="">Kategori Seçin</option>
+    <option value="p">Plastik Şişe</option>
+    <option value="k">Plastik Kavanoz</option>
+    <option value="c">Konsept Ürün</option>
+  </Form.Select>
+</Form.Group>
+
+
 
               <Form.Group controlId="editProductDescription" className="mb-3">
                 <Form.Label>Açıklama</Form.Label>
