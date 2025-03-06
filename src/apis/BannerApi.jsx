@@ -36,8 +36,6 @@ export const requestByType = async (type, property=null) => {
             headers: {
               'Content-Type': 'application/json',
             }, 
-          },
-          {
             data: property
           },
         );
