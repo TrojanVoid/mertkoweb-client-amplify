@@ -7,17 +7,16 @@ const baseUrl =
     ? apiConfig[envMode]["apiUrl"]
     : apiConfig["production"]["apiUrl"];
 
-    export const login = async (username, password) => {
-        
-        const base = baseUrl.replace("/api", ""); 
-        const url = `${base}/admin`; 
-        Logger.log(`Giriş denemesi: ${username}`, TITLE_TAGS.LOGIN_API);
-        try {
-          const response = await axios.post(url, { username, password });
-          return response;
-        } catch (error) {
-          Logger.error(`Login hatası: ${error}`, TITLE_TAGS.LOGIN_API);
-          throw error;
-        }
-      };
+export const login = async (username, password) => {
+  const base = baseUrl.replace("/api", ""); 
+  const url = `${base}/admin`; 
+  Logger.log(`Giriş denemesi: ${username}`, TITLE_TAGS.LOGIN_API);
+  try {
+    const response = await axios.post(url, { username, password });
+    return response;
+  } catch (error) {
+    Logger.error(`Login hatası: ${error}`, TITLE_TAGS.LOGIN_API);
+    throw error;
+  }
+};
       

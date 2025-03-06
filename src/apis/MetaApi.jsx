@@ -8,30 +8,30 @@ const baseUrl = (envMode == "development" || envMode == "production")
   : apiConfig["production"]["apiUrl"];
 
 export const types = {
-  updateBanner: "updateBanner",
-  getBanner: "bannerData",
+  updatePagesMeta: "updatePagesMeta",
+  getPagesMeta: "getPagesMeta",
 }
 
 const urls = {
-  updateBanner: `${baseUrl}/update-banner-data`,
-  getBanner: `${baseUrl}/banner-data`,
+  updatePagesMeta: `${baseUrl}/update-meta-data`,
+  getPagesMeta: `${baseUrl}/get-meta-data`,
 }
 
 export const requestByType = async (type, property=null) => {
-  Logger.log("Fetching banner data", TITLE_TAGS.META_API);
+  Logger.log("Fetching META data", TITLE_TAGS.META_API);
   if(!type){
-    Logger.error("Invalid banner request type", TITLE_TAGS.META_API);
+    Logger.error("Invalid META request type", TITLE_TAGS.META_API);
     return [];
   }
   let response = null;
   try {
     switch(type){
-      case types.updateBanner:
+      case types.updatePagesMeta:
         if(!property){
-          Logger.error("Invalid banner data", TITLE_TAGS.META_API);
+          Logger.error("Invalid META data", TITLE_TAGS.META_API);
           return [];
         }
-        response = await axios.put(`${urls.updateBanner}`, 
+        response = await axios.put(`${urls.updatePagesMeta}`, 
           {
             headers: {
               'Content-Type': 'application/json',
@@ -40,16 +40,16 @@ export const requestByType = async (type, property=null) => {
           },
         );
         break;
-      case types.getBanner:
-        response = await axios.get(urls.getBanner);
+      case types.getPagesMeta:
+        response = await axios.get(urls.getPagesMeta);
         break;
       default:
-        Logger.error(`Invalid banner request type: ${type}`, TITLE_TAGS.META_API);
+        Logger.error(`Invalid META request type: ${type}`, TITLE_TAGS.META_API);
         break;
     }
     return response;
   } catch (error) {
-    Logger.error(`Error fetching banner data: ERROR MESSAGE:\n${error}`, TITLE_TAGS.META_API);
+    Logger.error(`Error fetching META data: ERROR MESSAGE:\n${error}`, TITLE_TAGS.META_API);
     return [];
   }
 }

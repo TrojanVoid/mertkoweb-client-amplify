@@ -86,22 +86,28 @@ import IconFeather from "../docs/IconFeather";
 import About from "../dashboard/About";
 import Blog from "../dashboard/Blog";
 import Banner from "../dashboard/Banner";
+import Meta from "../dashboard/Meta";
 
 const protectedRoutes = [
-  { path: "finance", element: <FinanceMonitoring /> },
+  
+  { path: "product", element: <ProductManagement /> },
   { path: "about", element: <About/>},
   { path: "blog", element: <Blog/>},
-  { path: "banner", element: <Banner></Banner>},
-  { path: "studio", element: <AnimationStudio /> },
-  { path: "sales", element: <SalesMonitoring /> },
+  { path: "meta", element: <Meta/>},
+  { path: "banner", element: <Banner/>},
+  
+  /* { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },
-  { path: "crypto", element: <Cryptocurrency /> },
-  { path: "vega", element: <HelpdeskService /> },
-  { path: "variants", element: <Variants />},
+  { path: "crypto", element: <Cryptocurrency /> }, */
+  
+  /* { path: "variants", element: <Variants />},
   { path: "variant-types", element: <VariantTypes />},
-  { path: "storage", element: <StorageManagement /> },
-  { path: "product", element: <ProductManagement /> },
-  { path: "apps/gallery-music", element: <GalleryMusic /> },
+  { path: "storage", element: <StorageManagement /> }, */
+
+  /* { path: "vega", element: <HelpdeskService /> }, */
+  /* { path: "finance", element: <FinanceMonitoring /> }, */
+  /* { path: "studio", element: <AnimationStudio /> }, */
+  /* { path: "apps/gallery-music", element: <GalleryMusic /> },
   { path: "apps/gallery-video", element: <GalleryVideo /> },
   { path: "apps/tasks", element: <Tasks /> },
   { path: "apps/contacts", element: <Contacts /> },
@@ -165,7 +171,7 @@ const protectedRoutes = [
   { path: "docs/util/position", element: <UtilPosition /> },
   { path: "docs/util/typography", element: <UtilTypography /> },
   { path: "docs/util/shadows", element: <UtilShadows /> },
-  { path: "docs/util/extras", element: <UtilExtras /> }
+  { path: "docs/util/extras", element: <UtilExtras /> } */
 ]
 
 export default protectedRoutes;

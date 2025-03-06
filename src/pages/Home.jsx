@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../global/Layout';
-import "../style/pages/Home.scss";
+import "../style/pages/home.scss";
 import DynamicCarousel from '../components/DynamicCarousel';
 import MainSlider from '../components/MainSlider';
 import ProductSlider from '../components/ProductSlider';
@@ -9,6 +9,7 @@ import Contact from '../components/Contact';
 import Benefit from '../components/Benefit';
 import { useState, useEffect } from 'react';
 import LocationMap from '../components/LocationMap';
+import withMetaData from '../providers/MetaDataProvider';
 
 const {requestByType, types} = require('../apis/AboutApi');
 
@@ -158,4 +159,4 @@ const detectActiveTab = () => {
 }; */
 
 
-export default Home;
+export default withMetaData(Home);

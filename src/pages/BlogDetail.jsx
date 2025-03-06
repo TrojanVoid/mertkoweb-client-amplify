@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 /* import NewsInsight from '@/components/Home3/NewsInsight'; */
 import Layout from '../global/Layout';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import withMetaData from '../providers/MetaDataProvider';
 
 const {types, requestByType} = require("../apis/BlogApi");
 const {Logger, TITLE_TAGS} = require("../util/Logger");
@@ -247,4 +248,4 @@ const BlogDetail = () => {
     )
 }
 
-export default BlogDetail
+export default withMetaData(BlogDetail);

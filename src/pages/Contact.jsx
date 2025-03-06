@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb';
 import Layout from '../global/Layout';
 import LocationMap from '../components/LocationMap';
+import withMetaData from '../providers/MetaDataProvider';
 
-const ContactUs = () => {
+const Contact = () => {
     return (
         <Layout>
 
@@ -76,4 +77,4 @@ const ContactUs = () => {
     )
 }
 
-export default ContactUs
+export default withMetaData(Contact);

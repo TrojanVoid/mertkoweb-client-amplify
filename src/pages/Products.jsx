@@ -8,7 +8,8 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../util/HandlePagination';
 import Layout from '../global/Layout';
-import '../style/pages/Products.scss';
+import '../style/pages/products.scss';
+import withMetaData from '../providers/MetaDataProvider';
 
 const {Logger, TITLE_TAGS} = require('../util/Logger');
 const {types, requestByType} = require("../apis/ProductApi");
@@ -17,7 +18,6 @@ const productCategoriesData = require("../data/ProductCategories.json")["product
 const convertShortKeyToCategory = (shortKey) => {
     return productCategoriesData.find(entry => entry["shortKey"] === shortKey)["key"];
 }
-
 
 const sortBy = {
   VOLUME: 'volume',
@@ -403,4 +403,4 @@ const Products = () => {
     )
 }
 
-export default Products
+export default withMetaData(Products);

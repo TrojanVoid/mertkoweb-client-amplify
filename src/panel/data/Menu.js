@@ -6,14 +6,14 @@ const dashboardMenu = [
     "icon": "ri-dashboard-line"
   },
   {
-    "label": "Ürün ve Kategori",
+    "label": "Ürünler",
     "link": "/dashboard/studio",
-    "icon": "ri-store-3-line",
+    "icon": "ri-shopping-basket-line",
     "submenu": [
       {
         "label": "Ürün Görüntüle/Düzenle",
         "link": "/dashboard/product",
-        "icon": "ri-shopping-basket-line"
+        "icon": "ri-store-3-line"
       },
     ]
   },
@@ -61,20 +61,20 @@ const dashboardMenu = [
     "submenu": [
       {
         "label": "META",
-        "link": "/dashboard/product/meta",
+        "link": "/dashboard/meta",
         "icon": "ri-earth-line"
       },
       {
         "label": "İletişim",
-        "link": "/dashboard/product/contact",
+        "link": "/dashboard/contact",
         "icon": "ri-phone-line"
       },
       {
         "label": "Sosyal Medya",
-        "link": "/dashboard/product/social-media",
+        "link": "/dashboard/social-media",
         "icon": "ri-share-line"
       },
-      {
+      /* {
         "label": "Videolar",
         "link": "/dashboard/product/videos",
         "icon": "ri-video-line"
@@ -88,7 +88,7 @@ const dashboardMenu = [
         "label": "Footer Sayfaları",
         "link": "/dashboard/product/footer-pages",
         "icon": "ri-pages-line"
-      }
+      } */
     ]
   }
 ];

@@ -5,6 +5,7 @@ import HandlePagination from "../util/HandlePagination";
 import BlogItem from '../components/BlogItem';
 
 import Layout from '../global/Layout';
+import withMetaData from '../providers/MetaDataProvider';
 
 
 const {Logger, TITLE_TAGS} = require("../util/Logger");
@@ -96,4 +97,4 @@ const Blogs = () => {
     )
 }
 
-export default Blogs
+export default withMetaData(Blogs);

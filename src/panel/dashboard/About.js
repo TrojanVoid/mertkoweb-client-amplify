@@ -1,4 +1,3 @@
-// HelpdeskService.jsx
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form, FormGroup } from "react-bootstrap";
 import Header from "../layouts/Header";
@@ -83,7 +82,6 @@ export default function About() {
     const response = await requestByType(types.updateAbout, data);
 
     if(response?.status === 200){
-      console.log("alert test");
       setAlertHeading("Başarılı");
       setAlertMessage("HAKKIMIZDA içeriği başarıyla güncellendi.");
       setAlertVariant("success");

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const {requestByType, types} = require("../../apis/BannerApi");
 
-export default function HelpdeskService() {
+export default function Banner() {
   ///// Skin Switch /////
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
   const [skin, setSkin] = useState(currentSkin);

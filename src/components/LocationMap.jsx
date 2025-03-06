@@ -1,5 +1,5 @@
 import {Row, Col} from 'react-bootstrap';
-import "../style/components/Contact.scss";
+import "../style/components/contact.scss";
 
 const LocationMap = ({ }) => {
 

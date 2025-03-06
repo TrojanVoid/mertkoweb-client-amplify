@@ -10,6 +10,7 @@ import { Spinner } from 'react-bootstrap';
 import 'swiper/css/bundle';
 
 import Layout from '../global/Layout';
+import withMetaData from '../providers/MetaDataProvider';
 
 const {types, requestByType} = require('../apis/ProductApi');
 const {TITLE_TAGS, Logger} = require('../util/Logger');
@@ -189,4 +190,4 @@ const ProductDetail = () => {
     )
 }
 
-export default ProductDetail
+export default withMetaData(ProductDetail);
