@@ -7,13 +7,11 @@ import {
   Button,
   Card,
   Form,
-  Table,
   Spinner,
-  Badge,
   Modal,
-  Pagination,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { requestByType, types } from "../../apis/ProductApi";
 
 export default function ProductManagement() {
   const [products, setProducts] = useState([]);
@@ -22,6 +20,7 @@ export default function ProductManagement() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [imagesToDelete, setImagesToDelete] = useState([]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -33,7 +32,7 @@ export default function ProductManagement() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-  };
+};
 
   function getCategoryDisplayName(categoryCode) {
     const categoryMap = {
@@ -47,19 +46,27 @@ export default function ProductManagement() {
   useEffect(() => {
     async function fetchProducts() {
       try {
+        const response = await requestByType(types.allProducts);
         
-        const response = await fetch("http://localhost:5001/api/all-products");
-        if (!response.ok) {
+        if (!response.status === 200) {
           throw new Error("Ürünler çekilemedi.");
         }
-        const data = await response.json();
-       
+
+        const data = response.data;
+
         const mappedProducts = data.map((product) => ({
           ...product,
           isSelected: product.isSelected || false,
-          displayCategory:getCategoryDisplayName(product.category)
-          
+          displayCategory:getCategoryDisplayName(product.category),
+          images: [...product.images]
+            .sort((a, b) => a.imageIndex - b.imageIndex)
+            .map((img) => ({
+              imageUrl: img.imageUrl,
+              imageIndex: img.imageIndex,
+            })),
         }));
+
+        console.log("mappedProducts:", mappedProducts);
         
         setProducts(mappedProducts);
       } catch (error) {
@@ -88,8 +95,6 @@ export default function ProductManagement() {
     setShowEditModal(true); 
   };
   
-
-
   const deleteSelectedProducts = () => {
     setProducts(products.filter((p) => !p.isSelected));
   };
@@ -229,12 +234,14 @@ export default function ProductManagement() {
     }
 };
 
-  const removeImage = (index) => {
+  const removeImage = (img, index) => {
     const updatedImages = selectedProduct.images.filter((_, i) => i !== index);
     setSelectedProduct({
       ...selectedProduct,
       images: updatedImages,
     });
+
+    setImagesToDelete((prevImages) => [...prevImages, img]);
   };
 
 
@@ -242,6 +249,8 @@ export default function ProductManagement() {
     if (index <= 0) return;
     const updatedImages = [...selectedProduct.images];
     [updatedImages[index - 1], updatedImages[index]] = [updatedImages[index], updatedImages[index - 1]];
+    updatedImages[index].newIndex = index;
+    updatedImages[index - 1].newIndex = index - 1;
     setSelectedProduct({
       ...selectedProduct,
       images: updatedImages,
@@ -252,6 +261,8 @@ export default function ProductManagement() {
     if (index >= selectedProduct.images.length - 1) return;
     const updatedImages = [...selectedProduct.images];
     [updatedImages[index], updatedImages[index + 1]] = [updatedImages[index + 1], updatedImages[index]];
+    updatedImages[index].newIndex = index;
+    updatedImages[index + 1].newIndex = index + 1;
     setSelectedProduct({
       ...selectedProduct,
       images: updatedImages,
@@ -283,17 +294,6 @@ export default function ProductManagement() {
     setSelectedProduct(null);
     setShowDetailModal(false);
   };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedProduct({
-        ...selectedProduct,
-        image: file, 
-        imageUrl: URL.createObjectURL(file) 
-      });
-    }
-  };
   
   const openEditModal = (product, e) => {
     e.stopPropagation();
@@ -316,60 +316,108 @@ export default function ProductManagement() {
 
   const saveProductChanges = async () => {
     try {
- 
+      const preparedProductData = {
+        name: selectedProduct.name,
+        volume: selectedProduct.volume,
+        category: selectedProduct.category,
+        description: selectedProduct.description,
+        isBestSeller: selectedProduct.isBestSeller,
+        isNewRelease: selectedProduct.isNewRelease,
+        isSelected: selectedProduct.isSelected,
+      };
+
+      for (const key in preparedProductData) {
+        if (preparedProductData[key] === null || preparedProductData[key] === "") {
+          alert("Ürün bilgileri eksik");
+          throw new Error("Ürün bilgileri eksik");
+        }
+      }
+
+      const response = selectedProduct.id 
+        ? 
+          await requestByType(types.updateProduct, {
+            id: selectedProduct.id,
+            ...preparedProductData
+          }) 
+        :
+          await requestByType(types.createProduct, preparedProductData);
+      
+      if (!response && !response.data.name) {
+        throw new Error("Ürün kaydetme başarısız");
+      }
+
       const processedImages = await Promise.all(
         selectedProduct.images.map(async (img) => {
-          if (!img.driveId) {
+          console.log("img:", img);
+          if (img.imageUrl.startsWith('blob') || img.newIndex !== undefined) {
+            if(img.newIndex !== undefined) {
+              const repositionResponse = await requestByType(types.repositionProductImage, {
+                productId: selectedProduct.id ? selectedProduct.id : response.data.id,
+                imageDriveId: extractImageDriveIdFromURL(img.imageUrl),
+                newIndex: img.newIndex
+              });
+              if (!repositionResponse) {
+                throw new Error("Görsel sıralama başarısız");
+              }
+
+              const repositionedImage = repositionResponse.data;
+
+              return {
+                ...img,
+                name: repositionedImage.name,
+                driveId: repositionedImage.driveId,
+              }
+            }
+
             const formData = new FormData();
+            formData.append("productId", selectedProduct.id ? selectedProduct.id : response.data.id);
+            formData.append("name", selectedProduct.name ? selectedProduct.name : `${response.data.name}-${img.image.name}`);
+            formData.append("altDescription", `Product Image of ${selectedProduct.name ? selectedProduct.name : response.data.name}`);
             formData.append("image", img.image);
-     
-            const uploadResponse = await fetch("http://localhost:5001/api/upload-image", {
-              method: "POST",
-              body: formData,
-            });
-            if (!uploadResponse.ok) {
+            
+            const uploadResponse = await requestByType(types.uploadProductImage, formData);
+
+            if (uploadResponse.status !== 200) {
               throw new Error("Görsel yükleme başarısız");
             }
+
             const uploadedImage = await uploadResponse.json();
+            
             return {
               ...img,
-              name: uploadedImage.name, 
+              name: uploadedImage.name,
               driveId: uploadedImage.driveId, 
             };
           }
           return img;
         })
       );
+
+      imagesToDelete.forEach(async (img) => {
+        if(!img.imageUrl.startsWith('blob')){
+          const deleteResponse = await requestByType(types.deleteProductImage, {
+            productId: selectedProduct.id ? selectedProduct.id : response.data.id,
+            imageDriveId: extractImageDriveIdFromURL(img.imageUrl)
+          });
+
+          if (!deleteResponse) {
+            throw new Error("Görsel silme başarısız");
+          }
+        }
+      });
   
-      const productData = {
-        ...selectedProduct,
+      const savedProduct = {
+        ...response.data,
         images: processedImages,
       };
   
-      let response;
-      if (!selectedProduct.id) {
-        response = await fetch("http://localhost:5001/api/create-product", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(productData),
-        });
-      } else {
-
-        response = await fetch(`http://localhost:5001/api/update-product/${selectedProduct.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(productData),
-        });
-      }
-      if (!response.ok) {
-        throw new Error("Ürün kaydetme başarısız");
-      }
-      const savedProduct = await response.json();
-      if (!selectedProduct.id) {
-        setProducts([...products, savedProduct]);
-      } else {
-        setProducts(products.map((p) => (p.id === savedProduct.id ? savedProduct : p)));
-      }
+      setProducts(selectedProduct.id 
+        ? 
+          products.map((p) => (p.id === savedProduct.id ? savedProduct : p)) 
+        : 
+          [...products, savedProduct]
+      );
+      
       closeEditModal();
     } catch (error) {
       console.error("Ürün kaydedilirken hata:", error);
@@ -377,7 +425,10 @@ export default function ProductManagement() {
   };
   
   
-  
+  const extractImageDriveIdFromURL = (url) => {
+    const splitUrl = url.split('/');
+    return splitUrl[splitUrl.length - 1];
+  }
 
   return (
     <>
@@ -477,6 +528,13 @@ export default function ProductManagement() {
                     });
                   }}
                 >
+                  {selectedProduct.category !== null && selectedProduct.category !== "" ? (
+                    <option value={selectedProduct.category}>
+                      {getCategoryDisplayName(selectedProduct.category)}
+                    </option>
+                  ) : (
+                    <option disabled value="">Kategori Seçin</option>
+                  )}
                   <option value="p">Plastik Şişe</option>
                   <option value="k">Plastik Kavanoz</option>
                   <option value="c">Konsept Ürün</option>
@@ -532,7 +590,7 @@ export default function ProductManagement() {
                         variant="light"
                         size="sm"
                         style={{ position: 'absolute', top: '2px', right: '2px' }}
-                        onClick={() => removeImage(index)}
+                        onClick={() => removeImage(img, index)}
                       >
                         <i className="ri-close" style={{ fontSize: '1.8rem', color: '#dc3545', zIndex:10 }}></i>
                       </Button>

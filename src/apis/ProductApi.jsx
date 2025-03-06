@@ -16,6 +16,12 @@ export const types = {
   selectedProducts: "selectedProducts",
   newReleases: "newReleases",
   bestSellers: "bestSellers",
+  createProduct: "createProduct",
+  updateProduct: "updateProduct",
+  deleteProductImage: "deleteProductImage",
+  deleteProduct: "deleteProduct",
+  repositionProductImage: "repositionProductImage",
+  uploadProductImage: "uploadProductImage",
 }
 
 export const urls = {
@@ -28,6 +34,12 @@ export const urls = {
   selectedProducts: `${baseUrl}/selected-products`,
   newReleases: `${baseUrl}/new-products`,
   bestSellers: `${baseUrl}/best-seller-products`,
+  createProduct: `${baseUrl}/create-product`,
+  updateProduct: `${baseUrl}/update-product`,
+  deleteProductImage: `${baseUrl}/delete-product-image`,
+  deleteProduct: `${baseUrl}/delete-product`,
+  repositionProductImage: `${baseUrl}/reposition-product-image`,
+  uploadProductImage: `${baseUrl}/upload-product-image`,
 }
 
 export const requestByType = async (productRequestType, property=null) => {
@@ -66,6 +78,31 @@ export const requestByType = async (productRequestType, property=null) => {
         break;
       case "bestSellers":
         response = await axios.get(url);
+        break;
+      case "createProduct":
+        response = await axios.post(url, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: property
+        });
+        break;
+      case "updateProduct":
+        response = await axios.put(`${url}?id=${property.id}`, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: property
+        });
+        break;
+      case "deleteProductImage":
+        response = await axios.delete(`${url}?productId=${property.productId}&imageDriveId=${property.imageDriveId}`);
+        break;
+      case "repositionProductImage":
+        response = await axios.put(`${url}?productId=${property.productId}&imageDriveId=${property.imageDriveId}&newIndex=${property.newIndex}`);
+        break;
+      case "uploadProductImage":
+        response = await axios.post(url, property);
         break;
       default:
         Logger.error(`Invalid product request type: ${productRequestType}`, TITLE_TAGS.PRODUCT_API);
