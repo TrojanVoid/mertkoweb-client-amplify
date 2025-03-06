@@ -8,7 +8,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css'
 import HandlePagination from '../util/HandlePagination';
 import Layout from '../global/Layout';
-import '../style/pages/Products.scss';
+import '../style/pages/products.scss';
 
 const {Logger, TITLE_TAGS} = require('../util/Logger');
 const {types, requestByType} = require("../apis/ProductApi");
