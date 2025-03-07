@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb';
 import Layout from '../global/Layout';
 import LocationMap from '../components/LocationMap';
 import withMetaData from '../providers/MetaDataProvider';
 
+const {requestByType, types} = require("../apis/ContactApi");
+
 const Contact = () => {
+
+    const [contactData, setContactData] = useState(null);
+
+    const fetchContactData = async() => {
+        try {
+            const response = await requestByType(types.getContact);
+            setContactData(response.data);
+        } catch (err) {
+            console.error("Contact data fetch error:", err);
+        }
+    }
+
+    useEffect(() => {
+        fetchContactData();
+    }, []);
+
+    // Loading state
+    if (!contactData) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <Layout>
-
             <Breadcrumb heading='İLETİŞİM' subHeading='İletişim' />
             <div className='contact-us md:py-20 py-10'>
                 <div className="container">
@@ -38,26 +60,26 @@ const Contact = () => {
                             <address className="item">
                                 <h2 className="heading4">Lokasyonumuz</h2>
                                 <p className="mt-3">
-                                  Gümüşsuyu Caddesi Ceyhan İş Merkezi No:17 / 42 Topkapı-Maltepe İstanbul
+                                  {contactData.address}
                                 </p>
                                 <p className="mt-3">
-                                  Telefon: <a href="tel:+90 212 223 05 01" className='whitespace-nowrap'>+90 212 223 0501</a>
+                                  Telefon: <a href={`tel:${contactData.phone}`} className='whitespace-nowrap'>{contactData.phone}</a>
                                 </p>
                                 <p className="mt-1">
-                                  E-Posta: <a href="mailto:mertko@mertko.com" className='whitespace-nowrap'>mertko@mertko.com</a>
+                                  E-Posta: <a href={`mailto:${contactData.email}`} className='whitespace-nowrap'>{contactData.email}</a>
                                 </p>
                             </address>
 
                             <div className="item mt-10">
                                 <h2 className="heading4">Çalışma Saatlerimiz</h2>
                                 <p className="mt-3">
-                                   Haftaiçi: <span className='whitespace-nowrap'>08:00 - 18:00 GMT+03</span>
+                                   Haftaiçi: <span className='whitespace-nowrap'>{contactData.workingHours.weekDays[0]} - {contactData.workingHours.weekDays[1]}</span>
                                 </p>
                                 <p className="mt-3">
-                                  Cumartesi: <span className='whitespace-nowrap'>08:00 - 18:00 GMT+03</span>
+                                  Cumartesi: <span className='whitespace-nowrap'>{contactData.workingHours.saturday[0]} - {contactData.workingHours.saturday[1]}</span>
                                 </p>
                                 <p className="mt-3">
-                                  Pazar: <span className='whitespace-nowrap'>08:00 - 18:00 GMT+03</span>
+                                  Pazar: <span className='whitespace-nowrap'>{contactData.workingHours.sunday[0]} - {contactData.workingHours.sunday[1]}</span>
                                 </p>
                             </div>
 

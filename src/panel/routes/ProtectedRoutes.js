@@ -1,39 +1,38 @@
 import React from "react";
 
 // Dashboard
-import AnimationStudio from "../dashboard/AnimationStudio";
+/* import AnimationStudio from "../dashboard/AnimationStudio";
 import SalesMonitoring from "../dashboard/SalesMonitoring";
 import WebsiteAnalytics from "../dashboard/WebsiteAnalytics";
 import FinanceMonitoring from "../dashboard/FinanceMonitoring";
 import Cryptocurrency from "../dashboard/Cryptocurrency";
 import HelpdeskService from "../dashboard/HelpdeskService";
 import StorageManagement from "../dashboard/StorageManagement";
-import ProductManagement from "../dashboard/ProductManagement";
 import Variants from "../dashboard/Variants";
 import VariantTypes from "../dashboard/VariantTypes";
-import Hakkimizda from "../dashboard/About";
+import Hakkimizda from "../dashboard/About"; */
 
 // Apps
-import GalleryMusic from "../apps/GalleryMusic";
+/* import GalleryMusic from "../apps/GalleryMusic";
 import GalleryVideo from "../apps/GalleryVideo";
 import Tasks from "../apps/Tasks";
 import Contacts from "../apps/Contacts";
 import Chat from "../apps/Chat";
 import AppCalendar from "../apps/AppCalendar";
 import Email from "../apps/Email";
-import FileManager from "../apps/FileManager";
+import FileManager from "../apps/FileManager"; */
 
 // Pages
-import Pricing from "../pages/Pricing";
+/* import Pricing from "../pages/Pricing";
 import Faq from "../pages/Faq";
 import Profile from "../pages/Profile";
 import People from "../pages/People";
 import Activity from "../pages/Activity";
 import Events from "../pages/Events";
-import Settings from "../pages/Settings";
+import Settings from "../pages/Settings"; */
 
 // UI Elements
-import LayoutColumns from "../docs/LayoutColumns";
+/* import LayoutColumns from "../docs/LayoutColumns";
 import LayoutGrid from "../docs/LayoutGrid";
 import LayoutGutters from "../docs/LayoutGutters";
 import Accordions from "../docs/Accordions";
@@ -82,11 +81,14 @@ import ChartJs from "../docs/ChartJs";
 import MapLeaflet from "../docs/MapLeaflet";
 import MapVector from "../docs/MapVector";
 import IconRemix from "../docs/IconRemix";
-import IconFeather from "../docs/IconFeather";
+import IconFeather from "../docs/IconFeather"; */
+
+import ProductManagement from "../dashboard/ProductManagement";
 import About from "../dashboard/About";
 import Blog from "../dashboard/Blog";
 import Banner from "../dashboard/Banner";
 import Meta from "../dashboard/Meta";
+import Contact from "../dashboard/Contact";
 
 const protectedRoutes = [
   
@@ -95,6 +97,7 @@ const protectedRoutes = [
   { path: "blog", element: <Blog/>},
   { path: "meta", element: <Meta/>},
   { path: "banner", element: <Banner/>},
+  { path: "contact", element: <Contact/>},
   
   /* { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },

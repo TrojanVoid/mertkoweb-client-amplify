@@ -31,7 +31,12 @@ const dashboardMenu = [
         "label": "Hakkımızda",
         "link": "/dashboard/about",
         "icon": "ri-key-line"
-      }
+      },
+      {
+        "label": "İletişim",
+        "link": "/dashboard/contact",
+        "icon": "ri-phone-line"
+      },
     ]
   },
   {
@@ -63,11 +68,6 @@ const dashboardMenu = [
         "label": "META",
         "link": "/dashboard/meta",
         "icon": "ri-earth-line"
-      },
-      {
-        "label": "İletişim",
-        "link": "/dashboard/contact",
-        "icon": "ri-phone-line"
       },
       {
         "label": "Sosyal Medya",

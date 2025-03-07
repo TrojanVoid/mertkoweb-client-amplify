@@ -104,7 +104,7 @@ export default function HelpdeskService() {
         <div className="container">
           <ol className="breadcrumb fs-sm mb-1">
             <li className="breadcrumb-item">
-              <Link to="#">Dashboard</Link>
+              <Link to="/panel">Panel</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               Bloglar

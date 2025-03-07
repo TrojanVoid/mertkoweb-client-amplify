@@ -457,7 +457,7 @@ export default function ProductManagement() {
         <div className="mb-4">
           <ol className="breadcrumb fs-sm mb-1 p-2">
             <li className="breadcrumb-item">
-              <Link to="#">Ürün ve Kategori</Link>
+              <Link to="/panel">Panel</Link>
             </li>
             <li className="breadcrumb-item active text-black" aria-current="page">
               Ürün Yönetimi
