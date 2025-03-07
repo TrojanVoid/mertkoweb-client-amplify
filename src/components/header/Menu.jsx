@@ -98,8 +98,8 @@ const Menu = ({ props }) => {
                                     </Link>
                                     <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
                                         <div className="container">
-                                            <div className="flex justify-between py-8">
-                                                <div className="nav-link basis-2/3 flex justify-between pr-12">
+                                            <div className="flex justify-center py-8">
+                                                <div className="nav-link basis-2/3 flex justify-between ">
                                                     <div className="nav-item">
                                                         <Link
                                                                 to={'/urunler?category=plastik-siseler'}
