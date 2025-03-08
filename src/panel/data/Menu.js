@@ -1,4 +1,3 @@
-
 const dashboardMenu = [
   {
     "label": "Genel",
@@ -40,11 +39,20 @@ const dashboardMenu = [
     ]
   },
   {
-    "label": "Blog",
+    "label": "İçerikler",
     "link": "/dashboard/crypto",
     "icon": "ri-article-line",
     "submenu": [
-     {"label": "Bloglar", "link": "/dashboard/blog", "icon": "ri-article-line"},
+      {
+        "label": "Bloglar",
+        "link": "/dashboard/blog",
+        "icon": "ri-article-line"
+      },
+      {
+        "label": "Slider",
+        "link": "/dashboard/slider",
+        "icon": "ri-slideshow-line"
+      }
     ]
   },
   {
@@ -74,7 +82,7 @@ const dashboardMenu = [
         "link": "/dashboard/social-media",
         "icon": "ri-share-line"
       },
-      /* {
+       /* {
         "label": "Videolar",
         "link": "/dashboard/product/videos",
         "icon": "ri-video-line"
@@ -93,7 +101,8 @@ const dashboardMenu = [
   }
 ];
 
-const applicationsMenu = [
+
+/* const applicationsMenu = [
   {
     "label": "File Manager",
     "link": "/apps/file-manager",
@@ -477,6 +486,7 @@ const uiElementsMenu = [
       }
     ]
   }
-];
+]; */
 
-export { dashboardMenu, applicationsMenu, pagesMenu, uiElementsMenu };
+/* export { dashboardMenu, applicationsMenu, pagesMenu, uiElementsMenu }; */
+export { dashboardMenu };

@@ -89,6 +89,7 @@ import Blog from "../dashboard/Blog";
 import Banner from "../dashboard/Banner";
 import Meta from "../dashboard/Meta";
 import Contact from "../dashboard/Contact";
+import Slider from "../dashboard/Slider";
 
 const protectedRoutes = [
   
@@ -98,6 +99,7 @@ const protectedRoutes = [
   { path: "meta", element: <Meta/>},
   { path: "banner", element: <Banner/>},
   { path: "contact", element: <Contact/>},
+  { path: "slider", element: <Slider/>},
   
   /* { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },
