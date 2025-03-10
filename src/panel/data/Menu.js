@@ -1,10 +1,5 @@
 const dashboardMenu = [
   {
-    "label": "Genel",
-    "link": "/dashboard/finance",
-    "icon": "ri-dashboard-line"
-  },
-  {
     "label": "Ürünler",
     "link": "/dashboard/studio",
     "icon": "ri-shopping-basket-line",
