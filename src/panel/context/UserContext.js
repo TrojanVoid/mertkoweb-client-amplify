@@ -1,20 +1,31 @@
-// src/context/UserContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
-// Create a context for the user
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : { username: 'Guest' };
+    const savedUser = JSON.parse(localStorage.getItem('user'));
+    if (savedUser && savedUser.expirationTime > new Date().getTime()) {
+      return savedUser;
+    } else {
+      localStorage.removeItem('user');
+      return { username: 'Guest' };
+    }
   });
 
   useEffect(() => {
-    if (user.username !== 'Guest') {
-      localStorage.setItem('user', JSON.stringify(user));
-    }
-  }, [user]);
+    const checkExpiration = () => {
+      const savedUser = JSON.parse(localStorage.getItem('user'));
+      if (savedUser && savedUser.expirationTime <= new Date().getTime()) {
+        setUser({ username: 'Guest' });
+        localStorage.removeItem('user');
+      }
+    };
+
+    const interval = setInterval(checkExpiration, 60 * 1000); // her dakika kontrol et
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
