@@ -73,7 +73,7 @@ const Contact = () => {
                             <div className="item mt-10">
                                 <h2 className="heading4">Çalışma Saatlerimiz</h2>
                                 <p className="mt-3">
-                                   Haftaiçi: <span className='whitespace-nowrap'>{contactData.workingHours.weekDays[0]} - {contactData.workingHours.weekDays[1]}</span>
+                                   Hafta İçi: <span className='whitespace-nowrap'>{contactData.workingHours.weekDays[0]} - {contactData.workingHours.weekDays[1]}</span>
                                 </p>
                                 <p className="mt-3">
                                   Cumartesi: <span className='whitespace-nowrap'>{contactData.workingHours.saturday[0]} - {contactData.workingHours.saturday[1]}</span>
