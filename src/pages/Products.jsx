@@ -48,7 +48,6 @@ const Products = () => {
     const [maxVolume, setMaxVolume] = useState(99999);
     const [volumeRange, setVolumeRange] = useState([0, maxVolume]);
     
-
     const [layoutCol, setLayoutCol] = useState(4)
     const [openSidebar, setOpenSidebar] = useState(false)
 
@@ -61,7 +60,6 @@ const Products = () => {
     const categoryParam = searchParams.get('category');
 
     const navigate = useNavigate();
-
 
     const fetchProducts = async () => {
         try {
@@ -92,6 +90,11 @@ const Products = () => {
     useEffect(() => {
       applyFiltersAndSorting(); 
     }, [category, volumeRange, currentPage]);
+
+    useEffect(() => {
+      const categoryParam = searchParams.get('category');
+      setCategory(urlParamToCategory[categoryParam || '']);
+    }, [searchParams]);
 
     const handleLayoutCol = (col) => {
         setLayoutCol(col)
