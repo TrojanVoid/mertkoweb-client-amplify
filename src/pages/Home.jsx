@@ -44,7 +44,7 @@ const Home = () => {
 
 
 
-            <div className="about-container w-full">
+            <div className="about-container w-full mt-5">
                 <div className="text flex items-center justify-center">
                     <div className="content md:w-5/6 w-full">
 

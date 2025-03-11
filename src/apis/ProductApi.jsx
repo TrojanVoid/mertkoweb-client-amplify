@@ -22,6 +22,8 @@ export const types = {
   deleteProduct: "deleteProduct",
   repositionProductImage: "repositionProductImage",
   uploadProductImage: "uploadProductImage",
+  getProductCategories: "getProductCategories",
+  updateProductCategories: "updateProductCategories",
 }
 
 export const urls = {
@@ -40,6 +42,8 @@ export const urls = {
   deleteProduct: `${baseUrl}/delete-product`,
   repositionProductImage: `${baseUrl}/reposition-product-image`,
   uploadProductImage: `${baseUrl}/upload-product-image`,
+  getProductCategories: `${baseUrl}/product-categories`,
+  updateProductCategories: `${baseUrl}/update-product-categories`,
 }
 
 export const requestByType = async (productRequestType, property=null) => {
@@ -106,6 +110,17 @@ export const requestByType = async (productRequestType, property=null) => {
         break;
       case "uploadProductImage":
         response = await axios.post(url, property);
+        break;
+      case "getProductCategories":
+        response = await axios.get(url);
+        break;
+      case "updateProductCategories":
+        response = await axios.put(url, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: property
+        });
         break;
       default:
         Logger.error(`Invalid product request type: ${productRequestType}`, TITLE_TAGS.PRODUCT_API);

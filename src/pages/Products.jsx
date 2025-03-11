@@ -38,6 +38,7 @@ const urlParamToCategory = {
 
 const productPerPage = 12;
 
+
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);

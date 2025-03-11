@@ -154,7 +154,7 @@ function SidebarMenu({ onUpdateSize }) {
     return (
         <React.Fragment>
             <div className="nav-group show">
-                <div className="nav-label no-arrow" onClick={toggleMenu}>Admin Paneli</div>
+                <div className="nav-label no-arrow">Admin Paneli</div>
                 {populateMenu(dashboardMenu)}
             </div>
         </React.Fragment>

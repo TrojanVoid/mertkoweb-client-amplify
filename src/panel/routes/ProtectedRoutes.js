@@ -90,16 +90,19 @@ import Banner from "../dashboard/Banner";
 import Meta from "../dashboard/Meta";
 import Contact from "../dashboard/Contact";
 import Slider from "../dashboard/Slider";
+import ProductCategory from "../dashboard/ProductCategory";
 
 const protectedRoutes = [
   
   { path: "product", element: <ProductManagement /> },
+  { path: "product/category-description", element: <ProductCategory />},
   { path: "about", element: <About/>},
   { path: "blog", element: <Blog/>},
   { path: "meta", element: <Meta/>},
   { path: "banner", element: <Banner/>},
   { path: "contact", element: <Contact/>},
   { path: "slider", element: <Slider/>},
+  
   
   /* { path: "sales", element: <SalesMonitoring /> },
   { path: "analytics", element: <WebsiteAnalytics /> },

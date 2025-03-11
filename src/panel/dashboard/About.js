@@ -83,7 +83,7 @@ export default function About() {
 
     if(response?.status === 200){
       setAlertHeading("Başarılı");
-      setAlertMessage("HAKKIMIZDA içeriği başarıyla güncellendi.");
+      setAlertMessage("Hakkımızda içeriği başarıyla güncellendi.");
       setAlertVariant("success");
       setShowAlert(true);
       setTimeout(() => {
@@ -92,7 +92,7 @@ export default function About() {
     }
     else{
       setAlertHeading("Başarısız");
-      setAlertMessage("HAKKIMIZDA içeriği güncellenirken bir hata oluştu.");
+      setAlertMessage("Hakkımızda içeriği güncellenirken bir hata oluştu.");
       setAlertVariant("danger");
       setShowAlert(true);
       setTimeout(() => {

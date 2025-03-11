@@ -11,11 +11,13 @@ import 'swiper/css/bundle';
 
 import Layout from '../global/Layout';
 import withMetaData from '../providers/MetaDataProvider';
+import axios from 'axios';
 
 const {types, requestByType} = require('../apis/ProductApi');
 const {TITLE_TAGS, Logger} = require('../util/Logger');
 
 const productCategories = require('../data/ProductCategories.json').productCategories;
+
 
 const ProductDetail = () => {
     const navigate = useNavigate();
@@ -23,6 +25,8 @@ const ProductDetail = () => {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     
     const [searchParams] = useSearchParams();
+
+    const [productCategory, setProductCategory] = useState(null);
 
     const fetchProductData = async(id) => {
       const response = await requestByType(types.singleProduct, id);
@@ -32,6 +36,7 @@ const ProductDetail = () => {
         navigate('/urunler');
       }
       setData(productData);
+      setProductCategory(response.data.category);
     };
      
     useEffect(() => {
@@ -190,4 +195,22 @@ const ProductDetail = () => {
     )
 }
 
-export default withMetaData(ProductDetail);
+export default (props) => <ProductDetailWithMeta {...props} />;
+
+const ProductDetailWithMeta = (props) => {
+    const [productCategory, setProductCategory] = useState(null);
+
+    useEffect(() => {
+        const fetchCategory = async () => {
+            const productId = new URLSearchParams(window.location.search).get('id');
+            if (!productId) return;
+            const response = await requestByType(types.singleProduct, productId);
+            if (response?.data?.category) {
+                setProductCategory(response.data.category);
+            }
+        };
+        fetchCategory();
+    }, []);
+
+    return withMetaData(ProductDetail, productCategory)(props);
+};

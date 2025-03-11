@@ -1,12 +1,17 @@
 const dashboardMenu = [
   {
-    "label": "Ürünler",
+    "label": "Ürünler ve Kategoriler",
     "link": "/dashboard/studio",
     "icon": "ri-shopping-basket-line",
     "submenu": [
       {
         "label": "Ürün Görüntüle/Düzenle",
         "link": "/dashboard/product",
+        "icon": "ri-store-3-line"
+      },
+      {
+        "label": "Kategori Açıklamaları",
+        "link": "/dashboard/product/category-description",
         "icon": "ri-store-3-line"
       },
     ]

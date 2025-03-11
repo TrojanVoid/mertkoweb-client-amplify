@@ -8,11 +8,12 @@ const {toCamelCase} = require("../util/StringUtility");
 const defaultAuthor = "CBS Software";
 const defaultImage = "/resources/images/mertko_logo-300x117.png"; 
 
-const withMetaData = (Component) => {
+const withMetaData = (Component, productCategoryKey=null) => {
   const pageKey = toCamelCase(Component.name);
+  console.log(`properties given to meta data provider: page key: ${pageKey}, product category: ${productCategoryKey}`);
 
   return function WrappedComponent(props) {
-    const { title, description } = useMetaData(pageKey);
+    const { title, description } = useMetaData(pageKey, productCategoryKey);
 
     // Full image path (absolute path for use in meta tags)
     const imageUrl = `${window.location.origin}${defaultImage}`;
@@ -20,14 +21,15 @@ const withMetaData = (Component) => {
     return (
       <>
         <Helmet>
-          <title>{title || "Loading..."}</title>
-          <meta property="og:title" content={title || "Loading..."} />
-          <meta name="title" content={title || "Loading..."} />
-          <meta name="twitter:title" content={title || "Loading..."} />
+          <title>{title || "Mertko Plastik Ürünleri A.Ş"}</title>
+          <meta property="og:title" content={title || "Mertko Plastik Ürünleri A.Ş"} />
+          <meta name="title" content={title || "Mertko Plastik Ürünleri A.Ş"} />
+          <meta name="twitter:title" content={title || "Mertko Plastik Ürünleri A.Ş"} />
           
-          <meta property="og:description" content={description || "Loading..."} />
-          <meta name="twitter:description" content={description || "Loading..."} />
-          <meta name="description" content={description || "Loading..."} />
+          <meta property="og:description" content={description || "Mertko Plastik Ürünleri A.Ş"} />
+          <meta name="twitter:description" content={description || "Mertko Plastik Ürünleri A.Ş"} />
+          <meta name="description" content={description || "Mertko Plastik Ürünleri A.Ş"} />
+          
           <meta name="author" content={defaultAuthor} />
 
           <meta property="og:image" content={imageUrl} />
@@ -39,8 +41,8 @@ const withMetaData = (Component) => {
               {
                 "@context": "https://schema.org",
                 "@type": "WebPage",
-                "name": "${title || "Loading..."}",
-                "description": "${description || "Loading..."}",
+                "name": "${title || "Mertko Plastik Ürünleri A.Ş"}",
+                "description": "${description || "Mertko Plastik Ürünleri A.Ş"}",
                 "author": {
                   "@type": "Organization",
                   "name": "${defaultAuthor}"
@@ -50,7 +52,9 @@ const withMetaData = (Component) => {
             `}
           </script>
         </Helmet>
+        
         <Component {...props} />
+        
       </>
     );
   };
