@@ -71,7 +71,7 @@ function SidebarMenu({ onUpdateSize }) {
             if (m.submenu) {
                 sm = m.submenu.map((sm, key) => {
                     return (
-                        <NavLink to={sm.link} className="nav-sub-link" key={key}>{sm.label}</NavLink>
+                        <NavLink to={sm.link} onClick={toggleMenu} className="nav-sub-link" key={key}>{sm.label}</NavLink>
                     )
                 })
             }
@@ -79,7 +79,7 @@ function SidebarMenu({ onUpdateSize }) {
             return (
                 <li key={key} className="nav-item">
                     {(!sm) ? (
-                        <NavLink to={m.link} className="nav-link"><i className={m.icon}></i> <span>{m.label}</span></NavLink>
+                        <NavLink to={m.link} onClick={toggleMenu} className="nav-link"><i className={m.icon}></i> <span>{m.label}</span></NavLink>
                     ) : (
                         <div onClick={toggleSubMenu} className="nav-link has-sub"><i className={m.icon}></i> <span>{m.label}</span></div>
                     )}
@@ -97,7 +97,23 @@ function SidebarMenu({ onUpdateSize }) {
 
     // Toggle menu group
     const toggleMenu = (e) => {
+
+        const mobileMenuToggler = document.getElementsByClassName('menu-link me-3 me-lg-4')[0];
+        const computedStyle = window.getComputedStyle(mobileMenuToggler).display;
+        const isMobileMenuActive = computedStyle !== 'none';
+
+        if(!isMobileMenuActive) return;
+
         e.preventDefault();
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarShown = document.querySelector('.sidebar-show');
+        if (sidebarShown !== null) {
+            sidebarShown.classList.remove('sidebar-show');
+            sidebarShown.classList.add('sidebar');
+        } else if(sidebar !== null) {
+            sidebar.classList.remove('sidebar');
+            sidebar.classList.add('sidebar-show');  
+        }
 
         /* let parent = e.target.closest('.nav-group');
         parent.classList.toggle('show');

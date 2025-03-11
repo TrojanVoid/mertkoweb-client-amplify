@@ -37,8 +37,6 @@ export default function Header({ onSkin }) {
         sidebar.classList.add('sidebar-show');  
     }
 
-    console.log('sidebar click event');
-
     /* if (isOffset) {
       document.body.classList.toggle("sidebar-show");
     } else {
