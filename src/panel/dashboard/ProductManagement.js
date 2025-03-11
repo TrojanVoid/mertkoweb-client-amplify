@@ -536,25 +536,25 @@ export default function ProductManagement() {
 
              
               <Form.Group controlId="editProductCategory" className="mb-3">
-  <Form.Label>Kategori</Form.Label>
-  <Form.Select 
-    name="category"
-    value={selectedProduct.category} 
-    onChange={(e) => {
-      const value = e.target.value;
-      setSelectedProduct({
-        ...selectedProduct,
-        category: value,
-        displayCategory: getCategoryDisplayName(value)
-      });
-    }}
-  >
-    <option disabled value="">Kategori Seçin</option>
-    <option value="p">Plastik Şişe</option>
-    <option value="k">Plastik Kavanoz</option>
-    <option value="c">Konsept Ürün</option>
-  </Form.Select>
-</Form.Group>
+                <Form.Label>Kategori</Form.Label>
+                <Form.Select 
+                  name="category"
+                  value={selectedProduct.category} 
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSelectedProduct({
+                      ...selectedProduct,
+                      category: value,
+                      displayCategory: getCategoryDisplayName(value)
+                    });
+                  }}
+                >
+                  <option disabled value="">Kategori Seçin</option>
+                  <option value="p">Plastik Şişe</option>
+                  <option value="k">Plastik Kavanoz</option>
+                  <option value="c">Konsept Ürün</option>
+                </Form.Select>
+              </Form.Group>
 
 
 
