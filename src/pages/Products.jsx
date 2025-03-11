@@ -189,15 +189,6 @@ const Products = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="bg-img absolute top-2 -right-6 max-lg:bottom-0 max-lg:top-auto w-1/3 max-lg:w-[26%] z-[0] max-sm:w-[45%]">
-                            <img
-                                src={'/images/slider/bg1-1.png'}
-                                width={1000}
-                                height={1000}
-                                alt=''
-                                className=''
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
