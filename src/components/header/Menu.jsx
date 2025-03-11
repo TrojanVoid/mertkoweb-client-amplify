@@ -91,15 +91,15 @@ const Menu = ({ props }) => {
                             />
                         </div> */}
                         <div className="menu-main h-full xl:w-full flex items-center absolute left-1/2 transform -translate-x-1/2 justify-center max-lg:hidden ">
-                            <ul className='flex items-center gap-8 h-full'>
+                            <ul className='flex justify-center items-center gap-8 h-full w-screen'>
                                 <li className='h-full'>
                                     <Link to="/urunler" className='text-button-uppercase duration-300 h-full flex items-center justify-center'>
                                         ÜRÜNLER
                                     </Link>
-                                    <div className="mega-menu absolute top-[74px] left-0 bg-white w-screen">
-                                        <div className="container">
-                                            <div className="flex justify-center py-8">
-                                                <div className="nav-link basis-2/3 flex justify-between ">
+                                    <div className="mega-menu absolute top-[72px] left-0 bg-white w-screen">
+                                        <div className="container w-full">
+                                            <div className="flex py-8 w-full">
+                                                <div className="nav-link basis-3/3 flex justify-between w-full px-[10rem]">
                                                     <div className="nav-item">
                                                         <Link
                                                                 to={'/urunler?category=plastik-siseler'}
