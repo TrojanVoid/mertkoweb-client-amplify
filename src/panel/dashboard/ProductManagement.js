@@ -92,7 +92,8 @@ export default function ProductManagement() {
       material:"",
       isBestSeller: false,
       isNewRelease: false,
-      isSelected: false,
+      isFeatured: false,
+      isActive: true,
       images: [],
     });
     setShowEditModal(true); 
@@ -204,16 +205,28 @@ export default function ProductManagement() {
       sortable: true,
     },    
     {
-      header: 'Best Seller',
+      header: 'Çok Satan',
       accessor: 'isBestSeller',
       sortable: true,
       cell: (row) => (row.isBestSeller ? 'Evet' : 'Hayır'),
     },
     {
-      header: 'New Release',
+      header: 'Yeni Çıkan',
       accessor: 'isNewRelease',
       sortable: true,
       cell: (row) => (row.isNewRelease ? 'Evet' : 'Hayır'),
+    },
+    {
+      header: 'Öne Çıkan',
+      accessor: 'isFeatured',
+      sortable: true,
+      cell: (row) => (row.isFeatured ? 'Evet' : 'Hayır'),
+    },
+    {
+      header: 'Aktif',
+      accessor: 'isActive',
+      sortable: true,
+      cell: (row) => (row.isActive ? 'Evet' : 'Hayır'),
     },
     {
       header: 'Eylemler',
@@ -292,9 +305,7 @@ export default function ProductManagement() {
       setSelectedProductIds([...selectedProductIds, id]);
     }
   };
-  
-
-  
+    
   const toggleSelectAll = (e) => {
     e.stopPropagation();
     if (selectedProductIds.length === products.length) {
@@ -343,10 +354,14 @@ export default function ProductManagement() {
         description: selectedProduct.description,
         isBestSeller: selectedProduct.isBestSeller,
         isNewRelease: selectedProduct.isNewRelease,
-        isSelected: selectedProduct.isSelected,
+        isFeatured: selectedProduct.isFeatured,
+        isActive: selectedProduct.isActive,
       };
 
       for (const key in preparedProductData) {
+        if(key !== "name" && key !== "volume" && key !== "category") {
+          continue;
+        }
         if (preparedProductData[key] === null || preparedProductData[key] === "") {
           alert("Ürün bilgileri eksik");
           throw new Error("Ürün bilgileri eksik");
@@ -428,6 +443,7 @@ export default function ProductManagement() {
   
       const savedProduct = {
         ...response.data,
+        displayCategory: getCategoryDisplayName(response.data.category),
         images: processedImages,
       };
   
@@ -515,7 +531,7 @@ export default function ProductManagement() {
           {selectedProduct && (
             <Form>
               <Form.Group controlId="editProductName" className="mb-3">
-                <Form.Label>Ürün Adı</Form.Label>
+                <Form.Label>{`Ürün Adı (Zorunlu)`}</Form.Label>
                 <Form.Control
                   type="text"
                   name="name"
@@ -525,7 +541,7 @@ export default function ProductManagement() {
               </Form.Group>
 
               <Form.Group controlId="editProductVolume" className="mb-3">
-                <Form.Label>Hacim</Form.Label>
+                <Form.Label>{`Hacim (Zorunlu)`}</Form.Label>
                 <Form.Control
                   type="number"
                   name="volume"
@@ -536,7 +552,7 @@ export default function ProductManagement() {
 
              
               <Form.Group controlId="editProductCategory" className="mb-3">
-                <Form.Label>Kategori</Form.Label>
+                <Form.Label>{`Kategori (Zorunlu)`}</Form.Label>
                 <Form.Select 
                   name="category"
                   value={selectedProduct.category} 
@@ -584,7 +600,7 @@ export default function ProductManagement() {
                 <Form.Check
                   type="checkbox"
                   name="isBestSeller"
-                  label="Best Seller"
+                  label="Çok Satan"
                   checked={selectedProduct.isBestSeller}
                   onChange={handleEditChange}
                 />
@@ -594,8 +610,28 @@ export default function ProductManagement() {
                 <Form.Check
                   type="checkbox"
                   name="isNewRelease"
-                  label="New Release"
+                  label="Yeni Çıkan"
                   checked={selectedProduct.isNewRelease}
+                  onChange={handleEditChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="editProductFeatured" className="mb-3">
+                <Form.Check
+                  type="checkbox"
+                  name="isFeatured"
+                  label="Öne Çıkan"
+                  checked={selectedProduct.isFeatured}
+                  onChange={handleEditChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="editProductActive" className="mb-3">
+                <Form.Check
+                  type="checkbox"
+                  name="isActive"
+                  label="Aktif"
+                  checked={selectedProduct.isActive}
                   onChange={handleEditChange}
                 />
               </Form.Group>
@@ -759,10 +795,16 @@ export default function ProductManagement() {
                 <strong>Açıklama:</strong> {selectedProduct.description}
               </p>
               <p>
-                <strong>Best Seller:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
+                <strong>Çok Satan:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
               </p>
               <p>
-                <strong>New Release:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+                <strong>Yeni Çıkan:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+              </p>
+              <p>
+                <strong>Öne Çıkan:</strong> {selectedProduct.isFeatured ? "Evet" : "Hayır"} 
+              </p>
+              <p>
+                <strong>Aktif:</strong> {selectedProduct.isActive ? "Evet" : "Hayır"}
               </p>
             </div>
           )}
