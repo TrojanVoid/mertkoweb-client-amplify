@@ -736,80 +736,81 @@ export default function ProductManagement() {
       </Modal>
 
       <Modal show={showDetailModal} onHide={closeDetailModal}>
+  <Modal.Header className="bg-primary" closeButton>
+    <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
+  </Modal.Header>
 
-        <Modal.Header className="bg-primary" closeButton>
-          <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
-        </Modal.Header>
+  <Modal.Body>
+    {selectedProduct && (
+      <div className="flex flex-col items-center">
+        {selectedProduct.images && selectedProduct.images.length > 0 && (
+          selectedProduct.images.length > 1 ? (
+            <Carousel indicators={false} controls={true} interval={3000} className="mb-4">
+              {selectedProduct.images.map((img, index) => (
+                <Carousel.Item key={index}>
+                  <img
+                    className="d-block w-full rounded"
+                    src={img.imageUrl}
+                    alt={`Slide ${index + 1}`}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          ) : (
+            <div className="mb-4">
+              <img
+                src={selectedProduct.images[0].imageUrl}
+                alt={selectedProduct.name}
+                className="mx-auto block w-full rounded"
+              />
+            </div>
+          )
+        )}
 
-        <Modal.Body>
-          {selectedProduct && (
-            <div style={{ textAlign: "center" }}>
-              {selectedProduct.images && selectedProduct.images.length > 0 && (
-                selectedProduct.images.length > 1 ? (
-                  <Carousel indicators={false} controls={true} interval={3000} style={{ marginBottom: "15px" }}>
-                    {selectedProduct.images.map((img, index) => (
-                      <Carousel.Item key={index}>
-                        <img
-                          className="d-block w-100"
-                          src={img.imageUrl}
-                          alt={`Slide ${index + 1}`}
-                          style={{
-                            maxWidth: "100%",
-                            height: "auto",
-                            borderRadius: "5px",
-                          }}
-                        />
-                      </Carousel.Item>
-                    ))}
-                  </Carousel>
-                ) : (
-                  <div style={{ marginBottom: "15px" }}>
-                    <img
-                      src={selectedProduct.images[0].imageUrl}
-                      alt={selectedProduct.name}
-                      style={{
-                        display: "block",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        maxWidth: "100%",
-                        height: "auto",
-                        borderRadius: "5px",
-                      }}
-                    />
-                  </div>
-                )
-              )}
-              <p>
-                <strong>Ürün Adı:</strong> {selectedProduct.name}
-              </p>
-              <p>
-                <strong>Hacim:</strong> {selectedProduct.volume}
-              </p>
-              <p>
-                <strong>Kategori:</strong> {selectedProduct.displayCategory}
-              </p>
-              <p>
+        {/* Two-column layout for product details */}
+        <div className="flex flex-col md:flex-row gap-4 w-full">
+          {/* Left Column */}
+          <div className="flex-1">
+            <p className="mb-[0.35rem]">
+              <strong>Ürün Adı:</strong> {selectedProduct.name}
+            </p>
+            <p className="mb-[0.35rem]">
+              <strong>Hacim:</strong> {selectedProduct.volume}
+            </p>
+            <p className="mb-[0.35rem]">
+              <strong>Kategori:</strong> {selectedProduct.displayCategory}
+            </p>
+            <p className="mb-[0.35rem]">
               <strong>Malzeme:</strong> {selectedProduct.material}
             </p>
-              <p>
-                <strong>Açıklama:</strong> {selectedProduct.description}
-              </p>
-              <p>
-                <strong>Çok Satan:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
-              </p>
-              <p>
-                <strong>Yeni Çıkan:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
-              </p>
-              <p>
-                <strong>Öne Çıkan:</strong> {selectedProduct.isFeatured ? "Evet" : "Hayır"} 
-              </p>
-              <p>
-                <strong>Aktif:</strong> {selectedProduct.isActive ? "Evet" : "Hayır"}
-              </p>
-            </div>
-          )}
-        </Modal.Body>
-      </Modal>
+          </div>
+          {/* Right Column */}
+          <div className="flex-1">
+            <p className="mb-[0.35rem]">
+              <strong>Çok Satan:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
+            </p>
+            <p className="mb-[0.35rem]">
+              <strong>Yeni Çıkan:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+            </p>
+            <p className="mb-[0.35rem]">
+              <strong>Öne Çıkan:</strong> {selectedProduct.isFeatured ? "Evet" : "Hayır"}
+            </p>
+            <p className="mb-[0.35rem]">
+              <strong>Aktif:</strong> {selectedProduct.isActive ? "Evet" : "Hayır"}
+            </p>
+          </div>
+        </div>
+
+        <p className="mb-[0.35rem] w-full">
+          <strong>Açıklama:</strong> {selectedProduct.description}
+        </p>
+      </div>
+    )}
+  </Modal.Body>
+</Modal>
+
+
+
 
       <Footer />
     </>
