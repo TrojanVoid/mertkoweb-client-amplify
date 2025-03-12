@@ -594,50 +594,56 @@ export default function ProductManagement() {
                 onChange={handleEditChange}
               />
             </Form.Group>
+            
+            <Form.Group controlId="editProductActive" className="mb-3">
+              <Form.Check
+                type="checkbox"
+                name="isActive"
+                label="Aktif"
+                checked={selectedProduct.isActive}
+                onChange={handleEditChange}
+              />
+            </Form.Group>
 
+            <div className="border border-gray-500 rounded-lg p-3 mb-3">
+              <h6 className="mb-2 font-semibold">Ürün Etiketi</h6>
+              <div className="d-flex gap-4 w-full justify-between">
+                <Form.Group controlId="editProductBestSeller" className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    name="isBestSeller"
+                    label="Çok Satan"
+                    checked={selectedProduct.isBestSeller}
+                    onChange={handleEditChange}
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="editProductBestSeller" className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  name="isBestSeller"
-                  label="Çok Satan"
-                  checked={selectedProduct.isBestSeller}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
+                <Form.Group controlId="editProductNewRelease" className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    name="isNewRelease"
+                    label="Yeni Çıkan"
+                    checked={selectedProduct.isNewRelease}
+                    onChange={handleEditChange}
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="editProductNewRelease" className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  name="isNewRelease"
-                  label="Yeni Çıkan"
-                  checked={selectedProduct.isNewRelease}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
+                <Form.Group controlId="editProductFeatured" className="mb-3">
+                  <Form.Check
+                    type="checkbox"
+                    name="isFeatured"
+                    label="Öne Çıkan"
+                    checked={selectedProduct.isFeatured}
+                    onChange={handleEditChange}
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            
 
-              <Form.Group controlId="editProductFeatured" className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  name="isFeatured"
-                  label="Öne Çıkan"
-                  checked={selectedProduct.isFeatured}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="editProductActive" className="mb-3">
-                <Form.Check
-                  type="checkbox"
-                  name="isActive"
-                  label="Aktif"
-                  checked={selectedProduct.isActive}
-                  onChange={handleEditChange}
-                />
-              </Form.Group>
-
+            <div className="border border-gray-500 rounded-lg p-3 mb-3">
+              <h6 className="font-semibold w-full">Ürün Görselleri</h6>
               <Form.Group controlId="editProductImages" className="mb-3">
-                <Form.Label className="fw-bold">Ürün Görselleri</Form.Label>
                 <Form.Text className="text-muted d-block mb-2">
                   Görselleri sürükleyip bırakın veya tıklayarak seçin.
                 </Form.Text>
@@ -716,7 +722,7 @@ export default function ProductManagement() {
                   onChange={handleMultipleFileChange}
                 />
               </Form.Group>
-
+            </div>
 
             </Form>
           )}
