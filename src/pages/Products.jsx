@@ -70,12 +70,13 @@ const Products = () => {
               Logger.error(`Error fetching products`, TITLE_TAGS.UI_COMPONENT);
               navigate('/');
             }
-            setProducts(products);
-            setFilteredProducts(products);
-            setPageCount(Math.ceil(products.length / productsPerPage));
-            setCurrentProducts(products.slice(offset, offset + productsPerPage));
+            const activeProducts = products.filter(product => product.isActive);
+            setProducts(activeProducts);
+            setFilteredProducts(activeProducts);
+            setPageCount(Math.ceil(activeProducts.length / productsPerPage));
+            setCurrentProducts(activeProducts.slice(offset, offset + productsPerPage));
 
-            const maxVolumeInProducts = Math.max(...products.map(product => product.volume));
+            const maxVolumeInProducts = Math.max(...activeProducts.map(product => product.volume));
             setVolumeRange([0, maxVolumeInProducts]);
             setMaxVolume(maxVolumeInProducts);
         } catch (error) {
