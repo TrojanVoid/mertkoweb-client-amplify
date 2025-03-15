@@ -61,7 +61,6 @@ const Home = () => {
                               {
                                 (aboutData && aboutData.content1 &&
                                   aboutData["content1"].replaceAll('\n', ' <br/> ').split(' ').map((item, index) => {
-                                      console.log("item:", item);
                                       if (item.includes("<br/>") ) return (<br key={index} />);
                                       return item + " ";
                                   })

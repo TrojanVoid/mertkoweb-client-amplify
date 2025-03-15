@@ -4,13 +4,16 @@ import useMetaData from "../hooks/useMetaData";
 
 const {toCamelCase} = require("../util/StringUtility");
 
+const envMode = process.env.NODE_ENV;
 // Default metadata values
 const defaultAuthor = "CBS Software";
 const defaultImage = "/resources/images/mertko_logo-300x117.png"; 
 
 const withMetaData = (Component, productCategoryKey=null) => {
   const pageKey = toCamelCase(Component.name);
-  console.log(`properties given to meta data provider: page key: ${pageKey}, product category: ${productCategoryKey}`);
+  
+  if(envMode === "development") 
+    console.log(`properties given to meta data provider: page key: ${pageKey}, product category: ${productCategoryKey}`);
 
   return function WrappedComponent(props) {
     const { title, description } = useMetaData(pageKey, productCategoryKey);

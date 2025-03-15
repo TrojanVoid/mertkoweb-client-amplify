@@ -1,5 +1,6 @@
 class Logger {
   static lastLogType = null;
+  static devMode = process.env.NODE_ENV === "development";
 
   static TITLE_TAGS = {
     PRODUCT_API: "PRODUCT API",
@@ -31,15 +32,18 @@ class Logger {
       : Logger.SEPARATORS.DIFFERENT_TAG;
   }
 
-  static log(message, title = "General") {
+  static log(message, title = "General", onlyDev = true) {
+    if(!this.devMode && onlyDev) return;
     this.printLog(message, title, Logger.LOG_TYPES.INFO, "blue");
   }
 
-  static warn(message, title = "General") {
+  static warn(message, title = "General", onlyDev = true) {
+    if(!this.devMode && onlyDev) return;
     this.printLog(message, title, Logger.LOG_TYPES.ERROR, "orange");
   }
 
-  static error(message, title = "General") {
+  static error(message, title = "General", onlyDev = true) {
+    if(!this.devMode && onlyDev) return;
     this.printLog(message, title, Logger.LOG_TYPES.ERROR, "red");
   }
 
