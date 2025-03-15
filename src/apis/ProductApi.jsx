@@ -33,7 +33,7 @@ export const urls = {
   carouselImages: `${baseUrl}/carousel-images`,
   productImages: `${baseUrl}/product-images`,
   conceptProducts: `${baseUrl}/concept-products`,
-  featuredProducts: `${baseUrl}/selected-products`,
+  featuredProducts: `${baseUrl}/featured-products`,
   newReleases: `${baseUrl}/new-products`,
   bestSellers: `${baseUrl}/best-seller-products`,
   createProduct: `${baseUrl}/create-product`,

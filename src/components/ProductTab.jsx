@@ -98,8 +98,8 @@ const ProductTab = ({ data, start, limit }) => {
                             }}
                         >
                             {filteredProducts && filteredProducts.slice(start, limit).map((prd, index) => (
-                                <SwiperSlide key={index} className="!ml-5 !mr-5">
-                                    <Product data={prd} type='grid' />
+                                <SwiperSlide key={index}>
+                                    <Product data={prd} type='grid' className="w-[30%]"/>
                                 </SwiperSlide>
                             ))}
                         </Swiper>
