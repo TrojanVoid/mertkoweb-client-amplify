@@ -173,7 +173,7 @@ export default function Contact() {
 
           <h2 className="px-[0.1rem] md:!px-[3rem] pt-3 md:mt-3">İletişim Bilgileri</h2>
 
-          <div className="border rounded-lg shadow-md bg-white md:mx-[3rem] mt-[1rem] md:mt-[2rem] mb-4 px-[1rem] md:!px-[0rem] md:pb-4 hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out will-change-transform"> 
+          <div className="border rounded-lg shadow-md bg-white md:mx-[3rem] mt-[1rem] md:mt-[2rem] mb-4 px-[1rem] md:!px-[0rem] md:pb-4 hover:shadow-lg transition-all duration-300 ease-in-out"> 
             <div className="d-flex justify-start items-center w-auto mx-[0rem] md:mx-[3rem] mt-[1rem] md:mt-[2rem] border-b border-gray-100">
               <Form className="w-full">
                 <Form.Group className="mb-3">
@@ -236,7 +236,7 @@ export default function Contact() {
 
           <div className="flex flex-col md:flex-row gap-4 w-full px-[0.1rem] md:!px-[3rem] pt-3 md:mt-3">
             {/* Weekdays */}
-            <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out will-change-transform">
+            <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-semibold mb-2">Hafta İçleri</h3>
               <Form.Group>
                 <Form.Label>Açılış Saati</Form.Label>
@@ -275,7 +275,7 @@ export default function Contact() {
             </div>
 
             {/* Saturday */}
-            <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out will-change-transform">
+            <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-semibold mb-2">Cumartesi</h3>
               <Form.Group>
                 <Form.Label>Açılış Saati</Form.Label>
@@ -314,7 +314,7 @@ export default function Contact() {
             </div>
 
             {/* Sunday */}
-            <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out will-change-transform">
+            <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-semibold mb-2">Pazar</h3>
               <Form.Group>
                 <Form.Label>Açılış Saati</Form.Label>

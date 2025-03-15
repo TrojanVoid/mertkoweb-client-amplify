@@ -10,11 +10,17 @@ const baseUrl = (envMode == "development" || envMode == "production")
 export const types = {
   getAbout: "aboutData",
   updateAbout: "updateAbout",
+  getAboutImages: "aboutImages",
+  uploadAboutImage: "uploadAboutImage",
+  deleteAllAboutImages: "deleteAllAboutImages",
 }
 
 const urls = {
   getAbout: `${baseUrl}/about-data`,
   updateAbout: `${baseUrl}/update-about-data`,
+  getAboutImages: `${baseUrl}/about-images`,
+  uploadAboutImage: `${baseUrl}/upload-about-image`,
+  deleteAllAboutImages: `${baseUrl}/delete-all-about-images`,
 }
 
 export const requestByType = async (type, property=null) => {
@@ -42,6 +48,19 @@ export const requestByType = async (type, property=null) => {
         break;
       case types.getAbout:
         response = await axios.get(urls.getAbout);
+        break;
+      case types.getAboutImages:
+        response = await axios.get(urls.getAboutImages);
+        break;
+      case types.uploadAboutImage:
+        if(!property){
+          Logger.error("Invalid image data", TITLE_TAGS.ABOUT_API);
+          return [];
+        }
+        response = await axios.post(urls.uploadAboutImage, property);
+        break;
+      case types.deleteAllAboutImages:
+        response = await axios.delete(urls.deleteAllAboutImages, {data: property});
         break;
       default:
         Logger.error(`Invalid about request type: ${type}`, TITLE_TAGS.ABOUT_API);

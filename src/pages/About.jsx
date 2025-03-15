@@ -11,10 +11,13 @@ const {requestByType, types} = require('../apis/AboutApi');
 const About = () => {
 
     const [aboutData, setAboutData] = useState([]);
+    const [aboutImages, setAboutImages] = useState([]);
 
     const fetchAboutData = async() => {
         try {
             const response = await requestByType(types.getAbout);
+            const aboutImages = await requestByType(types.getAboutImages);
+            setAboutImages(aboutImages.data);
             setAboutData(response.data);
         } catch (err) {
             console.error("About data fetch error:", err);
@@ -23,7 +26,6 @@ const About = () => {
 
     useEffect(() => {
         fetchAboutData();
-
     }, []);
 
     return (
@@ -76,34 +78,21 @@ const About = () => {
 
                           </div>
                         </div>
-                        <div className="list-img grid sm:grid-cols-3 gap-[30px] md:pt-20 pt-10">
-                            <div className="bg-img">
-                                <img
-                                    src={'/images/other/about-us1.png'}
-                                    width={2000}
-                                    height={3000}
-                                    alt='bg-img'
-                                    className='w-full rounded-[30px]'
-                                />
-                            </div>
-                            <div className="bg-img">
-                                <img
-                                    src={'/images/other/about-us2.png'}
-                                    width={2000}
-                                    height={3000}
-                                    alt='bg-img'
-                                    className='w-full rounded-[30px]'
-                                />
-                            </div>
-                            <div className="bg-img">
-                                <img
-                                    src={'/images/other/about-us3.png'}
-                                    width={2000}
-                                    height={3000}
-                                    alt='bg-img'
-                                    className='w-full rounded-[30px]'
-                                />
-                            </div>
+
+                        <div className="list-img flex flex-col md:flex-row flex-grow flex-shrink justify-center items-center gap-[30px] md:py-[5rem] py-[2rem]">
+                            {
+                                aboutImages?.map((image, index) => (
+                                    <div key={index} className={`bg-img basis-[100%] md:basis-[30%] overflow-hidden`}>
+                                        <img
+                                            src={image.url}
+                                            alt={image.altDescription}
+                                            width={2000}
+                                            height={3000}
+                                            className='w-full rounded-[25px]'
+                                        />
+                                    </div>
+                                )) 
+                            }
                         </div>
                         <LocationMap />
                     </div>
