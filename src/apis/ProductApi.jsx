@@ -13,7 +13,7 @@ export const types = {
   carouselImages: "carouselImages",
   productImages: "productImages",
   conceptProducts: "conceptProducts",
-  selectedProducts: "selectedProducts",
+  featuredProducts: "featuredProducts",
   newReleases: "newReleases",
   bestSellers: "bestSellers",
   createProduct: "createProduct",
@@ -33,7 +33,7 @@ export const urls = {
   carouselImages: `${baseUrl}/carousel-images`,
   productImages: `${baseUrl}/product-images`,
   conceptProducts: `${baseUrl}/concept-products`,
-  selectedProducts: `${baseUrl}/selected-products`,
+  featuredProducts: `${baseUrl}/selected-products`,
   newReleases: `${baseUrl}/new-products`,
   bestSellers: `${baseUrl}/best-seller-products`,
   createProduct: `${baseUrl}/create-product`,
@@ -74,7 +74,7 @@ export const requestByType = async (productRequestType, property=null) => {
       case "conceptProducts":
         response = await axios.get(url);
         break;
-      case "selectedProducts":
+      case "featuredProducts":
         response = await axios.get(url);
         break;
       case "newReleases":

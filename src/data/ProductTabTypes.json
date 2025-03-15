@@ -22,12 +22,12 @@
     },
     {
       "id": 3,
-      "key": "selectedProducts",
+      "key": "featuredProducts",
       "tr": {
-        "name": "Seçili Ürünler"
+        "name": "Öne Çıkanlar"
       },
       "en": {
-        "name": "Selected Products"
+        "name": "Featured Products"
       }
     }
   ]

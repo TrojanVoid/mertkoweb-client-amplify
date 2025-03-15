@@ -13,7 +13,7 @@ const featuredProductTypes = ProductTabTypes.map((entry) => {
 });
 
 const ProductTab = ({ data, start, limit }) => {
-    const [activeTab, setActiveTab] = useState('selectedProducts')
+    const [activeTab, setActiveTab] = useState('featuredProducts')
     const [filteredProducts, setFilteredProducts] = useState([])
     const [selectedLanguage, setSelectedLanguage] = useState('tr')
     
@@ -38,8 +38,8 @@ const ProductTab = ({ data, start, limit }) => {
     }
 
     const getFilterData = () => {
-        if (activeTab === 'selectedProducts') {
-            fetchProducts("selectedProducts");
+        if (activeTab === 'featuredProducts') {
+            fetchProducts("featuredProducts");
         }
 
         if (activeTab === 'newReleases') {
@@ -58,7 +58,7 @@ const ProductTab = ({ data, start, limit }) => {
                 <div className="container">
                     <div className="heading flex flex-col items-center text-center">
                         <div className="menu-tab flex flex-shrink justify-center items-center gap-2 p-1 bg-surface rounded-2xl">
-                            {['bestSellers', 'selectedProducts', 'newReleases'].map((item, index) => (
+                            {['bestSellers', 'featuredProducts', 'newReleases'].map((item, index) => (
                                 <div
                                     key={index}
                                     className={`tab-item relative w-25 md:!w-[33%] text-secondary flex items-center justify-center heading5 py-2 px-5 cursor-pointer duration-500 hover:text-black ${activeTab === item ? 'active' : ''}`}
