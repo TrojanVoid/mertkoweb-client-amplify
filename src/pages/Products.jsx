@@ -280,7 +280,7 @@ const Products = () => {
                             </div>
 
                             <div
-                            className={`sidebar style-dropdown flex-wrap grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 md:gap-[30px] sm:gap-6 mt-4 ${openSidebar ? 'open' : ''}`}
+                            className={`sidebar style-dropdown flex-wrap grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 md:gap-[30px] sm:gap-6 mt-4 pb-3 ${openSidebar ? 'open' : ''}`}
                             >
                                 
                                 <div className="filter-type">
@@ -329,7 +329,7 @@ const Products = () => {
                             </div>
                         </div>
                         
-                        <div className="flex flex-col shadow-[0_1px_2px_rgba(0,0,0,0.1)] p-2 px-3 md:py-5 rounded-lg mt-3">
+                        <div className="flex flex-col shadow-[0_1px_2px_rgba(0,0,0,0.1)] p-2 px-3 md:py-5 pb-5 rounded-lg mt-3">
                             <div className="list-filtered flex items-center max-md:justify-center gap-3 mt-5 lg:!mt-1 ">
                                 <div className="total-product">
                                 <span className='text-secondary md:pl-1'>Filtrelere Uyan </span>    
@@ -387,7 +387,7 @@ const Products = () => {
                                 ) : (
                                     
                                     currentProducts.map((item) => (
-                                        <div className="my-3 max-sm:bg-white-100 rounded-xl max-sm:px-3 max-sm:py-4 max-sm:shadow-sm max-sm:hover:shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 md:hover:-translate-y-[0.4rem] hover:scale-[1.005] md:hover:scale-[1.02] will-change-transform">
+                                        <div className="max-md:my-3 max-sm:bg-white-100 rounded-xl max-sm:px-3 max-sm:py-4 max-sm:shadow-sm max-sm:hover:shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 md:hover:-translate-y-[0.4rem] hover:scale-[1.005] md:hover:scale-[1.02] will-change-transform">
                                             <Product key={item.id} data={item} type='grid' font="text-2xl md:text-2xl"/>
                                         </div>
                                     ))
