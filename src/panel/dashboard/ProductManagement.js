@@ -398,7 +398,6 @@ export default function ProductManagement() {
 
       const processedImages = await Promise.all(
         selectedProduct.images.map(async (img) => {
-          console.log("img:", img);
           if (img.imageUrl.startsWith('blob') || img.newIndex !== undefined) {
             if(img.newIndex !== undefined) {
               const repositionResponse = await requestByType(types.repositionProductImage, {
