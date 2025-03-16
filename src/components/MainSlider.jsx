@@ -15,7 +15,7 @@ const MainSlider = () => {
       try {
         const response = await requestByType(types.carouselImages);
         if (response && response.data) {
-          setImages(response.data);
+          setImages(sortCarouselEntitiesByDisplayIndex(response.data));
         }
       } catch (error) {
         Logger.error(`Error fetching images: ${error}`, 'Slider');
@@ -23,6 +23,10 @@ const MainSlider = () => {
     };
     fetchImages();
   }, []);
+
+  const sortCarouselEntitiesByDisplayIndex = (carouselEntities) => {
+    return carouselEntities.sort((a, b) => a.displayIndex - b.displayIndex);
+  };
 
   return (
     <div className="slider-block style-two w-full sm:h-[65vh] md:h-[70vh] lg:h-[75vh]">
