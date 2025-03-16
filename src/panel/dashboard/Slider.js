@@ -23,8 +23,9 @@ const Slider = () => {
   const fetchSliderData = async () => {
     try {
       const response = await requestByType(types.getSlider);
-      setSliderData(response.data);
-      setNewSliderData(structuredClone(response.data));
+      const sortedData = sortCarouselEntitiesByDisplayIndex(response.data);
+      setSliderData(sortedData);
+      setNewSliderData(structuredClone(sortedData));
     } catch (err) {
       console.error("Slider data fetch error:", err);
     }
@@ -33,6 +34,10 @@ const Slider = () => {
   useEffect(() => {
     fetchSliderData();
   }, []);
+
+  const sortCarouselEntitiesByDisplayIndex = (carouselEntities) => {
+    return carouselEntities.sort((a, b) => a.displayIndex - b.displayIndex);
+  };
 
   const switchSkin = (skin) => {
     if (skin === "dark") {
@@ -67,8 +72,7 @@ const Slider = () => {
       if (
         !slider.title ||
         slider.title.trim() === "" ||
-        !slider.imageUrl ||
-        slider.imageUrl.trim() === ""
+        (!slider.imageUrl || slider.imageUrl.trim() === "") && (!slider.image)
       ) {
         navigator.vibrate && navigator.vibrate(200);
         window.scrollTo(0, 0);
@@ -85,23 +89,40 @@ const Slider = () => {
       let allRequestsSucceeded = true;
       await Promise.all(
         newSliderData.map(async (slide, index) => {
-          if (!slide.id) {
-            const slideData = { title: slide.title, image: slide.image };
-            const response = await requestByType(types.uploadSlide, slideData);
-            if (response.status !== 200) {
-              allRequestsSucceeded = false;
+          if (!slide.id || slide.id < 0) {
+            if(slide.id < 0){
+              const response = await requestByType(types.deleteSlide, { id: -slide.id });
+              if (response.status !== 200) {
+                allRequestsSucceeded = false;
+              }
             }
-          } else {
-            if (
-              slide.title !== sliderData[index].title &&
-              slide.imageUrl === sliderData[index].imageUrl
-            ) {
+            const formData = new FormData();
+            formData.append("image", slide.image);
+            formData.append("title", slide.title);
+            const response = await requestByType(types.uploadSlide, formData);
+            allRequestsSucceeded = response.status === 200;
+          } 
+          else if (
+            slide.title !== sliderData[index].title &&
+            slide.imageUrl === sliderData[index].imageUrl)  {
               const response = await requestByType(types.updateSlideTitle, { id: slide.id, title: slide.title });
               allRequestsSucceeded = response.status === 200;
-            }
+          }
+          else if(slide.newIndex !== undefined){
+            const response = await requestByType(types.repositionSlide, { id: slide.id, newIndex: slide.newIndex });
+            allRequestsSucceeded = response.status === 200;
           }
         })
       );
+
+      await sliderData.forEach(async (slide, index) => {
+        if (!newSliderData[index]) {
+          const response = await requestByType(types.deleteSlide, { id: slide.id });
+          if (response.status !== 200) {
+            allRequestsSucceeded = false;
+          }
+        }
+      });
 
       if (allRequestsSucceeded) {
         setAlertVariant("success");
@@ -210,10 +231,12 @@ const Slider = () => {
                     {index > 0 && (
                       <Button
                         variant="outline-primary"
-                        className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 me-2 focus:!bg-white hover:!bg-white"
+                        className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 me-2 text-black focus:!bg-white hover:!bg-white hover:!text-black"
                         onClick={() => {
                           const temp = [...newSliderData];
                           const swap = temp[index];
+                          temp[index].newIndex = index - 1;
+                          temp[index - 1].newIndex = index;
                           temp[index] = temp[index - 1];
                           temp[index - 1] = swap;
                           setNewSliderData(temp);
@@ -225,10 +248,12 @@ const Slider = () => {
                     {index < newSliderData.length - 1 && (
                       <Button
                         variant="outline-primary"
-                        className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 me-2 focus:!bg-white hover:!bg-white"
+                        className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 me-2 text-black focus:!bg-white hover:!bg-white hover:!text-black"
                         onClick={() => {
                           const temp = [...newSliderData];
                           const swap = temp[index];
+                          temp[index].newIndex = index + 1;
+                          temp[index + 1].newIndex = index;
                           temp[index] = temp[index + 1];
                           temp[index + 1] = swap;
                           setNewSliderData(temp);
@@ -239,7 +264,7 @@ const Slider = () => {
                     )}
                     <Button
                       variant="outline-danger"
-                      className="btn-white w-[40%] sm:w-[30%] md:w-[15%] h-auto p-0 border-0 hover:!text-black"
+                      className="btn-white w-[40%] sm:w-[30%] md:w-[15%] h-auto p-0 border-0 hover:!text-red focus:!text-red"
                       onClick={() => {
                         const temp = [...newSliderData];
                         temp.splice(index, 1);
@@ -277,6 +302,7 @@ const Slider = () => {
                             onClick={() => {
                               const temp = [...newSliderData];
                               temp[index].imageUrl = "";
+                              temp[index].id = -temp[index].id;
                               setNewSliderData(temp);
                             }}
                           >
@@ -304,8 +330,8 @@ const Slider = () => {
             </div>
           ))}
 
-          <div className="d-flex flex-row w-full justify-center md:justify-end items-center mt-3 px-3">
-            <Button variant="primary" className="w-[80%] sm:w-[35%] md:w-[25%]" onClick={addNewSlider}>
+          <div className="d-flex flex-row w-full justify-center md:justify-end items-center mt-3 px-[0rem] md:px[1rem]">
+            <Button variant="primary" className="w-full sm:w-[35%] md:w-[25%]" onClick={addNewSlider}>
               <span className="text-md">Yeni Slider Ekle</span>
             </Button>
           </div>
