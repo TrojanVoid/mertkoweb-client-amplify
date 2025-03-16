@@ -12,8 +12,10 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { requestByType, types } from "../../apis/ProductApi";
+import { useConfirm } from "../context/ConfirmContext";
 
 export default function ProductManagement() {
+  const {confirm} = useConfirm(); 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dragActive, setDragActive] = useState(false);
@@ -232,14 +234,25 @@ export default function ProductManagement() {
       header: 'Eylemler',
       accessor: 'actions',
       sortable: false,
-      cell: (row) => (
-        <div onClick={(e) => e.stopPropagation()}>
-          <Button variant="link" size="sm" onClick={(e) => openEditModal(row, e)} className="p-0 me-2">
-            <i className="ri-edit-line fs-4"></i>
-          </Button>
-          <Button variant="link" size="sm" onClick={(e) => deleteProduct(row.id, e)} className="p-0">
-            <i className="ri-delete-bin-line fs-4"></i>
-          </Button>
+          cell: (row) => (
+            <div onClick={(e) => e.stopPropagation()}>
+              <Button variant="link" size="sm" onClick={(e) => openEditModal(row, e)} className="p-0 me-2">
+                <i className="ri-edit-line fs-4"></i>
+              </Button>
+              <Button
+      variant="link"
+      size="sm"
+      onClick={async (e) => {
+        e.stopPropagation();
+        const result = await confirm("Ürünü silmek istediğinize emin misiniz?");
+        if (result) {
+          deleteProduct(row.id, e);
+        }
+      }}
+      className="p-0"
+    >
+      <i className="ri-delete-bin-line fs-4"></i>
+    </Button>
         </div>
       ),
     },
@@ -305,6 +318,8 @@ export default function ProductManagement() {
       setSelectedProductIds([...selectedProductIds, id]);
     }
   };
+  const currentSkin = (localStorage.getItem('skin-mode'))? 'dark' : '';
+  const [skin, setSkin] = useState(currentSkin);
     
   const toggleSelectAll = (e) => {
     e.stopPropagation();
@@ -465,10 +480,11 @@ export default function ProductManagement() {
     const splitUrl = url.split('/');
     return splitUrl[splitUrl.length - 1];
   }
+  
 
   return (
     <>
-      <Header />
+      <Header  onSkin={setSkin} />
       <div className="main main-app p-3 p-lg-4">
         <div className="mb-4">
           <ol className="breadcrumb fs-sm mb-1 p-2">

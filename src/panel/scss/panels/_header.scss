@@ -173,21 +173,7 @@
 }
 
 .dropdown-skin {
-  .dropdown-link {
-    display: flex;
-    margin-top: 2px;
-
-    i {
-      font-size: 22px;
-      animation: rotation 5s infinite linear;
-      color: $primary;
-    }
-
-    @keyframes rotation {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(359deg); }
-    }
-  }
+  
 
   .dropdown-menu {
     width: 250px;

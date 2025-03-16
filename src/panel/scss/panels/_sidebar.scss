@@ -6,6 +6,7 @@
       left: 0;
       opacity: 1;
       visibility: visible;
+      position: fixed;
     }
 
     .header-main,
@@ -113,7 +114,60 @@
       opacity: 1;
     }
 
-    .sidebar-footer { bottom: 0; }
+  
+  
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0; /* Burada bottom'u -250px'ten 0px'e çekiyoruz */
+      left: 0;
+      right: 0;
+      background-color: #fff;
+      z-index: 10;
+      box-shadow: -20px -20px 20px #fff;
+      transition: all 0.25s;
+      
+      .sidebar-footer-menu.hidden {
+        display: none; /* Menü öğeleri gizlensin */
+      }
+      .sidebar-footer-menu {
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    
+        /* Menü öğelerini tek bir satırda tutuyoruz */
+        .nav {
+          flex-direction: column;
+          margin: 0;
+        }
+    
+        a {
+          height: 35px;
+          padding: 0 8px;
+          color: $gray-700;
+          display: flex;
+          align-items: center;
+          border-radius: 3px;
+          transition: all 0.25s;
+    
+          &:hover {
+            background-color: $gray-200;
+            color: $gray-900;
+          }
+        }
+    
+        a > i {
+          line-height: 1;
+          font-size: 20px;
+          margin-right: 12px;
+        }
+    
+        /* 'hr' öğesini kaldırıyoruz, böylece alt çizgi kaybolacak */
+        hr {
+          display: none;
+        }
+      }
+    }
   }
 }
 

@@ -4,10 +4,11 @@ import * as Icon from "@phosphor-icons/react/dist/ssr";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { Link } from "react-router-dom";
-
+import { useConfirm } from "../context/ConfirmContext";
 const {requestByType, types} = require("../../apis/BannerApi");
 
 export default function Banner() {
+  const {confirm} = useConfirm();
   ///// Skin Switch /////
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
   const [skin, setSkin] = useState(currentSkin);
@@ -238,15 +239,18 @@ export default function Banner() {
 
                           {/* Column 3: Always render the Trash button */}
                           <div className="flex justify-center items-center">
-                            <Button 
-                              variant="outline-danger" 
-                              className="btn-white flex justify-center items-center p-0 border-0"
-                              onClick={() => {
-                                const temp = [...newBannerData];
-                                temp.splice(index, 1);
-                                setNewBannerData(temp);
-                              }}
-                            >
+                          <Button 
+                          variant="outline-danger" 
+                          className="btn-white flex justify-center items-center p-0 border-0"
+                          onClick={async () => {
+                            const result = await confirm("Bu içeriği silmek istediğinize emin misiniz?");
+                            if (result) {
+                              const temp = [...newBannerData];
+                              temp.splice(index, 1);
+                              setNewBannerData(temp);
+                            }
+                          }}
+                        >
                               <Icon.Trash className="text-red transition-colors duration-200 group-hover:!text-red-100" size={16} />
                             </Button>
                           </div>

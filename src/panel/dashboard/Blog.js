@@ -4,11 +4,13 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import { Link } from "react-router-dom";
 import { requestByType, types } from "../../apis/BlogApi";
+import{ useConfirm } from '../context/ConfirmContext';
 
 export default function HelpdeskService() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { confirm } = useConfirm();
 
   // Modal state'leri
   const [showEditModal, setShowEditModal] = useState(false);
@@ -33,7 +35,6 @@ export default function HelpdeskService() {
 
   // Blog silme
   const handleDeleteBlog = async (blogId) => {
-    if (!window.confirm("Bu blog yazısını silmeye emin misiniz?")) return;
     try {
       await requestByType(types.deleteBlog, blogId);
       setBlogs(blogs.filter((blog) => blog.id !== blogId));
@@ -135,12 +136,18 @@ export default function HelpdeskService() {
                       Düzenle
                     </Button>
                     <Button
-                      variant="outline-danger"
-                      size="sm"
-                      onClick={() => handleDeleteBlog(blog.id)}
-                    >
-                      Sil
-                    </Button>
+  variant="outline-danger"
+  size="sm"
+  onClick={async () => {
+    // Kullanıcıdan onay alıyoruz
+    const result = await confirm("Bu blog yazısını silmek istediğinize emin misiniz?");
+    if (result) {
+      handleDeleteBlog(blog.id); // Eğer onaylandıysa, silme işlemini yapıyoruz
+    }
+  }}
+>
+  Sil
+</Button>
                   </div>
                 </Card.Header>
                 <Card.Body>

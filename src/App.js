@@ -14,6 +14,7 @@ import Signin2 from './panel/pages/Signin2';
 import Signup from "./panel/pages/Signup";
 
 import { UserProvider } from './panel/context/UserContext';
+import { ConfirmProvider } from './panel/context/ConfirmContext';
 import publicRoutes from "./panel/routes/PublicRoutes";
 import protectedRoutes from "./panel/routes/ProtectedRoutes";
 import ProtectedRoute from "./panel/routes/ProtectedRoute.js";
@@ -25,6 +26,7 @@ const App = () => {
   return (
     <HelmetProvider>
       <UserProvider>
+        <ConfirmProvider>
         
           <Routes>
             {/* Public Routes */}
@@ -72,6 +74,7 @@ const App = () => {
             <Route path="admin" element={<Signin2 />} />
             <Route path="*" element={<Home />} />
           </Routes>
+          </ConfirmProvider>
       </UserProvider>
     </HelmetProvider>
   );
