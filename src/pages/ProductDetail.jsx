@@ -14,6 +14,7 @@ import withMetaData from '../providers/MetaDataProvider';
 import axios from 'axios';
 
 const {types, requestByType} = require('../apis/ProductApi');
+const {types: contactApiTypes, requestByType: contactApiRequestByType} = require('../apis/ContactApi');
 const {TITLE_TAGS, Logger} = require('../util/Logger');
 
 const productCategories = require('../data/ProductCategories.json').productCategories;
@@ -23,10 +24,12 @@ const ProductDetail = () => {
     const navigate = useNavigate();
     const [data, setData] = useState(null);
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
-    
+  
     const [searchParams] = useSearchParams();
 
     const [productCategory, setProductCategory] = useState(null);
+    const [whatsappMessageTemplate, setWhatsappMessageTemplate] = useState(null);
+    const [whatsappPhoneNumber, setWhatsappPhoneNumber] = useState(null);
 
     const fetchProductData = async(id) => {
       const response = await requestByType(types.singleProduct, id);
@@ -38,6 +41,14 @@ const ProductDetail = () => {
       setData(productData);
       setProductCategory(response.data.category);
     };
+
+    const fetchWhatsappData = async() => {
+      const response = await contactApiRequestByType(contactApiTypes.getContact);
+      if(response?.data){
+        setWhatsappPhoneNumber(response.data.whatsappPhoneNumber);
+        setWhatsappMessageTemplate(response.data.whatsappMessageTemplate);
+      }
+    };
      
     useEffect(() => {
       const productId = searchParams.get('id');
@@ -45,12 +56,25 @@ const ProductDetail = () => {
         navigate('/urunler');
       }
       fetchProductData(productId);
-
+      fetchWhatsappData();
     }, []);
 
 
     const handleDetailProduct = (productId) => {
         navigate(`/urun-detay?id=${productId}`);
+    };
+
+    const handleGetProductInfo = () => {
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      const message = whatsappMessageTemplate.replace('$$PRODUCT_NAME$$', data.name);
+      console.log(`Message: ${message}`);
+      if (isMobile && navigator.share) {
+        const whatsappUrl = `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`;
+        window.location.href = whatsappUrl;
+      } else {
+        // Fallback: redirect to the "iletisim" page with the product data.
+        navigate('/iletisim', { state: { messageTemplate: message } });
+      }
     };
 
     const handleSwiper = (swiper) => {
@@ -147,7 +171,7 @@ const ProductDetail = () => {
                         <div className="list-action mt-auto">
                             
                             <div className="button-block">
-                                <div className="button-main w-full text-center">Buy It Now</div>
+                                <div onClick={handleGetProductInfo} className="button-main w-full text-center">FİYAT BİLGİSİ ALIN</div>
                             </div>
                         </div>
                     </div>

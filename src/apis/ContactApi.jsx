@@ -10,6 +10,8 @@ const baseUrl = (envMode == "development" || envMode == "production")
 export const types = {
   getContact: "contactData",
   updateContact: "updateContact",
+  getWhatsappTemplateMessage: "whatsappTemplateMessage",
+  updateWhatsappTemplateMessage: "updateWhatsappTemplateMessage",
 }
 
 const urls = {

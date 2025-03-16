@@ -99,7 +99,8 @@ const Products = () => {
     }, [searchParams]);
 
     const handleLayoutCol = (col) => {
-        setLayoutCol(col)
+        setLayoutCol(col);
+        
     }
 
     const applyFiltersAndSorting = (sortQuery = '') => {

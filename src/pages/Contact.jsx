@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb';
 import Layout from '../global/Layout';
 import LocationMap from '../components/LocationMap';
@@ -8,7 +8,9 @@ import withMetaData from '../providers/MetaDataProvider';
 const {requestByType, types} = require("../apis/ContactApi");
 
 const Contact = () => {
-
+    const location = useLocation();
+    const messageTemplate = location.state?.messageTemplate;
+    console.log(`Message template: ${messageTemplate}`);
     const [contactData, setContactData] = useState(null);
 
     const fetchContactData = async() => {
@@ -47,7 +49,7 @@ const Contact = () => {
                                         <input className="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="email" type="email" placeholder="E-Posta Adresiniz*" required />
                                     </div>
                                     <div className="message sm:col-span-2">
-                                        <textarea className="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="message" rows={3} placeholder="Mesajınız *" required />
+                                        <textarea value={messageTemplate && messageTemplate.length > 0 ? messageTemplate : ''} className="border-line px-4 pt-3 pb-3 w-full rounded-lg" id="message" rows={3} placeholder="Mesajınız *" required />
                                     </div>
                                 </div>
                                 <div className="block-button md:mt-6 mt-4">

@@ -77,7 +77,7 @@ const Blogs = () => {
 
     return (
         <Layout>
-            <Breadcrumb heading='Bloglar' subHeading='Bloglar' />
+            <Breadcrumb heading='BLOGLAR' subHeading='Bloglar' />
      
             <div className='blog grid md:py-20 py-10'>
                 <div className="container">

@@ -86,9 +86,13 @@ export default function Contact() {
   
   const save = async () => {
     
-    if(!isValidObjectData(newContactData) || !isValidPhoneNumber(newContactData.phone) || !isWorkingHoursValid()){
+    if(!isValidObjectData(newContactData) || !isValidPhoneNumber(newContactData.phone) 
+      || !isValidPhoneNumber(newContactData.whatsappPhoneNumber) || !newContactData.whatsappMessageTemplate.includes('$$PRODUCT_NAME$$') || !isWorkingHoursValid()){
       setAlertHeading("Başarısız");
-      setAlertMessage("Lütfen tüm iletişim bilgisi alanlarını uygun formatta doldurunuz.");
+      if(!newContactData.whatsappMessageTemplate.includes('$$PRODUCT_NAME$$'))
+        setAlertMessage("WhatsApp mesaj şablonu içerisinde $$PRODUCT_NAME$$ kısmı bulunmalıdır.");
+      else
+        setAlertMessage("Lütfen tüm iletişim bilgisi alanlarını uygun formatta doldurunuz.");
       setAlertVariant("danger");
       window.scrollTo(0, 0);
       navigator.vibrate(200);
@@ -98,6 +102,7 @@ export default function Contact() {
       }, 5000);
       return;
     }
+
 
     const data = structuredClone(newContactData);
 
@@ -177,7 +182,7 @@ export default function Contact() {
             <div className="d-flex justify-start items-center w-auto mx-[0rem] md:mx-[3rem] mt-[1rem] md:mt-[2rem] border-b border-gray-100">
               <Form className="w-full">
                 <Form.Group className="mb-3">
-                  <Form.Label>Adres</Form.Label>
+                  <Form.Label className="font-semibold text-md">Adres</Form.Label>
                   <Form.Control 
                     type="text" 
                     id="form-address"
@@ -196,7 +201,7 @@ export default function Contact() {
                 >
                   <FormGroup className="mb-3">
 
-                    <Form.Label>Telefon Numarası</Form.Label>
+                    <Form.Label className="font-semibold text-md">Telefon Numarası</Form.Label>
                     <Form.Control
                       type="text"
                       id="form-phone"
@@ -215,7 +220,7 @@ export default function Contact() {
                 >
                   <FormGroup className="mb-3">
 
-                    <Form.Label>E-Posta Adresi</Form.Label>
+                    <Form.Label className="font-semibold text-md">E-Posta Adresi</Form.Label>
                     <Form.Control
                       type="email"
                       id="form-email"
@@ -231,6 +236,42 @@ export default function Contact() {
             </div>
           </div>
           
+          <h2 className="px-[0.1rem] md:!px-[3rem] pt-3 md:mt-3">WhatsApp İletişim Bilgileri</h2>
+          <div className="border rounded-lg shadow-md bg-white md:mx-[3rem] mt-[1rem] md:mt-[2rem] mb-4 px-[1rem] md:!px-[0rem] md:pb-4 hover:shadow-lg transition-all duration-300 ease-in-out">
+            <div className="d-flex flex-col justify-start items-center w-auto mx-[0rem] md:mx-[3rem] mt-[1rem] md:mt-[2rem]">
+              <Form className="w-full">
+                <Form.Group className="mb-3">
+                  <Form.Label className="font-semibold text-md">WhatsApp Numarası</Form.Label>
+                  <Form.Control 
+                    type="text" 
+                    id="form-whatsapp-phone-number"
+                    value={newContactData.whatsappPhoneNumber}
+                    onChange={(e) => setNewContactData({...newContactData, whatsappPhoneNumber: e.target.value})}
+                  />
+                </Form.Group>
+              </Form>
+
+              <Form className="w-full">
+                <Form.Group className="mb-3">
+                  <Form.Label className="font-semibold text-md">
+                    WhatsApp Mesaj Şablonu 
+                    <br/>
+                    <br/>
+                    <span className="font-bold italic text-sm">
+                      (Mesaj içerisinde $$PRODUCT_NAME$$ yazan kısıma ürün ismi girilecektir. <br/>Bu kısım olmadan işlem düzgün çalışamaz)
+                    </span>
+                  </Form.Label>
+                  <Form.Control 
+                    as="textarea"
+                    rows={5} 
+                    id="form-whatsapp-message-template"
+                    value={newContactData.whatsappMessageTemplate}
+                    onChange={(e) => setNewContactData({...newContactData, whatsappMessageTemplate: e.target.value})}
+                  />
+                </Form.Group>
+              </Form>
+            </div>
+          </div>
 
           <h2 className="px-[0.1rem] md:!px-[3rem] pt-3 md:mt-3">Çalışma Saatleri</h2>
 
@@ -239,7 +280,7 @@ export default function Contact() {
             <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-semibold mb-2">Hafta İçleri</h3>
               <Form.Group>
-                <Form.Label>Açılış Saati</Form.Label>
+                <Form.Label className="font-semibold text-md">Açılış Saati</Form.Label>
                 <Form.Control
                   type="time"
                   className="w-full"
@@ -256,7 +297,7 @@ export default function Contact() {
                 />
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label>Kapanış Saati</Form.Label>
+                <Form.Label className="font-semibold text-md">Kapanış Saati</Form.Label>
                 <Form.Control
                   type="time"
                   className="w-full"
@@ -278,7 +319,7 @@ export default function Contact() {
             <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-semibold mb-2">Cumartesi</h3>
               <Form.Group>
-                <Form.Label>Açılış Saati</Form.Label>
+                <Form.Label className="font-semibold text-md">Açılış Saati</Form.Label>
                 <Form.Control
                   type="time"
                   className="w-full"
@@ -295,7 +336,7 @@ export default function Contact() {
                 />
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label>Kapanış Saati</Form.Label>
+                <Form.Label className="font-semibold text-md">Kapanış Saati</Form.Label>
                 <Form.Control
                   type="time"
                   className="w-full"
@@ -317,7 +358,7 @@ export default function Contact() {
             <div className="flex flex-col flex-1 border p-4 rounded-lg shadow-md bg-white hover:shadow-lg transition-all duration-300 ease-in-out">
               <h3 className="text-lg font-semibold mb-2">Pazar</h3>
               <Form.Group>
-                <Form.Label>Açılış Saati</Form.Label>
+                <Form.Label className="font-semibold text-md">Açılış Saati</Form.Label>
                 <Form.Control
                   type="time"
                   className="w-full"
@@ -334,7 +375,7 @@ export default function Contact() {
                 />
               </Form.Group>
               <Form.Group className="mt-2">
-                <Form.Label>Kapanış Saati</Form.Label>
+                <Form.Label className="font-semibold text-md">Kapanış Saati</Form.Label>
                 <Form.Control
                   type="time"
                   className="w-full"
