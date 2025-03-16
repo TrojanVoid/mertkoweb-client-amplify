@@ -14,7 +14,7 @@ import {
 export default function Sidebar() {
     const { user } = useContext(UserContext); // Get user from context
     const scrollBarRef = useRef(null); // Use useRef hook
-    const [isMenuVisible, setMenuVisible] = useState(true);
+    const [isMenuVisible, setMenuVisible] = useState(false);
 
     const toggleFooterMenu = (e) => {
         e.preventDefault();
