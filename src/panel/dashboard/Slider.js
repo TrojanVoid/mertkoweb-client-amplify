@@ -195,7 +195,7 @@ const Slider = () => {
                 <Form.Group className="mb-3 w-full">
                   <div className="d-flex w-full justify-between items-center">
                     <Form.Label className="text-lg">{`${index + 1}. Slider İçeriği`}</Form.Label>
-                    <div className="d-flex flex-row justify-end items-center">
+                    <div className="d-flex flex-row justify-end items-center me-2 gap-2">
                       {index > 0 && (
                         <Button
                           variant="outline-primary"

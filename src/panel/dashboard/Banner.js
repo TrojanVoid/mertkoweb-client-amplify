@@ -182,48 +182,74 @@ export default function Banner() {
                     <Form.Group className="mb-3 w-full">
                       <div className="d-flex w-full justify-between items-center">
                         <Form.Label>{`${index+1}. İçerik`}</Form.Label>
-                        <div className="d-flex flex-row justify-end items-center">
-                          {index > 0 && (
+                        <div className="grid grid-cols-3 gap-x-2 items-center">
+                          {/* Column 1: Render Up button for rows that are not the first row AND not the last row */}
+                          <div className="flex justify-center items-center">
+                            {index > 0 && index !== newBannerData.length - 1 && (
+                              <Button 
+                                variant="outline-primary" 
+                                className="btn-white flex justify-center items-center p-0 border-0"
+                                onClick={() => {
+                                  const temp = [...newBannerData];
+                                  const swap = temp[index];
+                                  temp[index] = temp[index - 1];
+                                  temp[index - 1] = swap;
+                                  setNewBannerData(temp);
+                                }}
+                              >
+                                <Icon.CaretUp className="text-black" size={16} />
+                              </Button>
+                            )}
+                          </div>
+
+                          {/* Column 2: Render Down button for non-last rows, or for the last row render the Up button if applicable */}
+                          <div className="flex justify-center items-center">
+                            {index < newBannerData.length - 1 && (
+                              <Button 
+                                variant="outline-primary" 
+                                className="btn-white flex justify-center items-center p-0 border-0"
+                                onClick={() => {
+                                  const temp = [...newBannerData];
+                                  const swap = temp[index];
+                                  temp[index] = temp[index + 1];
+                                  temp[index + 1] = swap;
+                                  setNewBannerData(temp);
+                                }}
+                              >
+                                <Icon.CaretDown className="text-black" size={16} />
+                              </Button>
+                            )}
+                            {index === newBannerData.length - 1 && index > 0 && (
+                              <Button 
+                                variant="outline-primary" 
+                                className="btn-white flex justify-center items-center p-0 border-0"
+                                onClick={() => {
+                                  const temp = [...newBannerData];
+                                  const swap = temp[index];
+                                  temp[index] = temp[index - 1];
+                                  temp[index - 1] = swap;
+                                  setNewBannerData(temp);
+                                }}
+                              >
+                                <Icon.CaretUp className="text-black" size={16} />
+                              </Button>
+                            )}
+                          </div>
+
+                          {/* Column 3: Always render the Trash button */}
+                          <div className="flex justify-center items-center">
                             <Button 
-                              variant="outline-primary" 
-                              className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 !me-[1rem] sm:!me-[1rem]"
+                              variant="outline-danger" 
+                              className="btn-white flex justify-center items-center p-0 border-0"
                               onClick={() => {
                                 const temp = [...newBannerData];
-                                const swap = temp[index];
-                                temp[index] = temp[index-1];
-                                temp[index-1] = swap;
+                                temp.splice(index, 1);
                                 setNewBannerData(temp);
                               }}
                             >
-                              <Icon.CaretUp className="text-black" size={16} />
+                              <Icon.Trash className="text-red transition-colors duration-200 group-hover:!text-red-100" size={16} />
                             </Button>
-                          )}
-                          {index < newBannerData.length-1 && (
-                            <Button 
-                              variant="outline-primary" 
-                              className="btn-white me-[3%] sm:!me-[5%] w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 !me-[1rem] sm:!me-[1rem]"
-                              onClick={() => {
-                                const temp = [...newBannerData];
-                                const swap = temp[index];
-                                temp[index] = temp[index+1];
-                                temp[index+1] = swap;
-                                setNewBannerData(temp);
-                              }}
-                            >
-                              <Icon.CaretDown className="text-black" size={16} />
-                            </Button>
-                          )}
-                          <Button 
-                            variant="outline-danger" 
-                            className={`btn-white w-[40%] sm:w-[30%] md:w-[15%] h-auto p-0 border-0 ` + `${(index === 0 || index === newBannerData.length-1) ? "!me-[0.6rem]" : "!me-[0.38rem]"}`}
-                            onClick={() => {
-                              const temp = [...newBannerData];
-                              temp.splice(index, 1);
-                              setNewBannerData(temp);
-                            }}
-                          >
-                            <Icon.Trash className="text-red transition-colors duration-200 group-hover:!text-red-100" size={16} />
-                          </Button>
+                          </div>
                         </div>
                       </div>
 
