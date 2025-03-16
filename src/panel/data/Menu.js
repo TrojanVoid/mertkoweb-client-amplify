@@ -73,7 +73,7 @@ const dashboardMenu = [
     "icon": "ri-settings-3-line",
     "submenu": [
       {
-        "label": "META",
+        "label": "Sayfa META",
         "link": "/dashboard/meta",
         "icon": "ri-earth-line"
       },
