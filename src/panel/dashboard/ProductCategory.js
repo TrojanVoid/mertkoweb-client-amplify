@@ -3,6 +3,7 @@ import { requestByType, types } from "../../apis/ProductApi";
 import { Table, Button, Form, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
+import * as Icon from "@phosphor-icons/react/dist/ssr";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 
@@ -161,9 +162,9 @@ export default function ProductCategory() {
                         cat.categoryDescription
                       )}
                     </td>
-                    <td>
+                    <td className="w-5 text-center align-middle"> 
                       <Button variant="primary" size="sm" onClick={() => handleEdit(index)}>
-                        {cat.isEditing ? "Tamam" : "Düzenle"}
+                        {cat.isEditing ? <Icon.Check size={16} /> : <Icon.PencilSimple size={16} />}
                       </Button>
                     </td>
                   </tr>
