@@ -134,8 +134,14 @@ export default function ProductCategory() {
             {loading ? "Kaydediliyor..." : "Kaydet"}
           </Button>
         </div>
-  
-        <div className="d-flex justify-start items-center w-auto mx-[0rem] md:mx-[3rem] mt-[3rem] md:mt-[2rem] border-b border-gray-100">
+
+        <div className="d-flex w-auto mx-[0rem] md:mx-[3rem] mt-[3rem] md:mt-[2rem] font-semibold italic"> 
+          <p>
+            Kategori açıklamaları hem ürünlerin varsayılan açıklamaları olarak hem de SEO (MetaData) açıklamaları olarak kullanılır.
+          </p>
+        </div>
+
+        <div className="d-flex justify-start items-center w-auto mx-[0rem] md:mx-[3rem] mt-[1rem] md:mt-[0.75rem] border-b border-gray-100">
           {loading ? <Spinner animation="border" /> : (
             <Table striped bordered hover>
               <thead>
