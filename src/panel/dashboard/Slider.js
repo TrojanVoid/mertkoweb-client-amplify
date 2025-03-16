@@ -202,7 +202,7 @@ const Slider = () => {
                   >
                     {!collapsedItems[index] ? <Icon.CaretDown size={16} className="focus:" /> : <Icon.CaretUp size={16} />}
                   </Button>
-                  <Form.Label className="text-lg m-0">{`${index + 1}. Slider İçeriği`}</Form.Label>
+                  <Form.Label onClick={() => toggleCollapse(index)} className="text-lg m-0 cursor-pointer w-full">{`${index + 1}. Slider İçeriği`}</Form.Label>
                 </div>
                 {/* Only show reorder and trash buttons when expanded */}
                 {collapsedItems[index] && (
