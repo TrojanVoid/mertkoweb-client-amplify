@@ -30,7 +30,7 @@ const Menu = ({ props }) => {
         setOpenSubNavMobile(openSubNavMobile === index ? null : index)
     }
 
-    const [fixedHeader, setFixedHeader] = useState(false)
+    const [fixedHeader, setFixedHeader] = useState(true);
     const [lastScrollPosition, setLastScrollPosition] = useState(0);
 
     useEffect(() => {
@@ -60,8 +60,6 @@ const Menu = ({ props }) => {
     };
 
     
-  
-
     return (
         <>
             <div className={`header-menu style-one ${fixedHeader ? ' fixed' : 'relative'} w-full md:h-[74px] h-[56px] ${props}`}>
