@@ -43,7 +43,8 @@ const Header = ({ props }) => {
                                     setIsOpenCurrence(false)
                                 }}
                             >
-                                <div className="select relative">
+                                {/* DISABLED LANGUAGE SELECTOR */}
+                                {/* <div className="select relative">
                                     <p className="selected caption2">{language}</p>
                                     <ul className={`list-option bg-white ${isOpenLanguage ? 'open' : ''}`}>
                                         {
@@ -53,7 +54,7 @@ const Header = ({ props }) => {
                                         }
                                     </ul>
                                 </div>
-                                <Icon.CaretDown size={12} />
+                                <Icon.CaretDown size={12} /> */}
                             </div>
                             {
                             /* <div
