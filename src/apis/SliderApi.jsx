@@ -9,9 +9,10 @@ const baseUrl = (envMode == "development" || envMode == "production")
 
 export const types = {
   getSlider: "sliderData",
-  uploadSlide: "updateSlider",
+  uploadSlide: "uploadSlide",
   updateSlideTitle: "updateSlideTitle",
   repositionSlide: "repositionSlide",
+  deleteSlide: "deleteSlide",
 }
 
 const urls = {
@@ -19,6 +20,7 @@ const urls = {
   uploadSlide: `${baseUrl}/upload-carousel-image`,
   updateSlideTitle: `${baseUrl}/update-carousel-title`,
   repositionSlide: `${baseUrl}/reposition-carousel-entity`,
+  deleteSlide: `${baseUrl}/delete-carousel-entity`,
 }
 
 export const requestByType = async (type, property=null) => {
@@ -35,14 +37,7 @@ export const requestByType = async (type, property=null) => {
           Logger.error("Invalid slider data", TITLE_TAGS.SLIDER_API);
           return [];
         }
-        response = await axios.put(`${urls.uploadSlide}`, 
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            }, 
-            data: property
-          },
-        );
+        response = await axios.put(`${urls.uploadSlide}`, property);
         break;
       case types.getSlider:
         response = await axios.get(urls.getSlider);
@@ -66,14 +61,10 @@ export const requestByType = async (type, property=null) => {
           Logger.error("Invalid slider data", TITLE_TAGS.SLIDER_API);
           return [];
         }
-        response = await axios.put(`${urls.repositionSlide}`, 
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            }, 
-            data: property
-          },
-        );
+        response = await axios.put(`${urls.repositionSlide}`, property);
+        break;
+      case types.deleteSlide:
+        response = await axios.delete(`${urls.deleteSlide}`, {data: property});
         break;
       default:
         Logger.error(`Invalid slider request type: ${type}`, TITLE_TAGS.SLIDER_API);
