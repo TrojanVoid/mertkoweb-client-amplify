@@ -104,7 +104,6 @@ function SidebarMenu({ onUpdateSize }) {
 
         if(!isMobileMenuActive) return;
 
-        e.preventDefault();
         const sidebar = document.querySelector('.sidebar');
         const sidebarShown = document.querySelector('.sidebar-show');
         if (sidebarShown !== null) {
