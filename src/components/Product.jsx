@@ -11,7 +11,7 @@ import { useCompare } from '@/context/CompareContext'
 import { useModalCompareContext } from '@/context/ModalCompareContext'
 import { useModalQuickviewContext } from '@/context/ModalQuickviewContext' */
 
-const Product = ({ data, type, style }) => {
+const Product = ({ data, type, style, font }) => {
     const [activeColor, setActiveColor] = useState('')
     const [activeSize, setActiveSize] = useState('')
     const [openQuickShop, setOpenQuickShop] = useState(false)
@@ -174,10 +174,10 @@ const Product = ({ data, type, style }) => {
                             </div> */}
 
                             <div className="product-name d-flex justify-between text-title duration-300 text-black-0">
-                                <h3 className="text-md md:text-2xl">
+                                <h3 className={font ? `${font}` : 'text-md md:text-2xl'}>
                                     {data.name}
                                 </h3>
-                                <h4 className="text-md md:text-2xl">
+                                <h4 className={font ? `${font}` : 'text-md md:text-2xl'}>
                                     {data.volume} mL 
                                 </h4>
                             </div>
