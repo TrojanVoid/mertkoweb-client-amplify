@@ -47,15 +47,8 @@ export default function Sidebar() {
                     <Link onClick={toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
                 </div>
                 <div className="sidebar-footer-menu">
-                    <nav className="nav">
-                        <Link to=""><i className="ri-edit-2-line"></i> Edit Profile</Link>
-                        <Link to=""><i className="ri-profile-line"></i> View Profile</Link>
-                    </nav>
                     <hr />
                     <nav className="nav">
-                        <Link to=""><i className="ri-question-line"></i> Help Center</Link>
-                        <Link to=""><i className="ri-lock-line"></i> Privacy Settings</Link>
-                        <Link to=""><i className="ri-user-settings-line"></i> Account Settings</Link>
                         <Link to=""><i className="ri-logout-box-r-line"></i> Log Out</Link>
                     </nav>
                 </div>

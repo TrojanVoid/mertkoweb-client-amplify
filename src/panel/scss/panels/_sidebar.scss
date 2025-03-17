@@ -118,7 +118,7 @@
   
     .sidebar-footer {
       position: absolute;
-      bottom: 0; /* Burada bottom'u -250px'ten 0px'e çekiyoruz */
+      bottom: 0; /* Burada bottom'u -70px'ten 0px'e çekiyoruz */
       left: 0;
       right: 0;
       background-color: #fff;
@@ -257,7 +257,7 @@
 
 .sidebar-footer {
   position: absolute;
-  bottom: -250px;
+  bottom: -70px;
   left: 0;
   right: 0;
   border-top: 1px solid $gray-200;
