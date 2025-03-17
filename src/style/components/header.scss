@@ -101,6 +101,12 @@
               transition: all ease 0.3s;
           }
 
+          &.header-logo{
+            &::before{
+                bottom: 0px !important;
+            }
+          }
+
           &.active {
               color: var(--black);
           }
@@ -110,6 +116,7 @@
               height: 2px;
               background-color: var(--secondary);
           }
+
       }
 
       >a.active::before,

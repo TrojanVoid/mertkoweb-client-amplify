@@ -11,7 +11,12 @@ const Footer = () => {
                     <div className="content-footer py-[60px] flex justify-between flex-wrap gap-y-8">
                         <div className="company-infor basis-2/5 max-lg:basis-full">
                             <Link to={'/'} className="logo">
-                                <div className="heading4">Mertko</div>
+                                <div className="header-logo !text-4xl">
+                                    <h1 className="flex flex-col">
+                                        <span className="text-logo-custom-red tracking-wider !text-2xl">MERTKO</span>
+                                        <span className='text-logo-custom-gray tracking-wider !text-2xl'>PLAST<span className="text-logo-custom-gray custom-i !text-2xl">I</span>K</span>
+                                    </h1>
+                                </div>
                             </Link>
                             <div className='flex gap-3 mt-3 w-100'>
                                 <address className="flex flex-col basis-1/4 sm:basis-[10%] lg:basis-[27%] xl:basis-[20%]">
