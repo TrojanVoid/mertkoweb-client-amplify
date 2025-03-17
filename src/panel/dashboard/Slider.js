@@ -4,14 +4,11 @@ import { Link } from "react-router-dom";
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import * as Icon from "@phosphor-icons/react/dist/ssr";
-import { useConfirm } from "../context/ConfirmContext";
-
 
 const { requestByType, types } = require("../../apis/SliderApi");
 const { isValidObjectData } = require("../../util/DataValidator");
 
 const Slider = () => {
-  const {confirm} = useConfirm();
   // Skin and data states
   const currentSkin = localStorage.getItem("skin-mode") ? "dark" : "";
   const [skin, setSkin] = useState(currentSkin);
@@ -265,18 +262,15 @@ const Slider = () => {
                         <Icon.CaretDown size={16} />
                       </Button>
                     )}
-                  <Button
-                  variant="outline-danger"
-                  className="btn-white flex justify-center items-center p-0 border-0"
-                  onClick={async () => {
-                  const result = await confirm("Bu içeriği silmek istediğinize emin misiniz?");
-                  if (result) {
-                  const temp = [...newSliderData];
-                  temp.splice(index, 1);
-                  setNewSliderData(temp);
-                  }
-                  }}
->
+                    <Button
+                      variant="outline-danger"
+                      className="btn-white w-[40%] sm:w-[30%] md:w-[15%] h-auto p-0 border-0 hover:!text-red focus:!text-red"
+                      onClick={() => {
+                        const temp = [...newSliderData];
+                        temp.splice(index, 1);
+                        setNewSliderData(temp);
+                      }}
+                    >
                       <Icon.Trash size={16} />
                     </Button>
                   </div>
