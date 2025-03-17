@@ -3,7 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import userAvatar from "../assets/img/img1.jpg";
 import { UserContext } from '../context/UserContext'; // Import UserContext
-import { useState } from "react";
 import {
     dashboardMenu,
     applicationsMenu,
@@ -14,11 +13,9 @@ import {
 export default function Sidebar() {
     const { user } = useContext(UserContext); // Get user from context
     const scrollBarRef = useRef(null); // Use useRef hook
-    const [isMenuVisible, setMenuVisible] = useState(false);
 
     const toggleFooterMenu = (e) => {
         e.preventDefault();
-        setMenuVisible(!isMenuVisible);
         let parent = document.getElementsByClassName('sidebar')[0] || document.getElementsByClassName('sidebar-show')[0];
         console.log('parent:', parent);
         parent.classList.toggle("footer-menu-show");
@@ -38,29 +35,31 @@ export default function Sidebar() {
             <PerfectScrollbar className="sidebar-body" ref={scrollBarRef}>
                 <SidebarMenu onUpdateSize={updateScroll} />
             </PerfectScrollbar>
-            <div className="sidebar-footer" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: '#fff', zIndex: 10, boxShadow: '-20px -20px 20px #fff', transition: 'all 0.25s' }}>
-    <div className="sidebar-footer-top" style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="sidebar-footer-thumb" style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}>
-            <img src={userAvatar} alt="" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
-        </div>
-        <div className="sidebar-footer-body" style={{ flex: 1 }}>
-            <h6 style={{ marginBottom: '2px', fontWeight: '600' }}>
-                <a href="" style={{ color: '#000' }}>{user.username}</a>
-            </h6>
-            <p style={{ marginBottom: '0', fontSize: '12px', color: '#888' }}>Administrator</p>
-        </div>
-        <Link onClick={toggleFooterMenu} to="" className="dropdown-link" style={{ fontSize: '20px', color: '#888', cursor: 'pointer', transition: 'all 0.25s' }}>
-            {isMenuVisible ? <i className="ri-arrow-down-s-line" /> : <i className="ri-arrow-up-s-line" />}
-        </Link>
-    </div>
-    <div className="sidebar-footer-menu" style={{ display: isMenuVisible ? 'block' : 'none' }}>
-    <nav className="nav" style={{ flexDirection: 'column' }}>
-        <Link to="/admin" style={{ padding: '10px', color: '#d9534f', display: 'flex', alignItems: 'center' }}>
-            <i className="ri-logout-box-r-line" style={{ marginRight: '10px' }}></i> Çıkış Yap
-        </Link>
-    </nav>
-</div>
-</div>
+            <div className="sidebar-footer">
+                <div className="sidebar-footer-top">
+                    <div className="sidebar-footer-thumb">
+                        <img src={userAvatar} alt="" />
+                    </div>
+                    <div className="sidebar-footer-body">
+                        <h6><Link to="../pages/profile.html">{user.username}</Link></h6>
+                        <p>Administrator</p>
+                    </div>
+                    <Link onClick={toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
+                </div>
+                <div className="sidebar-footer-menu">
+                    <nav className="nav">
+                        <Link to=""><i className="ri-edit-2-line"></i> Edit Profile</Link>
+                        <Link to=""><i className="ri-profile-line"></i> View Profile</Link>
+                    </nav>
+                    <hr />
+                    <nav className="nav">
+                        <Link to=""><i className="ri-question-line"></i> Help Center</Link>
+                        <Link to=""><i className="ri-lock-line"></i> Privacy Settings</Link>
+                        <Link to=""><i className="ri-user-settings-line"></i> Account Settings</Link>
+                        <Link to=""><i className="ri-logout-box-r-line"></i> Log Out</Link>
+                    </nav>
+                </div>
+            </div>
         </div>
     );
 }
