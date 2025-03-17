@@ -1,6 +1,6 @@
 // src/layouts/Header.js
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import userAvatar from "../assets/img/img1.jpg";
 import notification from "../data/Notification";
@@ -8,6 +8,7 @@ import { UserContext } from '../context/UserContext'; // Import UserContext
 
 export default function Header({ onSkin }) {
   const { user } = useContext(UserContext); // Get user from context
+  const navigate = useNavigate();
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <Link
@@ -121,6 +122,11 @@ export default function Header({ onSkin }) {
     }
   };
 
+  const logout = (e) => {
+    e.preventDefault();
+    navigate("/panel/signin", { state: { willSignOut: true } });
+  }
+
   return (
     <div className="header-main px-3 px-lg-4">
       <Link onClick={toggleSidebar} className="menu-link me-3 me-lg-4 !inline-block"><i className="ri-menu-2-fill"></i></Link>
@@ -177,7 +183,7 @@ export default function Header({ onSkin }) {
 
             <hr />
             <nav className="nav">
-              <Link to="/pages/signin"><i className="ri-logout-box-r-line"></i> Log Out</Link>
+              <Link onClick={logout}><i className="ri-logout-box-r-line"></i> Log Out</Link>
             </nav>
           </div>
         </Dropdown.Menu>

@@ -1,15 +1,25 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import bg1 from "../assets/img/bg1.jpg";
 import { login } from "../../apis/LoginApi";
 import { UserContext } from "../context/UserContext";
 
 export default function Signin2() {
+  const location = useLocation();
+  const willSignOut = location.state?.willSignOut;
+
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext); 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (willSignOut) {
+      localStorage.removeItem('user');
+      setUser({ username: null });
+    }
+  }, [willSignOut, setUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

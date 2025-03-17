@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import userAvatar from "../assets/img/img1.jpg";
 import { UserContext } from '../context/UserContext'; // Import UserContext
@@ -11,8 +11,15 @@ import {
 } from "../data/Menu";
 
 export default function Sidebar() {
+    const navigate = useNavigate();
     const { user } = useContext(UserContext); // Get user from context
     const scrollBarRef = useRef(null); // Use useRef hook
+
+    useEffect(() => {
+        if(!user || !user.username) {
+            navigate("/panel/signin");
+        }
+    }, [user, navigate]);
 
     const toggleFooterMenu = (e) => {
         e.preventDefault();
@@ -25,6 +32,11 @@ export default function Sidebar() {
         if (scrollBarRef.current) {
             scrollBarRef.current.updateScroll();
         }
+    }
+
+    const logout = (e) => {
+        e.preventDefault();
+        navigate("/panel/signin", { state: { willSignOut: true } });
     }
 
     return (
@@ -49,7 +61,7 @@ export default function Sidebar() {
                 <div className="sidebar-footer-menu">
                     <hr />
                     <nav className="nav">
-                        <Link to="signin"><i className="ri-logout-box-r-line"></i> Log Out</Link>
+                        <Link onClick={logout}><i className="ri-logout-box-r-line"></i> Log Out</Link>
                     </nav>
                 </div>
             </div>
