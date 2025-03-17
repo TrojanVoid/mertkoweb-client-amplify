@@ -68,8 +68,11 @@ const Menu = ({ props }) => {
                         <div className="menu-mobile-icon lg:hidden flex items-center" onClick={handleMenuMobile}>
                             <i className="icon-category text-2xl"></i>
                         </div>
-                        <Link to={'/'} className='flex items-center absolute left-1/2 transform -translate-x-1/2 lg:hidden'>
-                            <h1 className="heading4">Mertko</h1>
+                        <Link to={'/'} className='header-logo flex items-center absolute left-1/2 transform -translate-x-1/2 lg:hidden'>
+                            <h1 className="flex flex-col">
+                                <span className="text-logo-custom-red tracking-wider !text-lg md:!text-2xl">MERTKO</span>
+                                <span className='text-logo-custom-gray tracking-wider !text-lg md:!text-2xl'>PLAST<span className="text-logo-custom-gray custom-i !text-lg md:!text-2xl">I</span>K</span>
+                            </h1>
                         </Link>
                        {/*  <div className="form-search relative max-lg:hidden z-[1]">
                             <Icon.MagnifyingGlass
@@ -159,9 +162,12 @@ const Menu = ({ props }) => {
                                         İLETİŞİM
                                     </Link>
                                 </li>
-                                <li className='h-full flex items-center justify-center logo'>
-                                    <Link to={'/'} className='heading4'>
-                                        Mertko
+                                <li className='h-full flex items-center justify-center'>
+                                    <Link to={'/'} className='header-logo flex flex-col'>
+                                        <span className="text-logo-custom-red tracking-wider !text-lg md:!text-2xl">MERTKO</span>
+                                        <span className='text-logo-custom-gray tracking-wider !text-lg md:!text-2xl'>
+                                            PLAST<span className="text-logo-custom-gray custom-i !text-lg md:!text-2xl">I</span>K
+                                        </span>
                                     </Link>
                                 </li>
                                 <li className='h-full'>
@@ -252,8 +258,11 @@ const Menu = ({ props }) => {
                                 >
                                     <Icon.X size={14} />
                                 </div>
-                                <Link to={'/'} className='logo text-3xl font-semibold text-center'>
-                                    <h1>Mertko</h1>
+                                <Link to={'/'} className='header-logo font-semibold text-center'>
+                                    <h1 className="flex flex-col">
+                                        <span className="text-logo-custom-red tracking-wider ">MERTKO</span>
+                                        <span className='text-logo-custom-gray tracking-wider'>PLAST<span className="text-logo-custom-gray custom-i">I</span>K</span>
+                                    </h1>
                                 </Link>
                             </div>
                             {/* <div className="form-search relative mt-2">
