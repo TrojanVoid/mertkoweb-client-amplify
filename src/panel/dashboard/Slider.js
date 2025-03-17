@@ -201,7 +201,7 @@ const Slider = () => {
         </div>
 
         <div className="d-flex justify-around md:justify-end items-center w-auto mx-[0rem] md:mx-[3rem] my-2 py-2 bg-gray-300 rounded-lg px-3">
-          <Button variant="outline-primary" className="btn-white me-3 sm:me-4 w-[40%] sm:w-[30%] md:w-[15%]" onClick={resetToConfigValue}>
+          <Button variant="outline-primary" className="btn-white sm:!me-[2rem] w-[40%] sm:w-[30%] md:w-[15%] w-[40%] sm:w-[30%] md:w-[15%]" onClick={resetToConfigValue}>
             Vazgeç
           </Button>
           <Button variant="primary" className="w-[40%] sm:w-[30%] md:w-[15%]" onClick={save}>
