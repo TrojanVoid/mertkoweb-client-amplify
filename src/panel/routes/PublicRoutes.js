@@ -12,6 +12,8 @@ import Signup2 from "../pages/Signup2";
 import VerifyAccount from "../pages/VerifyAccount";
 
 const publicRoutes = [
+  { path: "panel/signin", element: <Signin /> },
+  { path: "dashboard/signin", element: <Signin /> },
   { path: "pages/signin", element: <Signin /> },
   { path: "pages/signin2", element: <Signin2 /> },
   { path: "pages/signup", element: <Signup /> },
