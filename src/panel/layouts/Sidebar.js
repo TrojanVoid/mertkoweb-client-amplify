@@ -41,7 +41,7 @@ export default function Sidebar() {
                         <img src={userAvatar} alt="" />
                     </div>
                     <div className="sidebar-footer-body">
-                        <h6><Link to="../pages/profile.html">{user.username}</Link></h6>
+                        <h6><Link>{user.username}</Link></h6>
                         <p>Administrator</p>
                     </div>
                     <Link onClick={toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
@@ -49,7 +49,7 @@ export default function Sidebar() {
                 <div className="sidebar-footer-menu">
                     <hr />
                     <nav className="nav">
-                        <Link to=""><i className="ri-logout-box-r-line"></i> Log Out</Link>
+                        <Link to="signin"><i className="ri-logout-box-r-line"></i> Log Out</Link>
                     </nav>
                 </div>
             </div>
