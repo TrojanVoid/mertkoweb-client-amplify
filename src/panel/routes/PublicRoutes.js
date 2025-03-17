@@ -12,10 +12,11 @@ import Signup2 from "../pages/Signup2";
 import VerifyAccount from "../pages/VerifyAccount";
 
 const publicRoutes = [
-  { path: "panel/signin", element: <Signin /> },
-  { path: "dashboard/signin", element: <Signin /> },
-  { path: "pages/signin", element: <Signin /> },
-  { path: "pages/signin2", element: <Signin2 /> },
+  { path: "panel/signin", element: <Signin2 /> },
+  { path: "dashboard/signin", element: <Signin2 /> },
+  { path: "pages/signin", element: <Signin2 /> },
+
+ /*  { path: "pages/signin2", element: <Signin2 /> },
   { path: "pages/signup", element: <Signup /> },
   { path: "pages/signup2", element: <Signup2 /> },
   { path: "pages/verify", element: <VerifyAccount /> },
@@ -24,7 +25,7 @@ const publicRoutes = [
   { path: "pages/error-404", element: <NotFound /> },
   { path: "pages/error-500", element: <InternalServerError /> },
   { path: "pages/error-503", element: <ServiceUnavailable /> },
-  { path: "pages/error-505", element: <Forbidden /> }
+  { path: "pages/error-505", element: <Forbidden /> } */
 ];
 
 export default publicRoutes;
