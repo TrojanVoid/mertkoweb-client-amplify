@@ -22,6 +22,7 @@ import ProtectedRoute from "./panel/routes/ProtectedRoute.js";
 import "./panel/assets/css/remixicon.css";
 import "./panel/scss/style.scss";
 
+
 const App = () => {
   return (
     <HelmetProvider>
