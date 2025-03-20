@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import userAvatar from "../assets/img/img1.jpg";
-import notification from "../data/Notification";
+/* import notification from "../data/Notification"; */
 import { UserContext } from '../context/UserContext'; // Import UserContext
 
 export default function Header({ onSkin }) {
@@ -49,7 +49,7 @@ export default function Header({ onSkin }) {
     } */
   }
 
-  function NotificationList() {
+  /* function NotificationList() {
     const notiList = notification.map((item, key) => {
       return (
         <li className="list-group-item" key={key}>
@@ -67,7 +67,7 @@ export default function Header({ onSkin }) {
         {notiList}
       </ul>
     );
-  }
+  } */
 
   const skinMode = (e) => {
     e.preventDefault();
