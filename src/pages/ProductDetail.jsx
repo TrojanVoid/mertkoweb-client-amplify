@@ -45,7 +45,7 @@ const ProductDetail = () => {
     const fetchWhatsappData = async() => {
       const response = await contactApiRequestByType(contactApiTypes.getContact);
       if(response?.data){
-        setWhatsappPhoneNumber(response.data.whatsappPhoneNumber);
+        setWhatsappPhoneNumber(response.data.whatsappPhoneNumber.replace('+', ''));
         setWhatsappMessageTemplate(response.data.whatsappMessageTemplate);
       }
     };
@@ -64,18 +64,18 @@ const ProductDetail = () => {
         navigate(`/urun-detay?id=${productId}`);
     };
 
-    const handleGetProductInfo = () => {
-      /* const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-      const message = whatsappMessageTemplate.replace('$$PRODUCT_NAME$$', data.name);
-      console.log(`Message: ${message}`);
-      if (isMobile && navigator.share) {
-        const whatsappUrl = `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`;
-        window.location.href = whatsappUrl;
-      } else {
-        // Fallback: redirect to the "iletisim" page with the product data.
-        navigate('/iletisim', { state: { messageTemplate: message } });
-      } */
-    };
+      const handleGetProductInfo = () => {
+        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+        const message = whatsappMessageTemplate.replace('$$PRODUCT_NAME$$', data.name);
+        console.log(`Message: ${message}`);
+        if (isMobile && navigator.share) {
+          const whatsappUrl = `https://wa.me/${whatsappPhoneNumber}?text=${encodeURIComponent(message)}`;
+          window.location.href = whatsappUrl;
+        } else {
+          // Fallback: redirect to the "iletisim" page with the product data.
+          navigate('/iletisim', { state: { messageTemplate: message } });
+        }
+      };
 
     const handleSwiper = (swiper) => {
       setThumbsSwiper(swiper);
