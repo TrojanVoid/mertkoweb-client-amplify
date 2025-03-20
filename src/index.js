@@ -1,16 +1,3 @@
-if (typeof Notification === 'undefined') {
-  // Define a dummy Notification constructor that does nothing
-  window.Notification = function(title, options) {
-    console.warn('Notification API is not supported in this environment.');
-  };
-  // Set a default permission value so that any checks for Notification.permission work
-  window.Notification.permission = 'default';
-  // Provide a dummy requestPermission method that resolves to 'default'
-  window.Notification.requestPermission = function() {
-    return Promise.resolve('default');
-  };
-}
-
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 import React from 'react';
@@ -30,7 +17,7 @@ Amplify.configure(amplifyconfig);
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
-if (typeof window !== 'undefined') {
+/* if (typeof window !== 'undefined') {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   if (isIOS && typeof Notification === 'undefined') {
     window.Notification = function(title, options) {
@@ -43,7 +30,7 @@ if (typeof window !== 'undefined') {
     window.Notification.permission = "denied";
     console.log("iOS tespit edildi: Notification API polyfill yüklendi.");
   }
-}
+} */
 
 root.render(
   <BrowserRouter>
