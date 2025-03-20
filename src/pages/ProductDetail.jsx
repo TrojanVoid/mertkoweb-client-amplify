@@ -65,7 +65,7 @@ const ProductDetail = () => {
     };
 
     const handleGetProductInfo = () => {
-      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      /* const isMobile = /Mobi|Android/i.test(navigator.userAgent);
       const message = whatsappMessageTemplate.replace('$$PRODUCT_NAME$$', data.name);
       console.log(`Message: ${message}`);
       if (isMobile && navigator.share) {
@@ -74,7 +74,7 @@ const ProductDetail = () => {
       } else {
         // Fallback: redirect to the "iletisim" page with the product data.
         navigate('/iletisim', { state: { messageTemplate: message } });
-      }
+      } */
     };
 
     const handleSwiper = (swiper) => {
