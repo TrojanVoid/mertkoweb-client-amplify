@@ -45,7 +45,7 @@ const ProductDetail = () => {
     const fetchWhatsappData = async() => {
       const response = await contactApiRequestByType(contactApiTypes.getContact);
       if(response?.data){
-        setWhatsappPhoneNumber(response.data.whatsappPhoneNumber.replace('+', ''));
+        setWhatsappPhoneNumber(response.data.whatsappPhoneNumber.replace('+', '').trim());
         setWhatsappMessageTemplate(response.data.whatsappMessageTemplate);
       }
     };
