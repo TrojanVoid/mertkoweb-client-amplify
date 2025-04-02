@@ -3,7 +3,6 @@ import Breadcrumb from '../components/Breadcrumb';
 import Benefit from '../components/Benefit'
 import Layout from '../global/Layout';
 import LocationMap from '../components/LocationMap';
-import { Helmet } from "react-helmet-async";
 import withMetaData from '../providers/MetaDataProvider';
 
 const {requestByType, types} = require('../apis/AboutApi');
