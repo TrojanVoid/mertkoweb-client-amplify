@@ -28,6 +28,7 @@ const ProductDetail = () => {
     const [searchParams] = useSearchParams();
 
     const [productCategory, setProductCategory] = useState(null);
+    const [description, setDescription] = useState('Henüz bir açıklama yok.');
     const [whatsappMessageTemplate, setWhatsappMessageTemplate] = useState(null);
     const [whatsappPhoneNumber, setWhatsappPhoneNumber] = useState(null);
 
@@ -39,7 +40,24 @@ const ProductDetail = () => {
         navigate('/urunler');
       }
       setData(productData);
-      setProductCategory(response.data.category);
+      setProductCategory(productData.category);
+      console.log(`Product category: ${productData.category}`);
+    };
+
+    const fetchProductCategoryDescription = async () => {
+      try {
+        const response = await requestByType(types.getProductCategories);
+        if (response.status === 200 && response?.data) {
+          Logger.log(`Product category: ${productCategory} and response: ${response.data}`);
+          Logger.log(`Product data: ${data}`);
+          setDescription(response.data.find((item) => item.shortKey === productCategory)?.categoryDescription);
+        }
+        else{
+          Logger.error("Error fetching product category meta data", TITLE_TAGS.UI_COMPONENT);
+        }
+      } catch (error) {
+        Logger.error(`Product category meta data fetch error: ${error}`, TITLE_TAGS.UI_COMPONENT);
+      }
     };
 
     const fetchWhatsappData = async() => {
@@ -55,10 +73,13 @@ const ProductDetail = () => {
       if(!productId) {
         navigate('/urunler');
       }
-      fetchProductData(productId);
+      fetchProductData(productId)
       fetchWhatsappData();
     }, []);
 
+    useEffect(() => {
+      fetchProductCategoryDescription();
+    }, [data, productCategory]);
 
     const handleDetailProduct = (productId) => {
         navigate(`/urun-detay?id=${productId}`);
@@ -101,7 +122,7 @@ const ProductDetail = () => {
                             modules={[Thumbs]}
                             className="mySwiper2 rounded-2xl overflow-hidden h-100"
                         >
-                          {data.images.map((image, index) => (
+                          {data?.images?.sort((i1, i2) => i1.imageIndex - i2.imageIndex).map((image, index) => (
                             <SwiperSlide key={index}>
                               <img
                                 src={image.imageUrl}
@@ -146,16 +167,23 @@ const ProductDetail = () => {
                           }
                         </h1>
                         <h2 className="heading4 mt-1">{data.name}</h2>
+
+                        <div className="flex items-center gap-3 flex-wrap mt-4">
+                            <h3 className="text-size-lg font-semibold">
+                              MALZEME:
+                            </h3>
+                            <span className="text-size-lg text-secondary">
+                              {data.material ? data.material : 'Belirtilmemiş'}
+                            </span>
+                        </div>
                         
-                        <div className="flex items-center gap-3 flex-wrap mt-5 pb-6 border-b border-line">
+                        <div className="flex items-center gap-3 flex-wrap mt-2 pb-6 border-b border-line">
                             <h3 className="text-size-lg font-semibold">
                               HACİM:
                             </h3>
                             <span className="text-size-lg text-secondary">
                               {data.volume} ML
                             </span>
-                            
-                            
                         </div>
 
                         <div className="flex items-center gap-3 flex-wrap mt-4 pb-6 border-b border-line">
@@ -163,8 +191,7 @@ const ProductDetail = () => {
                             AÇIKLAMA
                           </h3>
                           <span className="text-size-lg text-secondary">
-                            {data.description}
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero pariatur excepturi earum officiis suscipit odit cum, distinctio beatae nulla tempore quasi voluptatibus possimus ex sint ea saepe eum non aliquam dicta. Architecto, repellendus? Tenetur temporibus magni cumque in nisi repellendus aperiam, beatae eligendi excepturi, laboriosam sit ipsam impedit amet mollitia.
+                            {data.description ? data.description : description}
                           </span>
                         
                         </div>
@@ -178,30 +205,52 @@ const ProductDetail = () => {
                 </div>
 
                 <div className='desc-item description open w-[100%] ml-0 mt-[7rem] bg-surface p-6 pb-[4rem] rounded-t-2xl border-bottom border-line'>
-                    <div className='w-100 flex flex-col justify-center items-center '>
+                    <div className='w-100 flex flex-col justify-center items-center text-center'>
                         <h6 className="heading6 pb-3 mt-3">
                           ÜRÜNLERİMİZ HAKKINDA
                         </h6>
                             <div className="list-feature">
-                                <div className="item flex gap-1 text-secondary mt-1">
+                                <div className="item flex gap-1 text-secondary mt-2">
                                     <Icon.Dot size={28} />
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    <p>
+                                      Dayanıklı, sızdırmaz ve uzun ömürlü plastik şişe ve kavanozlar.
+                                    </p>
                                 </div>
-                                <div className="item flex gap-1 text-secondary mt-1">
+                                <div className="item flex gap-1 text-secondary mt-2">
                                     <Icon.Dot size={28} />
-                                    <p>Nulla luctus libero quis mauris vestibulum dapibus.</p>
+                                    <p>
+                                      Kozmetik, temizlik ve ilaç sektörleri için tasarlanmış ambalajlar.
+                                    </p>
                                 </div>
-                                <div className="item flex gap-1 text-secondary mt-1">
+                                <div className="item flex gap-1 text-secondary mt-2">
                                     <Icon.Dot size={28} />
-                                    <p>Maecenas ullamcorper erat mi, vel consequat enim suscipit at.</p>
+                                    <p>
+                                      Farklı hacim, kapak ve renk alternatifleriyle her ihtiyaca uygun modeller.
+                                    </p>
                                 </div>
-                                <div className="item flex gap-1 text-secondary mt-1">
+                                <div className="item flex gap-1 text-secondary mt-2">
                                     <Icon.Dot size={28} />
-                                    <p>Quisque consectetur nibh ac urna molestie scelerisque.</p>
+                                    <p>
+                                      Marka kimliğinizi yansıtan tasarım ve baskı seçenekleri.
+                                    </p>
                                 </div>
-                                <div className="item flex gap-1 text-secondary mt-1">
+                                <div className="item flex gap-1 text-secondary mt-2">
                                     <Icon.Dot size={28} />
-                                    <p>Mauris in nisl scelerisque massa consectetur pretium sed et mauris.</p>
+                                    <p>
+                                      PET ve PE(Polietilen) hammaddeden üretilmiş, sağlık ve kalite standartlarına uygun ürünler.
+                                    </p>
+                                </div>
+                                <div className="item flex gap-1 text-secondary mt-2">
+                                    <Icon.Dot size={28} />
+                                    <p>
+                                      Soft touch seçeneği ile şişe üzerinde yumuşak hissiyat.
+                                    </p>
+                                </div>
+                                <div className="item flex gap-1 text-secondary mt-2">
+                                    <Icon.Dot size={28} />
+                                    <p>
+                                      Şişe içi renklendirme ile ürünün orijinalliğini teyitlemek.
+                                    </p>
                                 </div>
                             </div>
 
