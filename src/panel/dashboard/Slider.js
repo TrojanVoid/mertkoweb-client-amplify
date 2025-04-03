@@ -19,6 +19,7 @@ const Slider = () => {
   const [alertHeading, setAlertHeading] = useState("");
   const [alertVariant, setAlertVariant] = useState("success");
   const [collapsedItems, setCollapsedItems] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
 
   const fetchSliderData = async () => {
     try {
@@ -67,6 +68,7 @@ const Slider = () => {
 
   const save = async () => {
     // Validate that no slider has empty title or imageUrl
+    setIsSaving(true);
     for (let i = 0; i < newSliderData.length; i++) {
       const slider = newSliderData[i];
       if (
@@ -81,6 +83,7 @@ const Slider = () => {
         setAlertMessage("Boş slider öğesi kayıt edilemez. Lütfen tüm slider öğelerinin başlık ve resim yüklemesini tamamlayın veya silin.");
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 5000);
+        setIsSaving(false);
         return;
       }
     }
@@ -154,9 +157,11 @@ const Slider = () => {
       setShowAlert(true);
       setTimeout(() => setShowAlert(false), 3000);
     }
+    await fetchSliderData();
+    setIsSaving(false);
     window.scrollTo(0, 0);
   };
-  
+   
   
 
   const addNewSlider = () => {
@@ -239,8 +244,13 @@ const Slider = () => {
           <Button variant="outline-primary" className="btn-white sm:!me-[2rem] w-[40%] sm:w-[30%] md:w-[15%] w-[40%] sm:w-[30%] md:w-[15%]" onClick={resetToConfigValue}>
             Vazgeç
           </Button>
-          <Button variant="primary" className="w-[40%] sm:w-[30%] md:w-[15%]" onClick={save}>
-            Kaydet
+          <Button variant="primary" className={`w-[40%] sm:w-[30%] md:w-[15%] ${isSaving ? 'bg-white border-blue text-blue' : ''}`} onClick={save} disabled={isSaving}>
+            <div className="flex justify-center items-center w-full h-full">
+              {isSaving ? 
+                <Icon.Spinner size={16} className="animate-spin" style={{ color: 'blue' }} /> 
+                : 'Kaydet'
+              }
+            </div>
           </Button>
         </div>
 
