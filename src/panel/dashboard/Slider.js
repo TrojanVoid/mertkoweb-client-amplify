@@ -36,7 +36,7 @@ const Slider = () => {
   }, []);
 
   const sortCarouselEntitiesByDisplayIndex = (carouselEntities) => {
-    return carouselEntities.sort((a, b) => a.displayIndex - b.displayIndex);
+    return carouselEntities?.sort((a, b) => a.displayIndex - b.displayIndex);
   };
 
   const switchSkin = (skin) => {
@@ -84,13 +84,16 @@ const Slider = () => {
         return;
       }
     }
-
+  
     try {
       let allRequestsSucceeded = true;
+  
+      // Saving new sliders with the current index (position in newSliderData)
       await Promise.all(
         newSliderData.map(async (slide, index) => {
           if (!slide.id || slide.id < 0) {
-            if(slide.id < 0){
+            if (slide.id < 0) {
+              // Deleting the slider if ID is invalid (this is a newly added slider)
               const response = await requestByType(types.deleteSlide, { id: -slide.id });
               if (response.status !== 200) {
                 allRequestsSucceeded = false;
@@ -99,31 +102,35 @@ const Slider = () => {
             const formData = new FormData();
             formData.append("image", slide.image);
             formData.append("title", slide.title);
+            formData.append("index", index);
             const response = await requestByType(types.uploadSlide, formData);
             allRequestsSucceeded = response.status === 200;
-          } 
-          else if (
-            slide.title !== sliderData[index].title &&
-            slide.imageUrl === sliderData[index].imageUrl)  {
-              const response = await requestByType(types.updateSlideTitle, { id: slide.id, title: slide.title });
-              allRequestsSucceeded = response.status === 200;
+          } else if (slide.title !== sliderData.find(s => s.id === slide.id)?.title) {
+            const response = await requestByType(types.updateSlideTitle, { id: slide.id, title: slide.title });
+            allRequestsSucceeded = response.status === 200;
           }
-          else if(slide.newIndex !== undefined){
-            const response = await requestByType(types.repositionSlide, { id: slide.id, newIndex: slide.newIndex });
+          else if(slide.willReposition) {
+            const response = await requestByType(types.repositionSlide, { id: slide.id, index: index });
             allRequestsSucceeded = response.status === 200;
           }
         })
       );
-
-      await sliderData.forEach(async (slide, index) => {
-        if (!newSliderData[index]) {
-          const response = await requestByType(types.deleteSlide, { id: slide.id });
-          if (response.status !== 200) {
-            allRequestsSucceeded = false;
+  
+      // Deleting any removed sliders (checking by ID, not index)
+      if(sliderData && sliderData.length > 0){
+        for (let i = 0; i < sliderData.length; i++) {
+          const originalSlider = sliderData[i];
+          const isDeleted = !newSliderData.find(slide => slide.id === originalSlider.id);
+          if (isDeleted) {
+            const response = await requestByType(types.deleteSlide, { id: originalSlider.id });
+            if (response.status !== 200) {
+              allRequestsSucceeded = false;
+            }
           }
         }
-      });
-
+      }
+      
+      // Show success or failure message
       if (allRequestsSucceeded) {
         setAlertVariant("success");
         setAlertHeading("Başarılı");
@@ -149,32 +156,60 @@ const Slider = () => {
     }
     window.scrollTo(0, 0);
   };
+  
+  
 
   const addNewSlider = () => {
-    if (newSliderData.length > 0) {
-      const lastSlider = newSliderData[newSliderData.length - 1];
+    if(!newSliderData || newSliderData.length === 0) {
+      setNewSliderData([{ title: "", imageUrl: "", image: null }]);
+      return;
+    }
+    for (let i = 0; i < newSliderData.length; i++) {
+      const slider = newSliderData[i];
+      console.log(`Slider object props: ${JSON.stringify(slider)}`);
       if (
-        !lastSlider.title ||
-        !lastSlider.imageUrl ||
-        lastSlider.title.trim() === "" ||
-        lastSlider.imageUrl.trim() === ""
+        !slider.title || // Title should not be empty
+        slider.title.trim() === "" ||
+        (
+          (!slider.imageUrl || slider.imageUrl.trim() === "") && 
+          !(slider.imageUrl === "local-image" || slider.image)
+        )
       ) {
         navigator.vibrate && navigator.vibrate(200);
         window.scrollTo(0, 0);
         setAlertVariant("danger");
         setAlertHeading("Hata");
-        setAlertMessage("Yeni slider eklemeden önce lütfen mevcut boş slider ögesini doldurun.");
+        setAlertMessage("Yeni slider eklemeden önce lütfen tüm slider öğelerinin başlık ve resim yüklemesini tamamlayın.");
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 5000);
         return;
       }
     }
-    setNewSliderData([...newSliderData, { title: "", imageUrl: "" }]);
+  
+    setNewSliderData([...newSliderData, { title: "", imageUrl: "", image: null }]);
   };
+  
 
-  // Toggle collapse state for a given slider index
   const toggleCollapse = (index) => {
     setCollapsedItems((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  const handleRepositionSlider = (index, direction) => {
+    const temp = [...newSliderData];
+    const newIndex = direction === "up" ? index - 1 : index + 1;
+  
+    if (newIndex >= 0 && newIndex < newSliderData.length) {
+      const tempSlider = temp[index];
+      temp[index] = temp[newIndex];
+      temp[newIndex] = tempSlider;
+  
+      temp[index].displayIndex = index;
+      temp[newIndex].displayIndex = newIndex;
+      temp[index].willReposition = true;
+      temp[newIndex].willReposition = true;
+  
+      setNewSliderData(temp);
+    }
   };
 
   return (
@@ -232,15 +267,7 @@ const Slider = () => {
                       <Button
                         variant="outline-primary"
                         className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 me-2 text-black focus:!bg-white hover:!bg-white hover:!text-black"
-                        onClick={() => {
-                          const temp = [...newSliderData];
-                          const swap = temp[index];
-                          temp[index].newIndex = index - 1;
-                          temp[index - 1].newIndex = index;
-                          temp[index] = temp[index - 1];
-                          temp[index - 1] = swap;
-                          setNewSliderData(temp);
-                        }}
+                        onClick={() => handleRepositionSlider(index, "up")}
                       >
                         <Icon.CaretUp size={16} />
                       </Button>
@@ -249,15 +276,7 @@ const Slider = () => {
                       <Button
                         variant="outline-primary"
                         className="btn-white flex justify-center items-center w-[40%] sm:w-[30%] md:w-[15%] p-0 border-0 me-2 text-black focus:!bg-white hover:!bg-white hover:!text-black"
-                        onClick={() => {
-                          const temp = [...newSliderData];
-                          const swap = temp[index];
-                          temp[index].newIndex = index + 1;
-                          temp[index + 1].newIndex = index;
-                          temp[index] = temp[index + 1];
-                          temp[index + 1] = swap;
-                          setNewSliderData(temp);
-                        }}
+                        onClick={() => handleRepositionSlider(index, "down")}
                       >
                         <Icon.CaretDown size={16} />
                       </Button>
@@ -301,7 +320,7 @@ const Slider = () => {
                             className="mt-2"
                             onClick={() => {
                               const temp = [...newSliderData];
-                              temp[index].imageUrl = "";
+                              temp[index].imageUrl = "local-image";
                               temp[index].id = -temp[index].id;
                               setNewSliderData(temp);
                             }}
@@ -318,6 +337,7 @@ const Slider = () => {
                             onChange={(e) => {
                               const temp = [...newSliderData];
                               temp[index].image = e.target.files[0];
+                              temp[index].imageUrl = "local-image";
                               setNewSliderData(temp);
                             }}
                           />
