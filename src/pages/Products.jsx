@@ -170,7 +170,7 @@ const Products = () => {
         <Layout>
             <div className="breadcrumb-block style-img">
                 <div className="breadcrumb-main bg-linear overflow-hidden">
-                    <div className="container lg:pt-[134px] pt-24 pb-10 relative">
+                    <div className="container py-5 relative">
                         <div className="main-content w-full h-full flex flex-col items-center justify-center relative z-[1]">
                             <div className="text-content">
                                 <h1 className="heading2 text-center">Ürünler</h1>
@@ -180,7 +180,7 @@ const Products = () => {
                                     <div className='text-secondary2 capitalize'>Ürünler</div>
                                 </div>
                             </div>
-                            <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 lg:mt-[70px] mt-12 overflow-hidden">
+                            <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 mt-5 overflow-hidden">
                                 {productCategoriesData.map((item, index) => (
                                     <h2
                                         key={index}
