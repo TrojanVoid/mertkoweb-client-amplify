@@ -10,20 +10,19 @@ const defaultAuthor = "CBS Software";
 const defaultImage = "/resources/images/mertko_logo-300x117.png"; 
 
 const withMetaData = (Component, productCategoryKey = null) => {
-  const pageKey = toCamelCase(Component.name);
-
-  // Enhanced logging in production
-  const logMetaData = (message) => {
-    /* if (envMode === "development" || envMode === "production") */
-      console.log(`[MetaDataProvider] ${message}`);
-  };
-
-  logMetaData(`Rendering page with key: ${pageKey}, product category: ${productCategoryKey || "none"}`);
+  
 
   return function WrappedComponent(props) {
+    const pageKey = toCamelCase(Component.displayName || props.pageKey || "home");
+
+    const logMetaData = (message) => {
+      /* if (envMode === "development" || envMode === "production") */
+        console.log(`[MetaDataProvider] ${message}`);
+    };
+
+    logMetaData(`Injecting into page with key: ${pageKey}, product category: ${productCategoryKey || "none"}`);
     const { title, description, loading, error } = useMetaData(pageKey, productCategoryKey);
 
-    // State to track when metadata is ready
     const [isMetaReady, setIsMetaReady] = useState(false);
 
     useEffect(() => {

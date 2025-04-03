@@ -106,4 +106,5 @@ const About = () => {
     )
 }
 
+About.displayName = "about";
 export default withMetaData(About);

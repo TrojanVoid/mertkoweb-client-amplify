@@ -101,4 +101,5 @@ const Contact = () => {
     )
 }
 
+Contact.displayName = "contact";
 export default withMetaData(Contact);

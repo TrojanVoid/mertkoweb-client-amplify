@@ -268,6 +268,7 @@ const ProductDetail = () => {
     )
 }
 
+ProductDetail.displayName = 'product-detail';
 export default (props) => <ProductDetailWithMeta {...props} />;
 
 const ProductDetailWithMeta = (props) => {

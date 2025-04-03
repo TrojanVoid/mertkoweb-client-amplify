@@ -248,4 +248,5 @@ const BlogDetail = () => {
     )
 }
 
+BlogDetail.displayName = "blog-detail";
 export default withMetaData(BlogDetail);

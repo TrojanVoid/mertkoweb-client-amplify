@@ -411,4 +411,5 @@ const Products = () => {
     )
 }
 
+Products.dislayName = "products";
 export default withMetaData(Products);
