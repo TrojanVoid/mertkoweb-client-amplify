@@ -18,7 +18,7 @@ const urls = {
 }
 
 export const requestByType = async (type, property=null) => {
-  Logger.log("Fetching banner data", TITLE_TAGS.BANNER_API);
+  Logger.info("Fetching banner data", TITLE_TAGS.BANNER_API);
   if(!type){
     Logger.error("Invalid banner request type", TITLE_TAGS.BANNER_API);
     return [];

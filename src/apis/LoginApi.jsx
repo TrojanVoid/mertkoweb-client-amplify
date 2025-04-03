@@ -10,7 +10,7 @@ const baseUrl =
 export const login = async (username, password) => {
   const base = baseUrl.replace("/api", ""); 
   const url = `${base}/admin`; 
-  Logger.log(`Giriş denemesi: ${username}`, TITLE_TAGS.LOGIN_API);
+  Logger.info(`Giriş denemesi: ${username}`, TITLE_TAGS.LOGIN_API);
   try {
     const response = await axios.post(url, { username, password });
     return response;

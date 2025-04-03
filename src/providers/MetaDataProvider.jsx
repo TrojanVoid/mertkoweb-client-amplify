@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import useMetaData from "../hooks/useMetaData";
 
 const { toCamelCase } = require("../util/StringUtility");
+const { Logger } = require("../util/Logger");
 
 const envMode = process.env.NODE_ENV;
 // Default metadata values
@@ -16,8 +17,7 @@ const withMetaData = (Component, productCategoryKey = null) => {
     const pageKey = toCamelCase(Component.displayName || props.pageKey || "home");
 
     const logMetaData = (message) => {
-      /* if (envMode === "development" || envMode === "production") */
-        console.log(`[MetaDataProvider] ${message}`);
+      Logger.info(`[MetaDataProvider] ${message}`);
     };
 
     logMetaData(`Injecting into page with key: ${pageKey}, product category: ${productCategoryKey || "none"}`);

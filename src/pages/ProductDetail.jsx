@@ -48,8 +48,8 @@ const ProductDetail = () => {
       try {
         const response = await requestByType(types.getProductCategories);
         if (response.status === 200 && response?.data) {
-          Logger.log(`Product category: ${productCategory} and response: ${response.data}`);
-          Logger.log(`Product data: ${data}`);
+          Logger.info(`Product category: ${productCategory} and response: ${response.data}`);
+          Logger.info(`Product data: ${data}`);
           setDescription(response.data.find((item) => item.shortKey === productCategory)?.categoryDescription);
         }
         else{

@@ -47,7 +47,7 @@ export const urls = {
 }
 
 export const requestByType = async (productRequestType, property=null) => {
-  Logger.log(`Fetching ${productRequestType} with property: ${property}`, TITLE_TAGS.PRODUCT_API);
+  Logger.info(`Fetching ${productRequestType} with property: ${property}`, TITLE_TAGS.PRODUCT_API);
   const url = urls[productRequestType];
   let response = null;
   try { 

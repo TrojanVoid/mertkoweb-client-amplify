@@ -24,7 +24,7 @@ export const urls = {
 }
 
 export const requestByType = async (blogRequestType, property=null) => {
-  Logger.log(`Fetching ${blogRequestType} with property: ${property}`, TITLE_TAGS.BLOG_API);
+  Logger.info(`Fetching ${blogRequestType} with property: ${property}`, TITLE_TAGS.BLOG_API);
   const url = urls[blogRequestType];
   let response = null;
   try { 

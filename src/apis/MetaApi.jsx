@@ -19,7 +19,7 @@ const urls = {
 };
 
 export const requestByType = async (type, property = null) => {
-  Logger.log("Fetching META data", TITLE_TAGS.META_API);
+  Logger.info("Fetching META data", TITLE_TAGS.META_API);
   if (!type) {
     Logger.error("Invalid META request type", TITLE_TAGS.META_API);
     return [];

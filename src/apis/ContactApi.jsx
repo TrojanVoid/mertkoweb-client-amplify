@@ -20,7 +20,7 @@ const urls = {
 }
 
 export const requestByType = async (type, property=null) => {
-  Logger.log("Fetching contact data", TITLE_TAGS.CONTACT_API);
+  Logger.info("Fetching contact data", TITLE_TAGS.CONTACT_API);
   if(!type){
     Logger.error("Invalid contact request type", TITLE_TAGS.CONTACT_API);
     return [];

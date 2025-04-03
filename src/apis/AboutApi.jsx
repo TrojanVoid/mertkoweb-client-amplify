@@ -24,7 +24,7 @@ const urls = {
 }
 
 export const requestByType = async (type, property=null) => {
-  Logger.log("Fetching about data", TITLE_TAGS.ABOUT_API);
+  Logger.info("Fetching about data", TITLE_TAGS.ABOUT_API);
   if(!type){
     Logger.error("Invalid about request type", TITLE_TAGS.ABOUT_API);
     return [];

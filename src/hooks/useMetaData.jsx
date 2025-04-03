@@ -16,7 +16,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
     const fetchMetaData = async () => {
       try {
         if (logData) {
-          Logger.log(`Fetching metadata for page: ${pageKey}`);
+          Logger.info(`Fetching metadata for page: ${pageKey}`);
         }
 
         const response = await requestByType(types.getPagesMeta);
@@ -25,7 +25,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
           setDescription(response.data.pages[pageKey].description);
           
           if (logData) {
-            Logger.log(`Fetched metadata for page ${pageKey}:`, {
+            Logger.info(`Fetched metadata for page ${pageKey}:`, {
               title: `${response.data.titlePrefix} ${response.data.pages[pageKey].title}`,
               description: response.data.pages[pageKey].description,
             });
@@ -50,7 +50,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
         if (!productCategoryKey) return;
 
         if (logData) {
-          Logger.log(`Fetching product category metadata for key: ${productCategoryKey}`);
+          Logger.info(`Fetching product category metadata for key: ${productCategoryKey}`);
         }
 
         const response = await productRequestByType(productApiTypes.getProductCategories);
@@ -60,7 +60,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
             setDescription((prev) => `${prev} ${category.categoryDescription}`);
             
             if (logData) {
-              Logger.log(`Fetched category description for ${productCategoryKey}: ${category.categoryDescription}`);
+              Logger.info(`Fetched category description for ${productCategoryKey}: ${category.categoryDescription}`);
             }
           } else {
             throw new Error(`Category not found for key: ${productCategoryKey}`);
@@ -80,7 +80,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
   useEffect(() => {
     if (error) {
       if (logData) {
-        Logger.log(`[Retry] Attempting to refetch metadata for page: ${pageKey}`);
+        Logger.info(`[Retry] Attempting to refetch metadata for page: ${pageKey}`);
       }
       const retryTimeout = setTimeout(() => {
         setError(null);
@@ -92,7 +92,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
 
   useEffect(() => {
     if (logData) {
-      Logger.log(`Metadata for page ${pageKey}:`, { title, description, loading, error });
+      Logger.info(`Metadata for page ${pageKey}:`, { title, description, loading, error });
     }
   }, [title, description, loading, error, pageKey]);
 

@@ -24,7 +24,7 @@ const urls = {
 }
 
 export const requestByType = async (type, property=null) => {
-  Logger.log("Fetching slider data", TITLE_TAGS.SLIDER_API);
+  Logger.info("Fetching slider data", TITLE_TAGS.SLIDER_API);
   if(!type){
     Logger.error("Invalid slider request type", TITLE_TAGS.SLIDER_API);
     return [];
