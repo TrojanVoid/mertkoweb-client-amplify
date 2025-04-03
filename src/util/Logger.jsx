@@ -58,7 +58,7 @@ class Logger {
    */
   static info(message, title = "General", onlyDev = true) {
     if (!this.devMode && onlyDev) return;
-    this.printLog(message, title, Logger.LOG_TYPES.INFO, "blue");
+    this.log(message, title, Logger.LOG_TYPES.INFO, "blue");
   }
 
   /**
@@ -70,7 +70,7 @@ class Logger {
    */
   static warn(message, title = "General", onlyDev = true) {
     if (!this.devMode && onlyDev) return;
-    this.printLog(message, title, Logger.LOG_TYPES.WARNING, "orange");
+    this.log(message, title, Logger.LOG_TYPES.WARNING, "orange");
   }
 
   /**
@@ -82,7 +82,7 @@ class Logger {
    */
   static error(message, title = "General", onlyDev = true) {
     if (!this.devMode && onlyDev) return;
-    this.printLog(message, title, Logger.LOG_TYPES.ERROR, "red");
+    this.log(message, title, Logger.LOG_TYPES.ERROR, "red");
   }
 
   /**
@@ -93,7 +93,7 @@ class Logger {
    * @param {string} logType - The log type (INFO, WARNING, ERROR).
    * @param {string} color - The color to apply to the log type.
    */
-  static printLog(message, title, logType, color) {
+  static log(message, title, logType, color) {
     console.log(`%c${this.getSeparator(logType)}`, "color: gray;");
     console.log(
       `%c[${logType}] %c(${title}) %c${message}`,
