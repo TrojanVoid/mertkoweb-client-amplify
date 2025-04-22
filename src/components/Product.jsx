@@ -95,7 +95,7 @@ const Product = ({ data, type, style, font }) => {
                                 ) : (
                                     <>
                                         {
-                                            data.images.map((img, index) => (
+                                            data.images.sort((image1, image2) => image1.imageIndex - image2.imageIndex).map((img, index) => (
                                                 <img
                                                     key={index}
                                                     src={img.imageUrl}
