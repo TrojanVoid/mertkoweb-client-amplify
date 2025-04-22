@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Modal, Spinner } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "@blocknote/core/fonts/inter.css";
+import "@blocknote/mantine/style.css";
+import { useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteView } from "@blocknote/mantine";
+
 import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
-import { Link } from "react-router-dom";
 import { requestByType, types } from "../../apis/BlogApi";
 import{ useConfirm } from '../context/ConfirmContext';
 
-export default function HelpdeskService() {
+export default function Blog() {
+
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { confirm } = useConfirm();
+  const editor = useCreateBlockNote();
 
   // Modal state'leri
   const [showEditModal, setShowEditModal] = useState(false);
@@ -20,6 +27,39 @@ export default function HelpdeskService() {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  useEffect(() => {
+    const injectBlogContent = async () => {
+      if (editor && selectedBlog && showEditModal) {
+        try {
+          editor.insertBlocks(JSON.parse(selectedBlog.content), editor.document[0]);
+          
+        } catch (err) {
+          console.error("Failed to parse and inject blog content:", err);
+        }
+      }
+    };
+  
+    if(!showEditModal) return;
+      emptyEditor().then(injectBlogContent());
+    
+  }, [showEditModal]);
+
+  useEffect(() => {
+    if(!showCreateModal) return;
+      emptyEditor();
+  }, [showCreateModal]);
+
+  const emptyEditor = async () => {
+    if(editor && editor.document.length > 0){
+      try{
+        editor.removeBlocks(editor.document);
+      }
+      catch(err){
+        console.error(`Failed to empty the editor: ${err}`);
+      }
+    }
+  }
 
   const fetchBlogs = async () => {
     setLoading(true);
@@ -62,6 +102,7 @@ export default function HelpdeskService() {
   };
 
   const handleBlogChange = (e) => {
+    if(!e || !e.target) return;
     const { name, value } = e.target;
     setSelectedBlog({
       ...selectedBlog,
@@ -71,7 +112,11 @@ export default function HelpdeskService() {
 
   const handleUpdateBlog = async () => {
     try {
-      const response = await requestByType(types.updateBlog, selectedBlog);
+      const serializedContent = await JSON.stringify(editor.document);
+      const response = await requestByType(types.updateBlog, {
+        ...selectedBlog,
+        content: serializedContent
+      });
       const updatedBlog = response.data;
       if (!updatedBlog) {
         alert("Güncellenen blog verisi alınamadı.");
@@ -88,7 +133,11 @@ export default function HelpdeskService() {
 
   const handleCreateBlog = async () => {
     try {
-      const response = await requestByType(types.createBlog, selectedBlog);
+      const serializedContent = await JSON.stringify(editor.document);
+      const response = await requestByType(types.createBlog, {
+        ...selectedBlog,
+        content: serializedContent
+      });
       setBlogs([...blogs, response.data]);
       setShowCreateModal(false);
       setSelectedBlog(null);
@@ -136,23 +185,23 @@ export default function HelpdeskService() {
                       Düzenle
                     </Button>
                     <Button
-  variant="outline-danger"
-  size="sm"
-  onClick={async () => {
-    // Kullanıcıdan onay alıyoruz
-    const result = await confirm("Bu blog yazısını silmek istediğinize emin misiniz?");
-    if (result) {
-      handleDeleteBlog(blog.id); // Eğer onaylandıysa, silme işlemini yapıyoruz
-    }
-  }}
->
-  Sil
-</Button>
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={async () => {
+                        // Kullanıcıdan onay alıyoruz
+                        const result = await confirm("Bu blog yazısını silmek istediğinize emin misiniz?");
+                        if (result) {
+                          handleDeleteBlog(blog.id); // Eğer onaylandıysa, silme işlemini yapıyoruz
+                        }
+                      }}
+                    >
+                      Sil
+                    </Button>
                   </div>
                 </Card.Header>
                 <Card.Body>
-                  <Card.Text>{blog.content}</Card.Text>
-                  <Link to={`/blog?id=${blog.id}`}>Detaylar</Link>
+                  {/* <Card.Text>{blog.content}</Card.Text> */}
+                  <Link to={`/blog?id=${blog.id}`}>İçeriği Görüntüle</Link>
                 </Card.Body>
               </Card>
             ))
@@ -193,12 +242,15 @@ export default function HelpdeskService() {
               </Form.Group>
               <Form.Group controlId="editBlogContent" className="mb-3">
                 <Form.Label>İçerik</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={5}
-                  name="content"
-                  value={selectedBlog.content}
-                  onChange={handleBlogChange}
+                <BlockNoteView
+                  editor={editor}
+                  contentEditable={true}
+                  onChange={(val) => {
+                    setSelectedBlog(prev => {return{
+                      ...prev,
+                      content: val
+                    }})
+                  }}
                 />
               </Form.Group>
               {/* Eğer görseller için alan eklemek isterseniz burada ekleyebilirsiniz */}
@@ -247,11 +299,9 @@ export default function HelpdeskService() {
               </Form.Group>
               <Form.Group controlId="createBlogContent" className="mb-3">
                 <Form.Label>İçerik</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={5}
-                  name="content"
-                  value={selectedBlog.content}
+                <BlockNoteView
+                  editor={editor}
+                  contentEditable={true}
                   onChange={handleBlogChange}
                 />
               </Form.Group>

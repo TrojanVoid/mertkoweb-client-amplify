@@ -1,10 +1,17 @@
 
 
 import React, { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import DOMPurify from 'dompurify';
+
+import { useCreateBlockNote } from '@blocknote/react';
+import "@blocknote/core/fonts/inter.css";
+import "@blocknote/mantine/style.css";
+
 /* import NewsInsight from '@/components/Home3/NewsInsight'; */
 import Layout from '../global/Layout';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import withMetaData from '../providers/MetaDataProvider';
+
 
 const {types, requestByType} = require("../apis/BlogApi");
 const {Logger, TITLE_TAGS} = require("../util/Logger");
@@ -12,6 +19,8 @@ const {Logger, TITLE_TAGS} = require("../util/Logger");
 const BlogDetail = () => {
     const navigate = useNavigate();
     const [blogData, setBlogData] = useState(null);
+    const [blogContentHTML, setBlogContentHTML] = useState("");
+    const tempEditor = useCreateBlockNote();
     const imageIndexRef = useRef(0);
 
     const [searchParams] = useSearchParams();
@@ -31,9 +40,9 @@ const BlogDetail = () => {
 
     const fetchBlogData = async () => {
         try {
-
             const response = await requestByType(types.getBlog, blogId);
             setBlogData(response.data);
+            setBlogContentHTML(await prepareBlogHTML(response.data.content));
         } catch (error) {
             console.error('Error fetching blogs:', error);
             return [];
@@ -53,6 +62,32 @@ const BlogDetail = () => {
         // Go to blog detail with id selected
         navigate(`/blog?id=${id}`);
     };
+
+    const prepareBlogHTML = async (serializedContent) => {
+        try {
+            const blocks = await JSON.parse(serializedContent);
+            const rawHTML = await tempEditor.blocksToFullHTML(blocks);
+            const styledHTML = mapDataTextColorToStyle(rawHTML);
+            return DOMPurify.sanitize(styledHTML); 
+        } catch (e) {
+            console.error("Failed to render blog content:", e);
+            return "<p>İçerik yüklenemedi.</p>";
+        }
+    };
+
+    const mapDataTextColorToStyle = (html) => {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+      
+        tempDiv.querySelectorAll("[data-text-color]").forEach((el) => {
+          const color = el.getAttribute("data-text-color");
+          if (color) {
+            el.style.color = color;
+          }
+        });
+      
+        return tempDiv.innerHTML;
+      };
 
     return (
         <Layout>
@@ -100,7 +135,9 @@ const BlogDetail = () => {
                             <div className="content md:mt-8 mt-5">
                                 <div className="body1">{blogData?.description}</div>
 
-                                {blogData?.content?.split(' ').map((item, index) => {
+                                <div className="blog-rich-content" dangerouslySetInnerHTML={{ __html: blogContentHTML }} />
+
+                                {/* {blogData?.content?.split(' ').map((item, index) => {
                                     if(item === "<br>" || item === "<br/>" || item === "<br />" || item == "</br>")
                                       return <br key={index}/>
                                     if(item ==="<img>" || item === "</img>" || item === "<img/>"){
@@ -118,60 +155,16 @@ const BlogDetail = () => {
                                     return item + " ";
                                     }
                                   )
-                                }
+                                } */}
 
-                                {/* <div className="body1 mt-3">I’ve always been passionate about underwear and shapewear and have a huge collection from over the years! 
-                                When it came to shapewear, I could never find exactly what I was looking for and I would cut up pieces and sew them together 
-                                to create the style and compression I needed.</div> */}
                                 
-                                
-                                {/* <div className="grid sm:grid-cols-2 gap-[30px] md:mt-8 mt-5">
-                                    {blogData?.images?.slice(1, blogData?.images.length).map((item, index) => (
-                                        <img
-                                            key={index}
-                                            src={item.imageUrl}
-                                            width={3000}
-                                            height={2000}
-                                            alt={item.altDescription}
-                                            className='w-full rounded-3xl'
-                                        />
-                                    ))}
-                                </div> */}
 
-
-                                {/* 
-                                <div className="heading4 md:mt-8 mt-5">How did SKIMS start?</div>
-                                <div className="body1 mt-4">This is such a hard question! Honestly, every time we drop a new collection I get obsessed with it. The pieces that have been my go-tos though are some of our simplest styles that we launched with. I wear our Fits Everybody Thong every single day – it is the only underwear I have now, it’s so comfortable and stretchy and light enough that you can wear anything over it.</div>
-                                <div className="body1 mt-4">For bras, I love our Cotton Jersey Scoop Bralette – it’s lined with this amazing power mesh so you get great support and is so comfy I can sleep in it. I also love our Seamless Sculpt Bodysuit – it’s the perfect all in one sculpting, shaping and smoothing shapewear piece with different levels of support woven throughout.</div>
-                                */}
 
                             </div>
                             <div className="action flex items-center justify-between flex-wrap gap-5 md:mt-8 mt-5">
                                 
                                 
-                                {/* <div className="left flex items-center gap-3 flex-wrap">
-                                    <p>Tag:</p>
-                                    <div className="list flex items-center gap-3 flex-wrap">
-                                        <div
-                                            className={`tags bg-surface py-1.5 px-4 rounded-full text-button-uppercase cursor-pointer duration-300 hover:bg-black hover:text-white`}
-                                            onClick={() => handleBlogClick('fashion')}
-                                        >
-                                            fashion
-                                        </div>
-                                        <div
-                                            className={`tags bg-surface py-1.5 px-4 rounded-full text-button-uppercase cursor-pointer duration-300 hover:bg-black hover:text-white`}
-                                            onClick={() => handleBlogClick('yoga')}
-                                        >
-                                            yoga
-                                        </div>
-                                        <div
-                                            className={`tags bg-surface py-1.5 px-4 rounded-full text-button-uppercase cursor-pointer duration-300 hover:bg-black hover:text-white`}
-                                            onClick={() => handleBlogClick('organic')}
-                                        >
-                                            organic
-                                        </div>
-                                    </div>
-                                </div> */}
+                                
 
 
                                 <div className="right flex items-center gap-3 flex-wrap">
