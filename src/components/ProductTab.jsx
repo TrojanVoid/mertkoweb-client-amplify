@@ -13,42 +13,56 @@ const featuredProductTypes = ProductTabTypes.map((entry) => {
 });
 
 const ProductTab = ({ data, start, limit }) => {
-    const [activeTab, setActiveTab] = useState('featuredProducts')
-    const [filteredProducts, setFilteredProducts] = useState([])
-    const [selectedLanguage, setSelectedLanguage] = useState('tr')
+    const [activeTab, setActiveTab] = useState('featuredProducts');
+    const [loading, setLoading] = useState(true);
+    const [featuredProducts, setFeaturedProducts] = useState([]);
+    const [bestSellerProducts, setBestSellerProducts] = useState([]);
+    const [newReleaseProducts, setNewReleaseProducts] = useState([]);
+    const [selectedLanguage, setSelectedLanguage] = useState('tr');
     
     useEffect(() => {
-        getFilterData()
-    }, [activeTab]);
+        fetchProducts();
+    }, []);
 
-    const fetchProducts = async (featureType) => {
+
+    const fetchProducts = async () => {
         try {
-            console.log("type: ", types[featureType]);
-            const response = await requestByType(types[featureType]);
-            setFilteredProducts(response.data);
+            for(const featureType of featuredProductTypes) {
+              await requestByType(featureType)
+                .then((response) => {
+                  if(!response || !response.data || response.data.length === 0) {
+                      return;
+                  }
+                  if (featureType === 'featuredProducts') {
+                      setFeaturedProducts(response.data);
+                  } else if (featureType === 'bestSellers') {
+                      setBestSellerProducts(response.data);
+                  } else if (featureType === 'newReleases') {
+                      setNewReleaseProducts(response.data);
+                  }
+                  setLoading(false);
+                });
+            }
         } catch (error) {
             Logger.error(`Error fetching products: ${error}`, TITLE_TAGS.UI_COMPONENT);
-            setFilteredProducts([]);
         }
     };
 
     const handleTabClick = (item) => {
-        setActiveTab(item)
-        getFilterData()
+        setActiveTab(item);
     }
 
-    const getFilterData = () => {
-        if (activeTab === 'featuredProducts') {
-            fetchProducts("featuredProducts");
-        }
-
-        if (activeTab === 'newReleases') {
-            fetchProducts("newReleases");
-        }
-
-        if (activeTab === 'bestSellers') {
-            fetchProducts("bestSellers");
-        }
+    const getSelectedProductList = () => {
+      switch (activeTab) {
+        case 'bestSellers':
+            return bestSellerProducts;
+        case 'featuredProducts':
+            return featuredProducts;
+        case 'newReleases':
+            return newReleaseProducts;
+        default:
+            return featuredProducts;
+      }
     }
 
 
@@ -97,7 +111,7 @@ const ProductTab = ({ data, start, limit }) => {
                                 },
                             }}
                         >
-                            {filteredProducts && filteredProducts.slice(start, limit).map((prd, index) => (
+                            {!loading && getSelectedProductList().slice(start, limit).map((prd, index) => (
                                 <SwiperSlide key={index}>
                                     <Product data={prd} type='grid' className="w-[30%]"/>
                                 </SwiperSlide>
