@@ -33,7 +33,7 @@ export const requestByType = async (blogRequestType, property=null) => {
         response = await axios.delete(`${url}/${property}`);
         break;
       case "updateBlog":
-        response = await axios.put(`${url}/${property}`);
+        response = await axios.put(`${url}/${property.id}`, property);
         break;
       case "createBlog":
         response = await axios.post(url, property);
