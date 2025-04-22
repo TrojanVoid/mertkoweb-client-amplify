@@ -18,6 +18,7 @@ export default function ProductManagement() {
   const {confirm} = useConfirm(); 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
@@ -116,7 +117,6 @@ export default function ProductManagement() {
       console.error("Ürün silme başarısız");
     }
   };
-
 
   
   const handleMultipleFileChange = (e) => {
@@ -360,6 +360,7 @@ export default function ProductManagement() {
   };
 
   const saveProductChanges = async () => {
+    setIsSaving(true);
     try {
       const preparedProductData = {
         name: selectedProduct.name,
@@ -379,6 +380,7 @@ export default function ProductManagement() {
         }
         if (preparedProductData[key] === null || preparedProductData[key] === "") {
           alert("Ürün bilgileri eksik");
+          setIsSaving(false);
           throw new Error("Ürün bilgileri eksik");
         }
       }
@@ -393,6 +395,7 @@ export default function ProductManagement() {
           await requestByType(types.createProduct, preparedProductData);
       
       if (!response && !response.data.name) {
+        setIsSaving(false);
         throw new Error("Ürün kaydetme başarısız");
       }
 
@@ -406,6 +409,7 @@ export default function ProductManagement() {
                 newIndex: img.newIndex
               });
               if (!repositionResponse) {
+                setIsSaving(false);
                 throw new Error("Görsel sıralama başarısız");
               }
 
@@ -427,10 +431,11 @@ export default function ProductManagement() {
             const uploadResponse = await requestByType(types.uploadProductImage, formData);
 
             if (uploadResponse.status !== 200) {
+              setIsSaving(false);
               throw new Error("Görsel yükleme başarısız");
             }
 
-            const uploadedImage = await uploadResponse.json();
+            const uploadedImage = await uploadResponse.data;
             
             return {
               ...img,
@@ -438,6 +443,7 @@ export default function ProductManagement() {
               driveId: uploadedImage.driveId, 
             };
           }
+          setIsSaving(false);
           return img;
         })
       );
@@ -450,6 +456,7 @@ export default function ProductManagement() {
           });
 
           if (!deleteResponse) {
+            setIsSaving(false);
             throw new Error("Görsel silme başarısız");
           }
         }
@@ -468,8 +475,10 @@ export default function ProductManagement() {
           [...products, savedProduct]
       );
       
+      setIsSaving(false);
       closeEditModal();
     } catch (error) {
+      setIsSaving(false);
       console.error("Ürün kaydedilirken hata:", error);
     }
   };
@@ -748,8 +757,15 @@ export default function ProductManagement() {
           <Button variant="secondary" onClick={closeEditModal}>
             İptal
           </Button>
-          <Button variant="primary" onClick={saveProductChanges}>
-            Kaydet
+          <Button variant="primary" onClick={saveProductChanges} disabled={isSaving}>
+            {isSaving 
+              ? (
+                <Spinner animation="border" size="sm" className="me-2" />
+                ) 
+              : 
+                <span>
+                  Kaydet
+                </span>}
           </Button>
         </Modal.Footer>
 
@@ -757,81 +773,78 @@ export default function ProductManagement() {
       </Modal>
 
       <Modal show={showDetailModal} onHide={closeDetailModal}>
-  <Modal.Header className="bg-primary" closeButton>
-    <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
-  </Modal.Header>
+        <Modal.Header className="bg-primary" closeButton>
+          <Modal.Title className="text-white">Ürün Detayları</Modal.Title>
+        </Modal.Header>
 
-  <Modal.Body>
-    {selectedProduct && (
-      <div className="flex flex-col items-center">
-        {selectedProduct.images && selectedProduct.images.length > 0 && (
-          selectedProduct.images.length > 1 ? (
-            <Carousel indicators={false} controls={true} interval={3000} className="mb-4">
-              {selectedProduct.images.map((img, index) => (
-                <Carousel.Item key={index}>
-                  <img
-                    className="d-block w-full rounded"
-                    src={img.imageUrl}
-                    alt={`Slide ${index + 1}`}
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          ) : (
-            <div className="mb-4">
-              <img
-                src={selectedProduct.images[0].imageUrl}
-                alt={selectedProduct.name}
-                className="mx-auto block w-full rounded"
-              />
+        <Modal.Body>
+          {selectedProduct && (
+            <div className="flex flex-col items-center">
+              {selectedProduct.images && selectedProduct.images.length > 0 && (
+                selectedProduct.images.length > 1 ? (
+                  <Carousel indicators={false} controls={true} interval={3000} className="mb-4">
+                    {selectedProduct.images.map((img, index) => (
+                      <Carousel.Item key={index}>
+                        <img
+                          className="d-block w-full rounded"
+                          src={img.imageUrl}
+                          alt={`Slide ${index + 1}`}
+                        />
+                      </Carousel.Item>
+                    ))}
+                  </Carousel>
+                ) : (
+                  <div className="mb-4">
+                    <img
+                      src={selectedProduct.images[0].imageUrl}
+                      alt={selectedProduct.name}
+                      className="mx-auto block w-full rounded"
+                    />
+                  </div>
+                )
+              )}
+
+              {/* Two-column layout for product details */}
+              <div className="flex flex-col md:flex-row gap-4 w-full">
+                {/* Left Column */}
+                <div className="flex-1">
+                  <p className="mb-[0.35rem]">
+                    <strong>Ürün Adı:</strong> {selectedProduct.name}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Hacim:</strong> {selectedProduct.volume}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Kategori:</strong> {selectedProduct.displayCategory}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Malzeme:</strong> {selectedProduct.material}
+                  </p>
+                </div>
+                {/* Right Column */}
+                <div className="flex-1">
+                  <p className="mb-[0.35rem]">
+                    <strong>Çok Satan:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Yeni Çıkan:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Öne Çıkan:</strong> {selectedProduct.isFeatured ? "Evet" : "Hayır"}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Aktif:</strong> {selectedProduct.isActive ? "Evet" : "Hayır"}
+                  </p>
+                </div>
+              </div>
+
+              <p className="mb-[0.35rem] w-full">
+                <strong>Açıklama:</strong> {selectedProduct.description}
+              </p>
             </div>
-          )
-        )}
-
-        {/* Two-column layout for product details */}
-        <div className="flex flex-col md:flex-row gap-4 w-full">
-          {/* Left Column */}
-          <div className="flex-1">
-            <p className="mb-[0.35rem]">
-              <strong>Ürün Adı:</strong> {selectedProduct.name}
-            </p>
-            <p className="mb-[0.35rem]">
-              <strong>Hacim:</strong> {selectedProduct.volume}
-            </p>
-            <p className="mb-[0.35rem]">
-              <strong>Kategori:</strong> {selectedProduct.displayCategory}
-            </p>
-            <p className="mb-[0.35rem]">
-              <strong>Malzeme:</strong> {selectedProduct.material}
-            </p>
-          </div>
-          {/* Right Column */}
-          <div className="flex-1">
-            <p className="mb-[0.35rem]">
-              <strong>Çok Satan:</strong> {selectedProduct.isBestSeller ? "Evet" : "Hayır"}
-            </p>
-            <p className="mb-[0.35rem]">
-              <strong>Yeni Çıkan:</strong> {selectedProduct.isNewRelease ? "Evet" : "Hayır"}
-            </p>
-            <p className="mb-[0.35rem]">
-              <strong>Öne Çıkan:</strong> {selectedProduct.isFeatured ? "Evet" : "Hayır"}
-            </p>
-            <p className="mb-[0.35rem]">
-              <strong>Aktif:</strong> {selectedProduct.isActive ? "Evet" : "Hayır"}
-            </p>
-          </div>
-        </div>
-
-        <p className="mb-[0.35rem] w-full">
-          <strong>Açıklama:</strong> {selectedProduct.description}
-        </p>
-      </div>
-    )}
-  </Modal.Body>
-</Modal>
-
-
-
+          )}
+        </Modal.Body>
+      </Modal>
 
       <Footer />
     </>
