@@ -10,7 +10,7 @@ export default function useMetaData(pageKey, productCategoryKey = null) {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); 
-    const logData = process.env.NODE_ENV === "development"; 
+  const logData = process.env.NODE_ENV === "development"; 
 
   useEffect(() => {
     const fetchMetaData = async () => {
