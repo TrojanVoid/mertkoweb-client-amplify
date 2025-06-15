@@ -29,7 +29,7 @@ const MainSlider = () => {
   };
 
   return (
-    <div className="slider-block style-two sm:h-[65vh] md:h-[70vh] lg:h-[75vh] xl:h-[65vh] w-full">
+    <div className="slider-block style-two sm:h-[65vh] md:h-[70vh] lg:h-[75vh] xl:h-[65vh] w-full max-md:mt-5">
       <div className="container xl:!px-[5rem] banner-block pt-[10px] sm:pt-[20px] lg:pt-[30px] flex max-lg:flex-wrap gap-y-5 h-full w-full">
         <div className="slider-main lg:w-full w-full md:px-[10px] lg:px-[15px] ">
           <Swiper
