@@ -153,7 +153,7 @@ const BlogDetail = () => {
                                         </span>
                                         </div>
                                     )}
-                                    </div>
+                                </div>
                             </div>
                             <div className="content md:mt-8 mt-5">
                                 <div className="body1">{blogData?.description}</div>
