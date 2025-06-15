@@ -170,17 +170,16 @@ const Products = () => {
         <Layout>
             <div className="breadcrumb-block style-img">
                 <div className="breadcrumb-main bg-linear overflow-hidden">
-                    <div className="container py-5 relative">
-                        <div className="main-content w-full h-full flex flex-col items-center justify-center relative z-[1]">
+                    <div className="pl-[13rem] relative">
+                        <div className="main-content w-full h-full pb-3 flex flex-col items-start justify-start relative pb-1 z-[1]">
                             <div className="text-content">
-                                <h1 className="heading2 text-center">Ürünler</h1>
-                                <div className="link flex items-center justify-center gap-1 caption1 mt-3">
+                                <div className="link flex items-center justify-start gap-1 caption1 mt-3">
                                     <Link to={'/'}>Anasayfa</Link>
                                     <Icon.CaretRight size={14} className='text-secondary2' />
                                     <div className='text-secondary2 capitalize'>Ürünler</div>
                                 </div>
                             </div>
-                            <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 mt-5 overflow-hidden">
+                            <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 pt-1 overflow-hidden border-t">
                                 {productCategoriesData.map((item, index) => (
                                     <h2
                                         key={index}
@@ -196,7 +195,7 @@ const Products = () => {
                 </div>
             </div>
 
-            <div className="shop-product breadcrumb1 lg:py-20 md:py-14 py-10">
+            <div className="shop-product breadcrumb1 py-5 pb-10">
                 <div className="container">
                     <div className="list-product-block relative">
                         <div className="filter-heading flex flex-wrap max-sm:justify-center max-lg:flex-row-reverse items-center justify-between gap-5 shadow-[0_1px_2px_rgba(0,0,0,0.1)] p-2 px-3 rounded-lg">
