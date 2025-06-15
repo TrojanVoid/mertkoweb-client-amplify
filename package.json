@@ -31,7 +31,7 @@
     "dompurify": "^2.5.8",
     "dotenv": "^16.4.7",
     "feather-icons": "^4.29.0",
-    "framer-motion": "^12.4.7",
+    "framer-motion": "^12.18.1",
     "gridjs": "^6.0.6",
     "gridjs-react": "^6.0.1",
     "jquery": "^3.6.3",
