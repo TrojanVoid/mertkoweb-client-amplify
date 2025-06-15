@@ -42,7 +42,7 @@ const BlogItem = ({ data, type }) => {
                                     <span className="caption1 text-secondary ml-1">{data?.author}</span>
                                 </div>
 
-                                <div className="line w-5 h-px bg-secondary" />
+                                <div className="line w-3 h-px bg-secondary" />
 
                                 {/* Date Card */}
                                 {data?.createdAt && (
