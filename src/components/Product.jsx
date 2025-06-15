@@ -79,36 +79,24 @@ const Product = ({ data, type, style, font }) => {
                     <div onClick={() => handleDetailProduct(data.id)} className="product-main cursor-pointer block">
                         <div className="product-thumb bg-white relative overflow-hidden rounded-2xl w-100 h-100">
                             <div className="product-img w-full h-full aspect-[4/3]">
-                                {activeColor ? (
-                                    <>
-                                        {
-                                            <img
-                                                src={data.variation.find((item) => item.color === activeColor)?.image ?? ''}
-                                                width={250}
-                                                height={250}
-                                                alt={data.name}
-                                                //priority={true}
-                                                className='w-full h-full object-cover duration-700'
-                                            />
-                                        }
-                                    </>
-                                ) : (
-                                    <>
-                                        {
-                                            data.images.sort((image1, image2) => image1.imageIndex - image2.imageIndex).map((img, index) => (
-                                                <img
-                                                    key={index}
-                                                    src={img.imageUrl}
-                                                    width={250}
-                                                    height={250}
-                                                    //priority={true}
-                                                    alt={img.altDescription ? img.altDescription : data.name}
-                                                    className='w-full h-full object-cover duration-700'
-                                                />
-                                            ))
-                                        }
-                                    </>
-                                )}
+                                <>
+                                    {
+                                      data.images
+                                        .sort((image1, image2) => image1.imageIndex - image2.imageIndex)
+                                        .slice(0, 2)
+                                        .map((img, index) => (
+                                          <img
+                                              key={index}
+                                              src={img.imageUrl}
+                                              width={250}
+                                              height={250}
+                                              //priority={true}
+                                              alt={img.altDescription ? img.altDescription : data.name}
+                                              className='w-full h-full object-cover duration-700 absolute'
+                                          />
+                                      ))
+                                    }
+                                </>
                             </div>
 
                             {/* TODO MAYBE ADD THIS BACK IN ANOTHER FORMAT? */}
