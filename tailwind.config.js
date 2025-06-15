@@ -13,13 +13,7 @@ export default {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
-    },
-    container: {
-      padding: {
-        DEFAULT: '16px',
-      },
-    },
-    colors: {
+      colors: {
       transparent: 'transparent',
       'green': '#D2EF9A',
       'black': '#1F1F1F',
@@ -33,9 +27,15 @@ export default {
       'yellow': '#ECB018',
       'pink': '#F4407D',
       'line': '#E9E9E9',
-      'outline': 'rgba(0, 0, 0, 0.15)',
+      'outline': 'rgba(16, 14, 14, 0.15)',
       'surface2': 'rgba(255, 255, 255, 0.2)',
       'surface1': 'rgba(255, 255, 255, 0.1)',
+      },
+    },
+    container: {
+      padding: {
+        DEFAULT: '16px',
+      },
     },
   },
   safelist: [
