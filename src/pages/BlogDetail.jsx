@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify';
 import { useCreateBlockNote } from '@blocknote/react';
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
+import { FiFeather, FiCalendar } from 'react-icons/fi'; 
 
 /* import NewsInsight from '@/components/Home3/NewsInsight'; */
 import Layout from '../global/Layout';
@@ -126,24 +127,33 @@ const BlogDetail = () => {
                                 </div> */}
 
 
-                                <div className='flex items-center gap-2'>
-                                    <div className="caption1 text-secondary">{blogData?.author}</div>
-                                    <div className="line w-5 h-px bg-secondary"></div>
-                                    <div className="caption1 text-secondary">
-                                        {blogData?.createdAt
-                                            ? (() => {
-                                                const date = new Date(blogData.createdAt);
-                                                const pad = n => n.toString().padStart(2, '0');
-                                                const turkishDays = [
-                                                    "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
-                                                ];
-                                                const dayName = turkishDays[date.getDay()];
-                                                return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${dayName} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-                                            })()
-                                            : ''
-                                        }
+                                <div className="flex items-center gap-2">
+                                    {/* Author Card */}
+                                    <div className="flex items-center gap-1 bg-gray-200 px-3 py-1 rounded-lg shadow-sm">
+                                        <FiFeather className="text-secondary text-lg" />
+                                        <span className="caption1 text-secondary ml-1">{blogData?.author}</span>
                                     </div>
-                                </div>
+
+                                    <div className="line w-5 h-px bg-secondary" />
+
+                                    {/* Date Card */}
+                                    {blogData?.createdAt && (
+                                        <div className="flex items-center gap-1 bg-gray-200 px-3 py-1 rounded-lg shadow-sm">
+                                        <FiCalendar className="text-secondary text-lg" />
+                                        <span className="caption1 text-secondary ml-1">
+                                            {(() => {
+                                            const date = new Date(blogData.createdAt);
+                                            const pad = n => n.toString().padStart(2, '0');
+                                            const turkishDays = [
+                                                "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+                                            ];
+                                            const dayName = turkishDays[date.getDay()];
+                                            return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${dayName} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+                                            })()}
+                                        </span>
+                                        </div>
+                                    )}
+                                    </div>
                             </div>
                             <div className="content md:mt-8 mt-5">
                                 <div className="body1">{blogData?.description}</div>
