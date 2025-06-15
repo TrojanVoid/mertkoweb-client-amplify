@@ -127,9 +127,22 @@ const BlogDetail = () => {
 
 
                                 <div className='flex items-center gap-2'>
-                                    <div className="caption1 text-secondary">by {blogData?.author}</div>
+                                    <div className="caption1 text-secondary">{blogData?.author}</div>
                                     <div className="line w-5 h-px bg-secondary"></div>
-                                    <div className="caption1 text-secondary">{blogData?.createdAt}</div>
+                                    <div className="caption1 text-secondary">
+                                        {blogData?.createdAt
+                                            ? (() => {
+                                                const date = new Date(blogData.createdAt);
+                                                const pad = n => n.toString().padStart(2, '0');
+                                                const turkishDays = [
+                                                    "Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"
+                                                ];
+                                                const dayName = turkishDays[date.getDay()];
+                                                return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${dayName} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
+                                            })()
+                                            : ''
+                                        }
+                                    </div>
                                 </div>
                             </div>
                             <div className="content md:mt-8 mt-5">
