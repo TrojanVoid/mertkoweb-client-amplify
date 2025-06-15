@@ -94,9 +94,9 @@ const BlogDetail = () => {
         <Layout>
             
             <div className='blog detail1'>
-                <div className="bg-img md:mt-[74px] mt-14">
+                <div className="bg-img md:mt-[36px] mt-8">
                     <img
-                        src={blogData?.images[0]?.imageUrl}
+                        src={blogData?.images?.[0]?.imageUrl}
                         width={5000}
                         height={4000}
                         alt={blogData?.images[0]?.altDescription}

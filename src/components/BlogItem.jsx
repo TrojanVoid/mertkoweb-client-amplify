@@ -23,11 +23,11 @@ const BlogItem = ({ data, type }) => {
                     <div className="blog-main h-full block">
                         <div className="blog-thumb rounded-[20px] overflow-hidden">
                             <img
-                                src={data.thumbImg}
+                                src={data.images?.[0]?.imageUrl}
                                 width={2000}
                                 height={1500}
                                 alt='blog-img'
-                                className='w-full duration-500'
+                                className='w-full duration-500 object-cover'
                             />
                         </div>
                         <div className="blog-infor mt-7 px-3 flex flex-col justify-between items-start h-[15vh]">

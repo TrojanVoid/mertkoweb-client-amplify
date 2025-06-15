@@ -113,15 +113,27 @@ export default function Blog() {
   const handleUpdateBlog = async () => {
     try {
       const serializedContent = await JSON.stringify(editor.document);
+
       const response = await requestByType(types.updateBlog, {
         ...selectedBlog,
         content: serializedContent
       });
+
       const updatedBlog = response.data;
-      if (!updatedBlog) {
-        alert("Güncellenen blog verisi alınamadı.");
-        return;
+
+      // Delete server-side image if flagged
+      if (selectedBlog.markImageForDeletion) {
+        await requestByType(types.deleteBlogImages, updatedBlog.id);
       }
+
+      // Upload new image if added
+      if (selectedBlog.imageFile) {
+        await requestByType(types.uploadBlogImage, {
+          id: updatedBlog.id,
+          image: selectedBlog.imageFile
+        });
+      }
+
       setBlogs(blogs.map((b) => (b.id === selectedBlog.id ? updatedBlog : b)));
       setShowEditModal(false);
       setSelectedBlog(null);
@@ -138,13 +150,32 @@ export default function Blog() {
         ...selectedBlog,
         content: serializedContent
       });
-      setBlogs([...blogs, response.data]);
+      const createdBlog = response.data;
+
+      if (selectedBlog.imageFile) {
+        await requestByType(types.uploadBlogImage, {
+          id: createdBlog.id,
+          image: selectedBlog.imageFile
+        });
+      }
+
+      setBlogs([...blogs, createdBlog]);
       setShowCreateModal(false);
       setSelectedBlog(null);
     } catch (err) {
       console.error("Blog oluşturulurken hata:", err);
       alert("Blog oluşturulurken hata oluştu.");
     }
+  };
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+    setSelectedBlog(null);
+  };
+
+  const closeCreateModal = () => {
+    setShowCreateModal(false);
+    setSelectedBlog(null);
   };
 
   return (
@@ -213,7 +244,7 @@ export default function Blog() {
       <Modal 
         className="w-full" 
         show={showEditModal} 
-        onHide={() => setShowEditModal(false)}
+        onHide={closeEditModal}
         dialogClassName="w-[90%] max-w-[90%]"
       >
         <Modal.Header closeButton>
@@ -240,6 +271,59 @@ export default function Blog() {
                   onChange={handleBlogChange}
                 />
               </Form.Group>
+
+              {(selectedBlog?.imageFile || selectedBlog?.images?.length > 0) && (
+                <div className="mb-3">
+                  <div className="position-relative d-inline-block">
+                    <img
+                      src={
+                        selectedBlog.imageFile
+                          ? URL.createObjectURL(selectedBlog.imageFile)  // Local temp file
+                          : selectedBlog.images[0]?.imageUrl             // Existing uploaded image from the server
+                      }
+                      alt={selectedBlog.images?.[0]?.altDescription || "Blog Görseli"}
+                      className="img-fluid mb-2"
+                    />
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      className="position-absolute top-0 end-0"
+                      onClick={() => {
+                        setSelectedBlog(prev => {
+                          const updated = { ...prev };
+
+                          if (updated.imageFile) {
+                            delete updated.imageFile;
+                          } 
+                          if (updated.images?.length > 0) {
+                            updated.images = [];
+                            updated.markImageForDeletion = true;
+                          }
+
+                          return updated;
+                        });
+                      }}
+                    >
+                      ×
+                    </Button>
+                  </div>
+                </div>
+              )}
+              <Form.Group controlId="blogImage" className="mb-3">
+                <Form.Label>Görsel Yükle</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (!e.target.files[0]) return;
+                    setSelectedBlog(prev => ({
+                      ...prev,
+                      imageFile: e.target.files[0]
+                    }));
+                  }}
+                />
+              </Form.Group>
+
               <Form.Group controlId="editBlogContent" className="mb-3">
                 <Form.Label>İçerik</Form.Label>
                 <BlockNoteView
@@ -253,7 +337,7 @@ export default function Blog() {
                   }}
                 />
               </Form.Group>
-              {/* Eğer görseller için alan eklemek isterseniz burada ekleyebilirsiniz */}
+
             </Form>
           )}
         </Modal.Body>
@@ -270,7 +354,7 @@ export default function Blog() {
       {/* Yeni Blog Oluşturma Modal'i */}
       <Modal 
         show={showCreateModal} 
-        onHide={() => setShowCreateModal(false)}
+        onHide={closeCreateModal}
         dialogClassName="w-[90%] max-w-[90%]"
       >
         <Modal.Header closeButton>
@@ -297,6 +381,55 @@ export default function Blog() {
                   onChange={handleBlogChange}
                 />
               </Form.Group>
+
+              {(selectedBlog?.imageFile || selectedBlog?.images?.length > 0) && (
+                <div className="mb-3">
+                  <div className="position-relative d-inline-block">
+                    <img
+                      src={
+                        selectedBlog.imageFile
+                          ? URL.createObjectURL(selectedBlog.imageFile)  // Local temp file
+                          : selectedBlog.images[0]?.imageUrl             // Existing uploaded image
+                      }
+                      alt={selectedBlog.images?.[0]?.altDescription || "Blog Görseli"}
+                      className="img-fluid mb-2"
+                    />
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      className="position-absolute top-0 end-0"
+                      onClick={() => {
+                        setSelectedBlog(prev => {
+                          const updated = { ...prev };
+                          if (updated.imageFile) {
+                            delete updated.imageFile;
+                          } else if (updated.images && updated.images.length > 0) {
+                            updated.images = [];
+                          }
+                          return updated;
+                        });
+                      }}
+                    >
+                      ×
+                    </Button>
+                  </div>
+                </div>
+              )}
+              <Form.Group controlId="blogImage" className="mb-3">
+                <Form.Label>Görsel Yükle</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (!e.target.files[0]) return;
+                    setSelectedBlog(prev => ({
+                      ...prev,
+                      imageFile: e.target.files[0]
+                    }));
+                  }}
+                />
+              </Form.Group>
+
               <Form.Group controlId="createBlogContent" className="mb-3">
                 <Form.Label>İçerik</Form.Label>
                 <BlockNoteView
@@ -305,6 +438,7 @@ export default function Blog() {
                   onChange={handleBlogChange}
                 />
               </Form.Group>
+
             </Form>
           )}
         </Modal.Body>
