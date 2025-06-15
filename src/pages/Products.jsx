@@ -170,8 +170,8 @@ const Products = () => {
         <Layout>
             <div className="breadcrumb-block style-img">
                 <div className="breadcrumb-main bg-linear overflow-hidden">
-                    <div className="pl-[13rem] relative">
-                        <div className="main-content w-full h-full pb-3 flex flex-col items-start justify-start relative pb-1 z-[1]">
+                    <div className="pl-5 lg:!pl-[13rem] relative">
+                        <div className="main-content w-full h-full pb-3 flex flex-col items-start justify-start relative pb-2 lg:!pb-1 z-[1]">
                             <div className="text-content">
                                 <div className="link flex items-center justify-start gap-1 caption1 mt-3">
                                     <Link to={'/'}>Anasayfa</Link>
@@ -179,7 +179,7 @@ const Products = () => {
                                     <div className='text-secondary2 capitalize'>Ürünler</div>
                                 </div>
                             </div>
-                            <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 pt-1 overflow-hidden border-t">
+                            <div className="list-tab flex flex-wrap items-center justify-center gap-y-5 gap-8 pt-2 lg:!pt-1 pb-1 lg:!pb-2 overflow-hidden border-t">
                                 {productCategoriesData.map((item, index) => (
                                     <h2
                                         key={index}
