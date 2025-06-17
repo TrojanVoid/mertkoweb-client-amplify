@@ -65,7 +65,12 @@ const Products = () => {
     const fetchProducts = async () => {
         try {
             const response = await requestByType(types.allProducts);
-            const products = response.data;
+            const products = response.data.sort((a, b) => {
+                if(a.order === null && b.order === null) return 0;
+                if(a.order === null) return 1; // null values go to the end
+                if(b.order === null) return -1; // null values go to the end
+                return a.order - b.order; // sort by order
+            });
             if(!products){
               Logger.error(`Error fetching products`, TITLE_TAGS.UI_COMPONENT);
               navigate('/');

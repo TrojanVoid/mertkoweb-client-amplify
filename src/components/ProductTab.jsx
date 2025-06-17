@@ -26,13 +26,19 @@ const ProductTab = ({ start = 0, limit = 12 }) => {
       for (const featureType of featuredProductTypes) {
         await requestByType(featureType).then((response) => {
           if (!response || !response.data || response.data.length === 0) return;
+          const data = response.data.sort((a, b) => {
+            if (a.order === null && b.order === null) return 0;
+            if (a.order === null) return 1; // null values go to the end
+            if (b.order === null) return -1; // null values go to the end
+            return a.order - b.order; // sort by order
+          });
 
           if (featureType === 'featuredProducts') {
-            setFeaturedProducts(response.data);
+            setFeaturedProducts(data);
           } else if (featureType === 'bestSellers') {
-            setBestSellerProducts(response.data);
+            setBestSellerProducts(data);
           } else if (featureType === 'newReleases') {
-            setNewReleaseProducts(response.data);
+            setNewReleaseProducts(data);
           }
           setLoading(false);
         });
