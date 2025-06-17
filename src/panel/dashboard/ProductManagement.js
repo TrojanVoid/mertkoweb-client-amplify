@@ -97,6 +97,7 @@ export default function ProductManagement() {
       isNewRelease: false,
       isFeatured: false,
       isActive: true,
+      order: -1,
       images: [],
     });
     setShowEditModal(true); 
@@ -223,6 +224,11 @@ export default function ProductManagement() {
       accessor: 'isFeatured',
       sortable: true,
       cell: (row) => (row.isFeatured ? 'Evet' : 'Hayır'),
+    },
+    {
+      header: "Sıra",
+      accessor: 'order',
+      sortable: true,
     },
     {
       header: 'Aktif',
@@ -372,16 +378,22 @@ export default function ProductManagement() {
         isNewRelease: selectedProduct.isNewRelease,
         isFeatured: selectedProduct.isFeatured,
         isActive: selectedProduct.isActive,
+        order: selectedProduct.order,
       };
 
       for (const key in preparedProductData) {
-        if(key !== "name" && key !== "volume" && key !== "category") {
+        if(key !== "name" && key !== "volume" && key !== "category" && key !== "order") {
           continue;
         }
         if (preparedProductData[key] === null || preparedProductData[key] === "") {
           alert("Ürün bilgileri eksik");
           setIsSaving(false);
           throw new Error("Ürün bilgileri eksik");
+        }
+        if (key == "order" && (preparedProductData[key] < 1 || preparedProductData[key] > 9999)) {
+          alert("Sıra 1 ile 9999 arasında olmalıdır");
+          setIsSaving(false);
+          throw new Error("Sıra 1 ile 9999 arasında olmalıdır");
         }
       }
 
@@ -619,15 +631,32 @@ export default function ProductManagement() {
               />
             </Form.Group>
             
-            <Form.Group controlId="editProductActive" className="mb-3">
-              <Form.Check
-                type="checkbox"
-                name="isActive"
-                label="Aktif"
-                checked={selectedProduct.isActive}
-                onChange={handleEditChange}
-              />
-            </Form.Group>
+            <div className="w-full d-flex justify-between gap-4 mb-3">
+              <Form.Group controlId="editProductActive">
+                <Form.Check
+                  type="checkbox"
+                  className="text-md mt-1"
+                  name="isActive"
+                  label="Aktif"
+                  checked={selectedProduct.isActive}
+                  onChange={handleEditChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="editProductOrder">
+                <div className="d-flex justify-between items-center">
+                  <span className="mr-3">Sıra</span>
+                  <Form.Control
+                    type="number"
+                    name="order"
+                    value={selectedProduct.order || ""}
+                    max ={9999}
+                    min ={1}
+                    onChange={handleEditChange}
+                  />
+                </div>
+                
+              </Form.Group>
+            </div>
 
             <div className="border border-gray-500 rounded-lg p-3 mb-3">
               <h6 className="mb-2 font-semibold">Ürün Etiketi</h6>
@@ -834,6 +863,9 @@ export default function ProductManagement() {
                   </p>
                   <p className="mb-[0.35rem]">
                     <strong>Aktif:</strong> {selectedProduct.isActive ? "Evet" : "Hayır"}
+                  </p>
+                  <p className="mb-[0.35rem]">
+                    <strong>Sıra:</strong> {selectedProduct.order !== null ? selectedProduct.order : "Belirtilmemiş"}
                   </p>
                 </div>
               </div>
